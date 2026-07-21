@@ -1,0 +1,28 @@
+{{/* Experience timeline that omits dates until Vidun has verified them. */}}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+
+<div class="personal-section personal-experience">
+  <header class="personal-section__header">
+    <h2>{{ index $content "title" }}</h2>
+    {{ with index $content "subtitle" }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  <ol class="personal-experience__timeline">
+    {{ range index $content "items" }}
+      <li class="personal-experience__item">
+        <div class="personal-experience__marker" aria-hidden="true"></div>
+        <article>
+          <div class="personal-experience__heading">
+            <div>
+              <h3>{{ index . "role" }}</h3>
+              <p>{{ index . "organisation" }}</p>
+            </div>
+            {{ if index . "current" }}<span class="personal-experience__status">Present</span>{{ end }}
+          </div>
+          <p class="personal-experience__description">{{ index . "description" }}</p>
+        </article>
+      </li>
+    {{ end }}
+  </ol>
+</div>
