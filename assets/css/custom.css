@@ -629,6 +629,10 @@ footer {
     scroll-padding-top: 4.5rem;
   }
 
+  nav button[aria-label="Toggle navigation"] {
+    min-height: 2.75rem;
+  }
+
   .personal-hero {
     width: min(100% - 1.5rem, 1180px);
     gap: 2.5rem;
