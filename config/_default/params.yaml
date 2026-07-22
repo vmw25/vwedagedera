@@ -36,22 +36,22 @@ hugoblox:
     pack: "default"
     # Optional: Override theme pack colors
     colors:
-      primary: "#2DD4BF"
-      secondary: "#38BDF8"
-      neutral: "slate"
+      primary: "#DADADB"
+      secondary: "#9B9C9D"
+      neutral: "zinc"
     # Optional: Mode-specific color overrides
     colors_light: {}
     colors_dark: {}
     # Optional: Semantic surface color overrides
     surfaces:
-      background: "#07090C"
-      foreground: "#E7EDF3"
+      background: "#1D1E20"
+      foreground: "#DADADB"
       header:
-        background: "#07090C"
-        foreground: "#E7EDF3"
+        background: "#1D1E20"
+        foreground: "#DADADB"
       footer:
-        background: "#07090C"
-        foreground: "#94A3B8"
+        background: "#1D1E20"
+        foreground: "#9B9C9D"
 
   # ────────────────────────────────────────────────────────────────────────────
   # TYPOGRAPHY
@@ -67,11 +67,11 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   layout:
     # Border radius: 'none', 'sm', 'md', 'lg', or 'full'
-    radius: "lg"
+    radius: "md"
     # Spacing density: 'compact', 'comfortable', or 'spacious'
     spacing: "comfortable"
     # Avatar shape in author profiles
-    avatar_shape: rounded               # circle | square | rounded
+    avatar_shape: circle                # circle | square | rounded
 
   # ────────────────────────────────────────────────────────────────────────────
   # HEADER
@@ -80,11 +80,13 @@ hugoblox:
   header:
     enable: true
     # Header style variant
-    style: navbar-simple                # navbar | navbar-simple | minimal
+    style: navbar                       # navbar | navbar-simple | minimal
     # Stick to top on scroll
     sticky: true
     # Menu alignment
     align: right                        # left | center | right
+    show_logo: false
+    show_title: true
     # Feature toggles
     search: false
     theme_toggle: false
@@ -105,7 +107,7 @@ hugoblox:
     style: minimal                      # minimal | columns | centered
     language_switcher: false
     # Custom footer text (HTML supported)
-    text: "Built with HugoBlox and hosted on GitHub Pages."
+    text: ""
 
   # ────────────────────────────────────────────────────────────────────────────
   # COPYRIGHT

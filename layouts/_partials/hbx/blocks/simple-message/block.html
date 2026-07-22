@@ -1,0 +1,9 @@
+{{/* A deliberately small text-only page for sections that do not have published items yet. */}}
+{{ $content := .wcBlock.content }}
+<section class="simple-message" aria-labelledby="simple-message-title">
+  <h1 id="simple-message-title">{{ index $content "title" | default "Writing" }}</h1>
+  {{ with index $content "description" }}
+    <div class="simple-message__text">{{ . | markdownify }}</div>
+  {{ end }}
+  <a class="simple-message__link" href="{{ site.Home.RelPermalink }}">Return home</a>
+</section>

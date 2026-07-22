@@ -10,7 +10,7 @@ Do not edit the generated `public/` folder. Hugo replaces it during every build.
 
 ## 2. What HugoBlox is
 
-HugoBlox is the design and page-building system used on top of Hugo. The homepage is assembled from blocks such as the project collection and contact section. This repository also contains three small, project-specific HugoBlox blocks for the hero, skills and date-safe experience timeline.
+HugoBlox is the design and page-building system used on top of Hugo. This website uses a few small, project-specific blocks to keep the homepage, project list and writing page simple.
 
 ## 3. What GitHub Pages is
 
@@ -28,7 +28,7 @@ GitHub Actions is the automated process that builds and publishes the website wh
 
 ## 5. Important folders and files
 
-- `content/_index.md`: homepage words, sections, experience entries and configured contact links.
+- `content/_index.md`: homepage name, role, introduction and GitHub link.
 - `content/projects/`: one folder for each project page.
 - `content/writing/`: the writing page and draft articles.
 - `data/authors/me.yaml`: your name, biography, interests, education and public profile links.
@@ -38,19 +38,19 @@ GitHub Actions is the automated process that builds and publishes the website wh
 - `.github/workflows/`: the automated build and deployment instructions.
 - `CONTENT_TODO.md`: personal details that are still missing.
 
-## 6. How to edit your biography
+## 6. How to edit your homepage introduction
 
-In GitHub, open:
-
-Repository → `data` → `authors` → `me.yaml` → pencil icon
-
-Edit only the words below `bio: |`. Keep the two-space indentation at the start of the biography line.
-
-To change the longer About section, open:
+For the short text visible on the homepage, open:
 
 Repository → `content` → `_index.md` → pencil icon
 
-Find `id: about` and edit the text below `text: |-` without changing its indentation.
+Edit the words after `role:` or `intro:`. Keep the quotation marks and do not change the indentation.
+
+For the longer biography stored with your author profile, open:
+
+Repository → `data` → `authors` → `me.yaml` → pencil icon
+
+Edit only the words below `bio: |`. Keep the two-space indentation at the start of the biography line. This longer biography is used on detailed pages rather than the compact homepage.
 
 ## 7. How to add a project
 
@@ -116,7 +116,7 @@ First open `data/authors/me.yaml` and add this item under `links:`:
     label: LinkedIn
 ```
 
-Then open `content/_index.md`, find the Contact section's `social:` list and add the same three lines with the existing indentation.
+Then open `content/_index.md`, find the existing GitHub item under `social:`, and add the same three lines below it with matching indentation.
 
 ## 11. How to add your email
 
@@ -126,10 +126,12 @@ Open `data/authors/me.yaml` and add this directly below `role:`:
 email: your-approved-public-address@example.org
 ```
 
-Then open `content/_index.md`, find `id: contact`, and add this directly below `username: me`:
+Then open `content/_index.md`, find `social:`, and add this below the existing GitHub item:
 
 ```yaml
-      email: 'your-approved-public-address@example.org'
+        - icon: at-symbol
+          url: 'mailto:your-approved-public-address@example.org'
+          label: 'Email'
 ```
 
 Use only an address you are comfortable publishing.
@@ -144,7 +146,7 @@ Repository → `static` → `uploads` → Add file → Upload files
 
 Name it `cv.pdf`.
 
-Then open `content/_index.md`. In the Contact section's `social:` list, add:
+Then open `content/_index.md`. In the homepage `social:` list, add:
 
 ```yaml
         - icon: document-arrow-down
@@ -154,13 +156,7 @@ Then open `content/_index.md`. In the Contact section's `social:` list, add:
 
 Hugo will include the correct `/vwedagedera/` project path.
 
-To add a verified experience date, open `content/_index.md`, find the relevant item under `id: experience`, and add a `dates:` field below `organisation:`. For example:
-
-```yaml
-          dates: '2024–Present'
-```
-
-Use only dates you have checked. The optional field replaces the temporary `Present` label. Education dates are recorded in `data/authors/me.yaml`; add them only after confirming the degree dates and the HugoBlox author-data format in use at that time.
+Education and longer biographical details are recorded in `data/authors/me.yaml`. Add dates only after checking them; the public homepage intentionally stays concise.
 
 ## 13. How to preview the site in Codespaces
 
