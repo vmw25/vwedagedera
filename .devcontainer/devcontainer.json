@@ -1,11 +1,14 @@
 {
   "name": "HugoBlox Codespace",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "HUGO_VERSION": "0.161.1",
-      "NODE_VERSION": "22",
-      "PNPM_VERSION": "10.14.0"
+  "image": "mcr.microsoft.com/devcontainers/go:1.22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:2.1.0": {
+      "version": "22",
+      "pnpmVersion": "10.14.0"
+    },
+    "ghcr.io/devcontainers/features/hugo:1.1.3": {
+      "version": "0.161.1",
+      "extended": true
     }
   },
   "updateContentCommand": "pnpm install --frozen-lockfile --prefer-offline",
@@ -17,9 +20,6 @@
       ]
     }
   },
-  "mounts": [
-    "source=pnpm-store,target=/home/vscode/.local/share/pnpm,type=volume"
-  ],
   "remoteUser": "vscode",
   "forwardPorts": [
     1313
