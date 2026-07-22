@@ -1,13 +1,16 @@
 ---
 title: 'Projects'
-summary: 'Research, product discovery, community work and scientific analysis.'
+summary: 'Practical work, experiments and things I am building.'
 type: landing
 
 sections:
-  - block: simple-projects
+  - block: simple-collection
     content:
       title: 'Projects'
-      text: 'Research, product discovery, community work and scientific analysis.'
+      text: 'Practical work, experiments and things I am building.'
+      section: 'projects'
+      item_label: 'View project'
+      empty_text: 'Projects will appear here as they are ready.'
     design:
       spacing:
         padding: ['0', '0', '0', '0']

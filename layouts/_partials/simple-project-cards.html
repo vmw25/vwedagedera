@@ -1,5 +1,8 @@
+{{ $items := .projects }}
+{{ with .items }}{{ $items = . }}{{ end }}
+{{ $linkLabel := .link_label | default "View item" }}
 <div class="simple-project-list">
-  {{ range .projects }}
+  {{ range $items }}
     {{ $cardImage := .Resources.GetMatch "featured.*" }}
     {{ if not $cardImage }}{{ $cardImage = .Resources.GetMatch "cover.*" }}{{ end }}
     <article class="simple-project-card">
@@ -23,7 +26,7 @@
           {{ with .Params.tags }}<span class="simple-project-card__tag">{{ index . 0 }}</span>{{ end }}
           <h3>{{ .Title }}</h3>
           {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
-          <span class="simple-project-card__link">Read project <span aria-hidden="true">→</span></span>
+          <span class="simple-project-card__link">{{ $linkLabel }} <span aria-hidden="true">→</span></span>
         </div>
       </a>
     </article>
