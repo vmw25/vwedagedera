@@ -13,18 +13,17 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   identity:
     # Site name - shown in navbar, footer, copyright, and browser title by default
-    name: "Your Name"
+    name: "Vidun Wedagedera"
     # Legal entity for copyright notices (defaults to name if not set)
     organization: ""
     # Schema.org type for structured data
     type: person                        # person | organization | local_business
     # Short tagline displayed on your site
-    tagline: "Full-Stack Developer"
+    tagline: "Clinician-in-training, researcher and emerging healthtech builder"
     # Site meta description for search engines and social sharing
-    description: "Modern developer portfolio showcasing web development projects, technical blog posts, and open source contributions. Built with Hugo Blox."
+    description: "Vidun Wedagedera is a University of Cambridge medical student exploring cardiovascular medicine, cardiac electrophysiology, research and health technology."
     # Social accounts (used for meta tags like Twitter Cards)
-    social:
-      twitter: "yourusername"              # Twitter/X handle for Twitter Cards (without @)
+    social: {}
 
   # ────────────────────────────────────────────────────────────────────────────
   # THEME
@@ -37,22 +36,22 @@ hugoblox:
     pack: "default"
     # Optional: Override theme pack colors
     colors:
-      primary: ""                       # Tailwind palette name or hex (e.g., "indigo" or "#6366f1")
-      secondary: ""
-      neutral: ""                       # Affects gray utilities (text-gray-*, bg-gray-*)
+      primary: "#2DD4BF"
+      secondary: "#38BDF8"
+      neutral: "slate"
     # Optional: Mode-specific color overrides
     colors_light: {}
     colors_dark: {}
     # Optional: Semantic surface color overrides
     surfaces:
-      background: ""
-      foreground: ""
+      background: "#07090C"
+      foreground: "#E7EDF3"
       header:
-        background: ""
-        foreground: ""
+        background: "#07090C"
+        foreground: "#E7EDF3"
       footer:
-        background: ""
-        foreground: ""
+        background: "#07090C"
+        foreground: "#94A3B8"
 
   # ────────────────────────────────────────────────────────────────────────────
   # TYPOGRAPHY
@@ -60,7 +59,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   typography:
     # Theme pack: name from data/fonts/
-    pack: "developer"
+    pack: "system"
 
   # ────────────────────────────────────────────────────────────────────────────
   # LAYOUT
@@ -68,11 +67,11 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   layout:
     # Border radius: 'none', 'sm', 'md', 'lg', or 'full'
-    radius: "md"
+    radius: "lg"
     # Spacing density: 'compact', 'comfortable', or 'spacious'
     spacing: "comfortable"
     # Avatar shape in author profiles
-    avatar_shape: circle                # circle | square | rounded
+    avatar_shape: rounded               # circle | square | rounded
 
   # ────────────────────────────────────────────────────────────────────────────
   # HEADER
@@ -81,16 +80,16 @@ hugoblox:
   header:
     enable: true
     # Header style variant
-    style: navbar                       # navbar | navbar-simple | minimal
+    style: navbar-simple                # navbar | navbar-simple | minimal
     # Stick to top on scroll
     sticky: true
     # Menu alignment
-    align: center                       # left | center | right
+    align: right                        # left | center | right
     # Feature toggles
-    search: true
-    theme_toggle: true
-    theme_picker: true
-    language_switcher: true
+    search: false
+    theme_toggle: false
+    theme_picker: false
+    language_switcher: false
     # Call-to-action button
     cta:
       enable: false
@@ -104,9 +103,9 @@ hugoblox:
   footer:
     # Footer style variant
     style: minimal                      # minimal | columns | centered
-    language_switcher: true
+    language_switcher: false
     # Custom footer text (HTML supported)
-    text: ""
+    text: "Built with HugoBlox and hosted on GitHub Pages."
 
   # ────────────────────────────────────────────────────────────────────────────
   # COPYRIGHT
@@ -114,12 +113,11 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   copyright:
     # Copyright notice - supports {year}, {name}, {license} placeholders
-    notice: "© {year} {name}. This work is licensed under {license}"
+    notice: "© {year} {name}"
     license:
-      type: cc                          # cc | custom
-      allow_derivatives: false
-      share_alike: true
-      allow_commercial: false
+      type: custom                      # cc | custom
+      label: ""
+      url: ""
 
   # ────────────────────────────────────────────────────────────────────────────
   # SEO
@@ -127,7 +125,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   seo:
     # Browser tab title override (defaults to identity.name if not set)
-    title: ""
+    title: "Vidun Wedagedera | Medicine, Research and Healthtech"
     # For local_business identity type only
     location:
       address:
@@ -145,7 +143,7 @@ hugoblox:
       allow:
         - /
       disallow: []
-      note: "Guidance for AI crawlers - customize to match your public content."
+      note: "Public portfolio content may be indexed; draft and private research content must not be indexed."
       contact: ""
 
   # ────────────────────────────────────────────────────────────────────────────
@@ -171,7 +169,7 @@ hugoblox:
   # Site search
   # ────────────────────────────────────────────────────────────────────────────
   search:
-    enable: true
+    enable: false
     # Trending/suggested search terms
     suggestions: []
     # Quick action shortcuts in search modal
@@ -239,9 +237,9 @@ hugoblox:
   # Regional formatting preferences
   # ────────────────────────────────────────────────────────────────────────────
   locale:
-    date_format: "Jan 2, 2006"          # Go time format
+    date_format: "2 Jan 2006"           # Go time format
     time_format: "3:04 PM"
-    address_format: en-us
+    address_format: en-gb
 
   # ────────────────────────────────────────────────────────────────────────────
   # SECURITY
