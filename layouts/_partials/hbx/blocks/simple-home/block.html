@@ -8,7 +8,7 @@
     {{ if $avatar }}
       {{ $display_avatar := $avatar }}
       {{ if reflect.IsImageResourceProcessable $avatar }}
-        {{ $display_avatar = $avatar.Fill "440x440 webp Center" }}
+        {{ $display_avatar = $avatar.Fill "440x440 webp TopLeft" }}
       {{ end }}
       <img class="simple-profile__image" src="{{ $display_avatar.RelPermalink }}" alt="Portrait of {{ index $content "name" }}" width="220" height="220" fetchpriority="high">
     {{ else }}
