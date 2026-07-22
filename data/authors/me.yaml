@@ -19,6 +19,9 @@ links:
   - icon: brands/github
     url: https://github.com/vmw25
     label: GitHub
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/vidun-wedagedera-6aa65025a/
+    label: LinkedIn
 
 interests:
   - Cardiovascular medicine

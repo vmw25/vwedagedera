@@ -5,7 +5,7 @@ This file is internal repository documentation. Hugo does not publish it.
 ## Contact and identity
 
 - [ ] Professional email address approved for public display.
-- [ ] LinkedIn profile URL.
+- [x] LinkedIn profile URL added from the matching public profile; Vidun should confirm it before merging.
 - [ ] A real profile photograph that Vidun owns and approves for the website.
 - [ ] Current CV as a PDF, approved for public download.
 
