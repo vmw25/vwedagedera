@@ -16,8 +16,6 @@ sections:
           url: 'https://www.linkedin.com/in/vidun-wedagedera-6aa65025a/'
       featured_title: 'Selected work'
     design:
-      background:
-        color: '#1D1E20'
       spacing:
         padding: ['0', '0', '0', '0']
 ---

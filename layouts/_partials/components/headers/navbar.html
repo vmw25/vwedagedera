@@ -1,31 +1,236 @@
 {{ $branding := partialCached "functions/get_branding" . "branding" }}
 {{ $page := . }}
+{{ $contactEmail := hugo.Data.authors.me.email }}
+{{ $mascot := resources.Get "media/assistant-mascot.png" }}
+{{ if and $mascot (reflect.IsImageResourceProcessable $mascot) }}
+  {{ $mascot = $mascot.Resize "320x webp q90" }}
+{{ end }}
+
+<script>
+  (function setInitialTheme() {
+    try {
+      const savedTheme = localStorage.getItem('vidun-theme');
+      const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      const initialTheme = savedTheme || systemTheme;
+      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+    } catch (error) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
 
 <header id="site-header">
   <nav class="simple-nav" aria-label="Primary navigation">
     <a class="simple-nav__brand" href="{{ site.Home.RelPermalink }}">{{ $branding.name }}</a>
 
-    <button class="simple-nav__toggle" type="button" aria-expanded="false" aria-controls="simple-nav-menu" aria-label="Toggle navigation" onclick="toggleSimpleNavigation(this)">
-      <span class="simple-nav__toggle-icon" aria-hidden="true"></span>
-    </button>
+    <div class="simple-nav__desktop">
+      <ul class="simple-nav__menu" id="simple-nav-menu">
+        {{ range site.Menus.main }}
+          {{ $url := .URL }}
+          {{ if not (findRE `^https?://` .URL) }}{{ $url = .URL | relLangURL }}{{ end }}
+          <li>
+            <a href="{{ $url }}"{{ if eq $page.RelPermalink $url }} class="active" aria-current="page"{{ end }}{{ if findRE `^https?://` .URL }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Name }}</a>
+          </li>
+        {{ end }}
+      </ul>
 
-    <ul class="simple-nav__menu" id="simple-nav-menu">
-      {{ range site.Menus.main }}
-        {{ $url := .URL }}
-        {{ if not (findRE `^https?://` .URL) }}{{ $url = .URL | relLangURL }}{{ end }}
-        <li>
-          <a href="{{ $url }}"{{ if eq $page.RelPermalink $url }} class="active" aria-current="page"{{ end }}{{ if findRE `^https?://` .URL }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Name }}</a>
-        </li>
-      {{ end }}
-    </ul>
+      <div class="simple-nav__actions">
+        <button class="simple-nav__action" id="site-search-open" type="button" aria-label="Search website" aria-haspopup="dialog" aria-controls="site-search-dialog">
+          <span class="simple-nav__action-icon" aria-hidden="true">⌕</span>
+          <span class="simple-nav__action-label">Search</span>
+        </button>
+        <button class="simple-nav__action" id="theme-toggle" type="button" aria-label="Switch colour theme">
+          <span class="simple-nav__action-icon" data-theme-icon aria-hidden="true">☀</span>
+          <span class="simple-nav__action-label" data-theme-label>Light</span>
+        </button>
+        <button class="simple-nav__toggle" type="button" aria-expanded="false" aria-controls="simple-nav-menu" aria-label="Toggle navigation">
+          <span class="simple-nav__toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
   </nav>
 </header>
 
+<dialog class="site-dialog site-search" id="site-search-dialog" aria-labelledby="site-search-title">
+  <div class="site-dialog__header">
+    <div>
+      <p class="site-dialog__eyebrow">Website search</p>
+      <h2 id="site-search-title">What are you looking for?</h2>
+    </div>
+    <button class="site-dialog__close" type="button" data-dialog-close aria-label="Close search">×</button>
+  </div>
+
+  <label class="site-field" for="site-search-input">
+    <span>Search projects and writing</span>
+    <input id="site-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Try ‘cardiac’, ‘healthtech’ or ‘research’">
+  </label>
+  <p class="site-search__status" id="site-search-status" aria-live="polite">Start typing to search the public pages.</p>
+
+  <ul class="site-search__results" id="site-search-results">
+    {{ range site.RegularPages.ByTitle }}
+      {{ $searchText := printf "%s %s %s" .Title (.Summary | plainify) (.Plain | plainify) }}
+      <li data-search-entry data-search-text="{{ $searchText | lower }}" hidden>
+        <a href="{{ .RelPermalink }}">
+          <span>{{ .Title }}</span>
+          {{ with .Summary }}<small>{{ . | plainify | truncate 150 }}</small>{{ end }}
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</dialog>
+
+<dialog class="site-dialog contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title">
+  <div class="site-dialog__header">
+    <div>
+      <p class="site-dialog__eyebrow">Ask Vidun</p>
+      <h2 id="contact-dialog-title">Send a question or enquiry</h2>
+    </div>
+    <button class="site-dialog__close" type="button" data-dialog-close aria-label="Close contact form">×</button>
+  </div>
+
+  <p class="contact-dialog__introduction">Use this form for research, healthtech, speaking, community or general professional enquiries.</p>
+
+  <form class="contact-form" action="https://formsubmit.co/{{ $contactEmail }}" method="POST">
+    <input type="hidden" name="_subject" value="New website enquiry for Vidun Wedagedera">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="{{ "contact-thanks/" | absURL }}">
+    <input type="hidden" name="_url" value="{{ site.Home.Permalink }}">
+    <label class="site-honeypot" aria-hidden="true">Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+
+    <div class="contact-form__row">
+      <label class="site-field">
+        <span>Name</span>
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+      <label class="site-field">
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+    </div>
+
+    <label class="site-field">
+      <span>Reason for getting in touch</span>
+      <select name="reason" required>
+        <option value="" selected disabled>Choose one</option>
+        <option>Research collaboration</option>
+        <option>Healthtech or project enquiry</option>
+        <option>Speaking or community</option>
+        <option>Mentoring or education</option>
+        <option>Other professional enquiry</option>
+      </select>
+    </label>
+
+    <label class="site-field">
+      <span>Subject</span>
+      <input type="text" name="subject" required maxlength="120">
+    </label>
+
+    <label class="site-field">
+      <span>Question or message</span>
+      <textarea name="message" rows="5" required maxlength="3000"></textarea>
+    </label>
+
+    <label class="contact-form__consent">
+      <input type="checkbox" name="confidentiality_acknowledged" value="yes" required>
+      <span>I will not include patient information or confidential, sensitive or urgent medical details.</span>
+    </label>
+
+    <p class="contact-form__privacy">Submitting sends these details through <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a> to {{ $contactEmail }}. This is not a clinical advice or emergency service.</p>
+
+    <div class="contact-form__actions">
+      <button class="site-button site-button--primary" type="submit">Send enquiry</button>
+      <a href="mailto:{{ $contactEmail }}">Or email directly</a>
+    </div>
+  </form>
+</dialog>
+
+{{ with $mascot }}
+  <button class="assistant-launcher" id="contact-dialog-open" type="button" aria-haspopup="dialog" aria-controls="contact-dialog">
+    <span class="assistant-launcher__label">Ask Vidun</span>
+    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" aria-hidden="true">
+    <span class="sr-only">Open the contact form</span>
+  </button>
+{{ end }}
+
 <script>
-  function toggleSimpleNavigation(button) {
-    const menu = document.getElementById(button.getAttribute('aria-controls'));
-    const isOpen = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', String(!isOpen));
-    menu.classList.toggle('is-open', !isOpen);
-  }
+  (function initialiseSiteControls() {
+    const navToggle = document.querySelector('.simple-nav__toggle');
+    const navMenu = document.getElementById('simple-nav-menu');
+    const themeButton = document.getElementById('theme-toggle');
+    const themeIcon = themeButton?.querySelector('[data-theme-icon]');
+    const themeLabel = themeButton?.querySelector('[data-theme-label]');
+    const searchDialog = document.getElementById('site-search-dialog');
+    const searchOpen = document.getElementById('site-search-open');
+    const searchInput = document.getElementById('site-search-input');
+    const searchStatus = document.getElementById('site-search-status');
+    const searchEntries = Array.from(document.querySelectorAll('[data-search-entry]'));
+    const contactDialog = document.getElementById('contact-dialog');
+    const contactOpen = document.getElementById('contact-dialog-open');
+
+    function updateThemeButton() {
+      const isLight = document.documentElement.dataset.theme === 'light';
+      if (themeIcon) themeIcon.textContent = isLight ? '☾' : '☀';
+      if (themeLabel) themeLabel.textContent = isLight ? 'Dark' : 'Light';
+      themeButton?.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
+    }
+
+    navToggle?.addEventListener('click', function () {
+      const isOpen = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', String(!isOpen));
+      navMenu?.classList.toggle('is-open', !isOpen);
+    });
+
+    themeButton?.addEventListener('click', function () {
+      const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = nextTheme;
+      document.documentElement.classList.toggle('dark', nextTheme === 'dark');
+      try { localStorage.setItem('vidun-theme', nextTheme); } catch (error) {}
+      updateThemeButton();
+    });
+
+    function openDialog(dialog, firstField) {
+      if (!dialog) return;
+      dialog.showModal();
+      window.setTimeout(() => firstField?.focus(), 0);
+    }
+
+    searchOpen?.addEventListener('click', () => openDialog(searchDialog, searchInput));
+    contactOpen?.addEventListener('click', () => openDialog(contactDialog, contactDialog?.querySelector('input[name="name"]')));
+
+    document.querySelectorAll('[data-dialog-close]').forEach((button) => {
+      button.addEventListener('click', () => button.closest('dialog')?.close());
+    });
+
+    document.querySelectorAll('dialog').forEach((dialog) => {
+      dialog.addEventListener('click', (event) => {
+        const bounds = dialog.getBoundingClientRect();
+        const isBackdrop = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+        if (isBackdrop) dialog.close();
+      });
+    });
+
+    searchInput?.addEventListener('input', function () {
+      const query = this.value.trim().toLowerCase();
+      const terms = query.split(/\s+/).filter(Boolean);
+      let matches = 0;
+
+      searchEntries.forEach((entry) => {
+        const text = entry.dataset.searchText || '';
+        const isMatch = terms.length > 0 && terms.every((term) => text.includes(term));
+        entry.hidden = !isMatch;
+        if (isMatch) matches += 1;
+      });
+
+      if (!query) {
+        searchStatus.textContent = 'Start typing to search the public pages.';
+      } else if (matches === 0) {
+        searchStatus.textContent = `No results for “${this.value.trim()}”.`;
+      } else {
+        searchStatus.textContent = `${matches} result${matches === 1 ? '' : 's'} found.`;
+      }
+    });
+
+    updateThemeButton();
+  })();
 </script>
