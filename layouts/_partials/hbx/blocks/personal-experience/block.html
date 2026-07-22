@@ -18,7 +18,11 @@
               <h3>{{ index . "role" }}</h3>
               <p>{{ index . "organisation" }}</p>
             </div>
-            {{ if index . "current" }}<span class="personal-experience__status">Present</span>{{ end }}
+            {{ with index . "dates" }}
+              <span class="personal-experience__status">{{ . }}</span>
+            {{ else }}
+              {{ if index . "current" }}<span class="personal-experience__status">Present</span>{{ end }}
+            {{ end }}
           </div>
           <p class="personal-experience__description">{{ index . "description" }}</p>
         </article>

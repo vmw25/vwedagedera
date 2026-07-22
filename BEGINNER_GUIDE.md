@@ -154,6 +154,14 @@ Then open `content/_index.md`. In the Contact section's `social:` list, add:
 
 Hugo will include the correct `/vwedagedera/` project path.
 
+To add a verified experience date, open `content/_index.md`, find the relevant item under `id: experience`, and add a `dates:` field below `organisation:`. For example:
+
+```yaml
+          dates: '2024–Present'
+```
+
+Use only dates you have checked. The optional field replaces the temporary `Present` label. Education dates are recorded in `data/authors/me.yaml`; add them only after confirming the degree dates and the HugoBlox author-data format in use at that time.
+
 ## 13. How to preview the site in Codespaces
 
 Create a preview environment through:
