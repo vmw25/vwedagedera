@@ -106,17 +106,16 @@ Upload the image with exactly one of these names:
 
 The homepage automatically replaces the VW monogram with that photograph. Hugo crops it to the rounded portrait frame. Do not upload a private or patient-related image.
 
-## 10. How to add LinkedIn
+## 10. How to edit homepage social links
 
-First open `data/authors/me.yaml` and add this item under `links:`:
+GitHub and LinkedIn are already configured. To add another homepage link, open `content/_index.md` and add another item under `social:` with matching indentation:
 
 ```yaml
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/in/YOUR-PUBLIC-PROFILE/
-    label: LinkedIn
+        - label: 'Another profile'
+          url: 'https://example.org/your-public-profile/'
 ```
 
-Then open `content/_index.md`, find the existing GitHub item under `social:`, and add the same three lines below it with matching indentation.
+Only add links that you are comfortable making public.
 
 ## 11. How to add your email
 
@@ -126,12 +125,11 @@ Open `data/authors/me.yaml` and add this directly below `role:`:
 email: your-approved-public-address@example.org
 ```
 
-Then open `content/_index.md`, find `social:`, and add this below the existing GitHub item:
+Then open `content/_index.md`, find `social:`, and add this below the existing links:
 
 ```yaml
-        - icon: at-symbol
+        - label: 'Email'
           url: 'mailto:your-approved-public-address@example.org'
-          label: 'Email'
 ```
 
 Use only an address you are comfortable publishing.

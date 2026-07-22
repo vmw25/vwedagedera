@@ -23,7 +23,11 @@
 
     {{ with index $content "social" }}
       <div class="simple-profile__links">
-        <a href="{{ index . "url" | safeURL }}" target="_blank" rel="noopener noreferrer">{{ index . "label" }} <span aria-hidden="true">↗</span></a>
+        {{ range . }}
+          <a href="{{ index . "url" | safeURL }}" target="_blank" rel="noopener noreferrer">
+            {{ index . "label" }} <span aria-hidden="true">↗</span>
+          </a>
+        {{ end }}
       </div>
     {{ end }}
   </section>
