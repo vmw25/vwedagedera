@@ -1,0 +1,35 @@
+{{/* A deliberately quiet homepage inspired by a compact personal blog layout. */}}
+{{ $content := .wcBlock.content }}
+{{ $avatar := resources.GetMatch "media/authors/me.*" }}
+{{ $projects := (where site.RegularPages "Section" "projects").ByWeight }}
+
+<div class="simple-home">
+  <section class="simple-profile" aria-labelledby="profile-name">
+    {{ if $avatar }}
+      {{ $display_avatar := $avatar }}
+      {{ if reflect.IsImageResourceProcessable $avatar }}
+        {{ $display_avatar = $avatar.Fill "440x440 webp Center" }}
+      {{ end }}
+      <img class="simple-profile__image" src="{{ $display_avatar.RelPermalink }}" alt="Portrait of {{ index $content "name" }}" width="220" height="220" fetchpriority="high">
+    {{ else }}
+      <div class="simple-profile__monogram" role="img" aria-label="Temporary VW monogram">
+        <span aria-hidden="true">VW</span>
+      </div>
+    {{ end }}
+
+    <h1 id="profile-name">{{ index $content "name" }}</h1>
+    <p class="simple-profile__role">{{ index $content "role" }}</p>
+    <p class="simple-profile__introduction">{{ index $content "introduction" }}</p>
+
+    {{ with index $content "social" }}
+      <div class="simple-profile__links">
+        <a href="{{ index . "url" | safeURL }}" target="_blank" rel="noopener noreferrer">{{ index . "label" }} <span aria-hidden="true">↗</span></a>
+      </div>
+    {{ end }}
+  </section>
+
+  <section class="simple-featured" id="work" aria-labelledby="featured-title">
+    <h2 id="featured-title">{{ index $content "featured_title" }}</h2>
+    {{ partial "simple-project-cards.html" (dict "projects" $projects) }}
+  </section>
+</div>

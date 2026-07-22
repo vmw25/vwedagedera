@@ -4,16 +4,11 @@ summary: 'Notes on cardiovascular medicine, clinical problems, research and buil
 type: landing
 
 sections:
-  - block: markdown
+  - block: simple-message
     content:
-      title: 'Writing in progress'
-      text: |-
-        I am preparing notes on cardiovascular medicine, clinical problem discovery, research and the process of building useful health technology.
-
-        Drafts remain private until they are ready. [Return to the homepage](../).
+      title: 'Writing'
+      description: 'I am preparing notes on cardiovascular medicine, clinical problem discovery, research and the process of building useful health technology. Drafts remain private until they are ready.'
     design:
       background:
-        color: '#07090C'
-      spacing:
-        padding: ['7rem', '0', '7rem', '0']
+        color: '#1D1E20'
 ---
