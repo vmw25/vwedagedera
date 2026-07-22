@@ -1,10 +1,30 @@
 <div class="simple-project-list">
   {{ range .projects }}
+    {{ $cardImage := .Resources.GetMatch "featured.*" }}
+    {{ if not $cardImage }}{{ $cardImage = .Resources.GetMatch "cover.*" }}{{ end }}
     <article class="simple-project-card">
       <a href="{{ .RelPermalink }}">
-        <h3>{{ .Title }}</h3>
-        {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
-        <span class="simple-project-card__link">Read project <span aria-hidden="true">→</span></span>
+        {{ if $cardImage }}
+          {{ $displayImage := $cardImage }}
+          {{ if reflect.IsImageResourceProcessable $cardImage }}
+            {{ $displayImage = $cardImage.Fill "1200x675 webp Center" }}
+          {{ end }}
+          {{ $imageAlt := .Params.image_alt | default (printf "Project image for %s" .Title) }}
+          <div class="simple-project-card__media">
+            <img src="{{ $displayImage.RelPermalink }}" alt="{{ $imageAlt }}" width="1200" height="675" loading="lazy">
+          </div>
+        {{ else }}
+          <div class="simple-project-card__media simple-project-card__placeholder" aria-hidden="true">
+            <span>{{ substr .Title 0 1 }}</span>
+          </div>
+        {{ end }}
+
+        <div class="simple-project-card__content">
+          {{ with .Params.tags }}<span class="simple-project-card__tag">{{ index . 0 }}</span>{{ end }}
+          <h3>{{ .Title }}</h3>
+          {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+          <span class="simple-project-card__link">Read project <span aria-hidden="true">→</span></span>
+        </div>
       </a>
     </article>
   {{ end }}

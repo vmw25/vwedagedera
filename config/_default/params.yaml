@@ -31,7 +31,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   theme:
     # Mode: 'light', 'dark', or 'system' (follows OS preference)
-    mode: dark
+    mode: system
     # Theme pack: name from data/themes/ or { light: "x", dark: "y" } for mix-and-match
     pack: "default"
     # Optional: Override theme pack colors
@@ -88,8 +88,8 @@ hugoblox:
     show_logo: false
     show_title: true
     # Feature toggles
-    search: false
-    theme_toggle: false
+    search: false                    # Custom compact search is rendered by the project header.
+    theme_toggle: false              # Custom accessible toggle is rendered by the project header.
     theme_picker: false
     language_switcher: false
     # Call-to-action button
