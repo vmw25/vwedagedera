@@ -32,8 +32,8 @@ GitHub Actions is the automated process that builds and publishes the website wh
 - `content/projects/`: one folder for each project page.
 - `content/writing/`: the writing page and draft articles.
 - `data/authors/me.yaml`: your name, biography, interests, education and public profile links.
-- `assets/media/`: the social-sharing graphic and, later, your photograph.
-- `assets/css/custom.css`: the dark visual design.
+- `assets/media/`: the assistant mascot, social-sharing graphic and, later, your photograph.
+- `assets/css/custom.css`: the light and dark visual design.
 - `config/_default/`: navigation, site identity, theme and URL configuration.
 - `.github/workflows/`: the automated build and deployment instructions.
 - `CONTENT_TODO.md`: personal details that are still missing.
@@ -78,6 +78,28 @@ show_breadcrumb: true
 
 Write the page below the second `---`. Do not add results, dates or metrics until you have verified them.
 
+### Add a picture to a project card
+
+Use a landscape image that you own and are comfortable publishing. A `1200 × 675` JPG, PNG or WebP works well. Never upload patient information, confidential research material or an image you do not have permission to use.
+
+In GitHub:
+
+1. Open the project folder, for example `content/projects/cardiac-electrophysiology-problems/`.
+2. Select **Add file → Upload files**.
+3. Upload the image into that same folder.
+4. Name it exactly `featured.jpg`, `featured.png` or `featured.webp`.
+5. Commit the upload to your working branch.
+
+The homepage and Projects page will find it automatically. You do not need to add an image path to the code. If there is no `featured` image, the website shows the coloured initial placeholder instead.
+
+For accessible alternative text, add this inside the project's top YAML section:
+
+```yaml
+image_alt: 'A short, factual description of the image.'
+```
+
+To replace the picture later, upload a new file with the same name and extension. To change the extension, delete the old `featured` file on your branch first so that only one remains.
+
 ## 8. How to add an article
 
 In a Codespace terminal, run this one command:
@@ -117,22 +139,36 @@ GitHub and LinkedIn are already configured. To add another homepage link, open `
 
 Only add links that you are comfortable making public.
 
-## 11. How to add your email
+## 11. How the contact form and assistant work
 
-Open `data/authors/me.yaml` and add this directly below `role:`:
-
-```yaml
-email: your-approved-public-address@example.org
-```
-
-Then open `content/_index.md`, find `social:`, and add this below the existing links:
+The blue assistant in the bottom-right corner opens the contact form. Messages are sent to the approved public address in `data/authors/me.yaml`:
 
 ```yaml
-        - label: 'Email'
-          url: 'mailto:your-approved-public-address@example.org'
+email: vmw25@cam.ac.uk
 ```
 
-Use only an address you are comfortable publishing.
+The form uses FormSubmit because GitHub Pages cannot send email by itself. After the feature is published, activate it once:
+
+1. Open the published website.
+2. Select the blue **Ask Vidun** assistant.
+3. Send one test message using your own name and email.
+4. Complete the spam check if it appears.
+5. Open the inbox for `vmw25@cam.ac.uk`.
+6. Find FormSubmit's activation email. Check the spam folder if needed.
+7. Select **Activate Form** in that email.
+8. Send a second test message and confirm that it arrives.
+
+Do not skip the activation: FormSubmit will not forward normal visitor messages until it is confirmed. If you change the address in `me.yaml`, the new address must be activated in the same way.
+
+The assistant picture is `assets/media/assistant-mascot.png`. Replacing that file changes the character. Use a transparent PNG and keep the same filename.
+
+## 11a. How search and light/dark mode work
+
+- **Search** automatically searches the words in every published project and writing page. Add or edit normal page text, then rebuild the site; there is no separate search list to maintain.
+- **Light/dark mode** follows the visitor's device the first time. The button remembers that visitor's choice in their browser.
+- To change the colours, edit the variables at the top of `assets/css/custom.css`. The first `:root` group is dark mode. The `:root[data-theme="light"]` group is light mode.
+
+The contact form deliberately warns visitors not to include patient, confidential, sensitive or urgent medical information. Keep that warning in place.
 
 ## 12. How to upload your CV
 
