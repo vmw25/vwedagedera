@@ -166,9 +166,11 @@ Use only dates you have checked. The optional field replaces the temporary `Pres
 
 Create a preview environment through:
 
-Repository → Code → Codespaces → Create codespace on branch
+Repository → select the `codex/personal-brand-site` branch → Code → Codespaces → Create codespace on branch
 
 Wait for the Codespace to finish preparing. It automatically installs the site dependencies.
+
+Before continuing, check that the terminal prompt names the branch you intended to preview. If both `hugo version` and `pnpm --version` say `command not found`, the development container was not applied. Press `F1`, choose `Codespaces: Rebuild Container`, wait for the rebuild to finish, and then run those two version checks again.
 
 In the terminal, run:
 
@@ -226,6 +228,7 @@ GitHub creates a new pull request that reverses the earlier changes. Review and 
 - `failed to render`: Hugo could not turn one content or template file into a page. Read the first file path and line number in the error.
 - `SetInMap: assignment to entry in nil map`: a Hugo/HugoBlox compatibility problem previously seen with Hugo 0.162.0. Confirm that `hugoblox.yaml` still pins `0.161.1`.
 - `binary "tailwindcss" is not a Node.js script`: the wrong pnpm version created an incompatible command wrapper. Confirm that `package.json` still declares `pnpm@10.14.0`, then reinstall with the frozen lockfile.
+- Both `hugo` and `pnpm` say `command not found`: confirm that the terminal is on the intended branch, then press `F1` and run `Codespaces: Rebuild Container`. The repository-owned container installs both tools automatically.
 - A page works locally but not on GitHub Pages: look for a root-relative URL that forgot `/vwedagedera/`.
 - A draft is visible: confirm its front matter contains `draft: true`, then rebuild.
 

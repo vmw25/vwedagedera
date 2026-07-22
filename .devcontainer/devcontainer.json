@@ -1,6 +1,13 @@
 {
   "name": "HugoBlox Codespace",
-  "image": "ghcr.io/HugoBlox/hugo-blox-dev:hugo0.161.1",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "HUGO_VERSION": "0.161.1",
+      "NODE_VERSION": "22",
+      "PNPM_VERSION": "10.14.0"
+    }
+  },
   "updateContentCommand": "pnpm install --frozen-lockfile --prefer-offline",
   "postCreateCommand": "pnpm --version && hugo version",
   "customizations": {
