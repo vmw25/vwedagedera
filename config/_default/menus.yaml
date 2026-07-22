@@ -6,9 +6,12 @@ main:
   - name: Projects
     url: /projects/
     weight: 20
-  - name: Writing
-    url: /writing/
+  - name: Articles
+    url: /articles/
     weight: 30
-  - name: GitHub
-    url: https://github.com/vmw25
+  - name: Resources
+    url: /resources/
     weight: 40
+  - name: Advice
+    url: /advice/
+    weight: 50

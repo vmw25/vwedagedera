@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
 :root {
   color-scheme: dark;
   --simple-bg: #1d1e20;
@@ -16,6 +18,12 @@
   --simple-button-text: #141721;
   --simple-backdrop: rgba(7, 9, 14, 0.76);
   --simple-shadow: rgba(0, 0, 0, 0.38);
+  --simple-glass: rgba(47, 49, 57, 0.58);
+  --simple-glass-strong: rgba(37, 39, 46, 0.82);
+  --simple-glass-border: rgba(255, 255, 255, 0.14);
+  --simple-glass-highlight: rgba(255, 255, 255, 0.1);
+  --simple-font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --simple-font-display: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --simple-width: 720px;
   --simple-header-width: 1072px;
   --hb-color-background: var(--simple-bg);
@@ -44,6 +52,10 @@
   --simple-button-text: #ffffff;
   --simple-backdrop: rgba(28, 31, 38, 0.58);
   --simple-shadow: rgba(28, 31, 38, 0.16);
+  --simple-glass: rgba(255, 255, 255, 0.62);
+  --simple-glass-strong: rgba(255, 255, 255, 0.84);
+  --simple-glass-border: rgba(255, 255, 255, 0.88);
+  --simple-glass-highlight: rgba(255, 255, 255, 0.72);
   --hb-color-background: var(--simple-bg);
   --hb-color-foreground: var(--simple-text);
   --hb-color-header-bg: var(--simple-bg);
@@ -61,10 +73,24 @@ body {
   margin: 0;
   background: var(--simple-bg);
   color: var(--simple-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--simple-font-body);
   font-size: 18px;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.simple-nav,
+.simple-project-card__tag,
+.simple-category-card__label,
+.simple-index__eyebrow {
+  font-family: var(--simple-font-display);
 }
 
 body.page-wrapper,
@@ -108,28 +134,34 @@ textarea:focus-visible {
 /* Header */
 .page-header,
 #site-header {
-  background: var(--simple-header-bg) !important;
+  background: transparent !important;
   box-shadow: none !important;
 }
 
 .page-header {
+  padding: 8px 16px 0;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
 #site-header {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-#site-header {
-  min-height: 60px;
+  width: min(100%, var(--simple-header-width));
+  min-height: 56px;
+  margin: 0 auto;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 38%),
+    var(--simple-glass) !important;
+  box-shadow: 0 12px 36px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight) !important;
+  backdrop-filter: blur(24px) saturate(165%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%);
 }
 
 .simple-nav {
   display: flex;
   width: min(100%, var(--simple-header-width));
-  min-height: 60px;
+  min-height: 56px;
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
@@ -205,7 +237,7 @@ textarea:focus-visible {
 }
 
 .simple-nav__action:hover {
-  background: var(--simple-card);
+  background: var(--simple-glass-highlight);
 }
 
 .simple-nav__action-icon {
@@ -281,11 +313,15 @@ textarea:focus-visible {
   overflow: auto;
   margin: auto;
   padding: 26px;
-  border: 1px solid var(--simple-border);
-  border-radius: 16px;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 22px;
   color: var(--simple-text);
-  background: var(--simple-card);
-  box-shadow: 0 28px 90px var(--simple-shadow);
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 36%),
+    var(--simple-glass-strong);
+  box-shadow: 0 28px 90px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight);
+  backdrop-filter: blur(28px) saturate(165%);
+  -webkit-backdrop-filter: blur(28px) saturate(165%);
 }
 
 .contact-dialog {
@@ -375,7 +411,7 @@ textarea:focus-visible {
   border: 1px solid var(--simple-border);
   border-radius: 8px;
   color: var(--simple-text);
-  background: var(--simple-input);
+  background: color-mix(in srgb, var(--simple-input) 78%, transparent);
   font: inherit;
   font-size: 0.9rem;
   font-weight: 400;
@@ -485,6 +521,13 @@ textarea:focus-visible {
   line-height: 1.55;
 }
 
+.contact-form__status {
+  min-height: 1.2rem;
+  margin: -0.35rem 0 0;
+  color: var(--simple-accent-strong);
+  font-size: 0.72rem;
+}
+
 .contact-form__actions {
   display: flex;
   align-items: center;
@@ -565,11 +608,13 @@ textarea:focus-visible {
   bottom: 28px;
   width: max-content;
   padding: 0.42rem 0.65rem;
-  border: 1px solid var(--simple-border);
+  border: 1px solid var(--simple-glass-border);
   border-radius: 999px;
   color: var(--simple-text);
-  background: var(--simple-card);
+  background: var(--simple-glass-strong);
   box-shadow: 0 8px 24px var(--simple-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
   font-size: 0.72rem;
   font-weight: 700;
   opacity: 0;
@@ -704,6 +749,75 @@ textarea:focus-visible {
   line-height: 1.25;
 }
 
+.simple-featured__introduction {
+  margin: -0.6rem 0 1.25rem;
+  color: var(--simple-muted);
+  font-size: 0.9rem;
+}
+
+.simple-category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.simple-category-card {
+  position: relative;
+  display: flex;
+  min-height: 230px;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 22px;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 20px;
+  color: var(--simple-text);
+  background:
+    radial-gradient(circle at 95% 0%, color-mix(in srgb, var(--simple-accent) 20%, transparent), transparent 42%),
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 42%),
+    var(--simple-glass);
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--simple-shadow) 55%, transparent), inset 0 1px 0 var(--simple-glass-highlight);
+  text-decoration: none;
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.simple-category-card:hover {
+  border-color: color-mix(in srgb, var(--simple-accent) 42%, var(--simple-glass-border));
+  box-shadow: 0 22px 52px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight);
+  transform: translateY(-4px);
+}
+
+.simple-category-card__label {
+  color: var(--simple-accent-strong);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.simple-category-card h3 {
+  margin: 1.3rem 0 0;
+  color: var(--simple-text);
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.simple-category-card p {
+  margin: 0.5rem 0 1rem;
+  color: var(--simple-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.simple-category-card__link {
+  margin-top: auto;
+  color: var(--simple-text);
+  font-family: var(--simple-font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
 .simple-project-list {
   display: grid;
   gap: 1.3rem;
@@ -711,16 +825,22 @@ textarea:focus-visible {
 
 .simple-project-card {
   overflow: hidden;
-  border: 1px solid var(--simple-border);
-  border-radius: 14px;
-  background: var(--simple-card);
-  box-shadow: 0 12px 36px transparent;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 38%),
+    var(--simple-glass);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--simple-shadow) 48%, transparent), inset 0 1px 0 var(--simple-glass-highlight);
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
   transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .simple-project-card:hover {
   border-color: var(--simple-border-hover);
-  background: var(--simple-card-hover);
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 38%),
+    var(--simple-glass-strong);
   box-shadow: 0 18px 42px var(--simple-shadow);
   transform: translateY(-3px);
 }
@@ -822,6 +942,16 @@ textarea:focus-visible {
   margin-bottom: 1.8rem;
 }
 
+.simple-index__eyebrow {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--simple-accent-strong);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .simple-index__header h1 {
   margin-bottom: 0.45rem;
   font-size: 2rem;
@@ -831,6 +961,45 @@ textarea:focus-visible {
   margin: 0;
   color: var(--simple-muted);
   font-size: 0.95rem;
+}
+
+.simple-empty-state {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 2rem;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 20px;
+  color: var(--simple-muted);
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 38%),
+    var(--simple-glass);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--simple-shadow) 45%, transparent), inset 0 1px 0 var(--simple-glass-highlight);
+  text-align: center;
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+.simple-empty-state > span {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 50%;
+  color: var(--simple-accent-strong);
+  background: var(--simple-glass-highlight);
+  font-family: var(--simple-font-display);
+  font-size: 1.35rem;
+}
+
+.simple-empty-state p {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 .simple-message {
@@ -1014,7 +1183,7 @@ footer .opacity-80,
   .simple-nav__menu {
     position: absolute;
     z-index: 30;
-    top: 60px;
+    top: 56px;
     right: 0;
     left: 0;
     display: none;
@@ -1023,11 +1192,12 @@ footer .opacity-80,
     flex-direction: column;
     gap: 0;
     padding: 0.5rem 18px 1rem;
-    border-bottom: 1px solid var(--simple-border);
-    background: var(--simple-bg);
+    border: 1px solid var(--simple-glass-border);
+    border-radius: 0 0 18px 18px;
+    background: var(--simple-glass-strong);
     box-shadow: 0 14px 24px var(--simple-shadow);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(24px) saturate(165%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
   }
 
   .simple-nav__menu.is-open {
@@ -1077,6 +1247,14 @@ footer .opacity-80,
 
   .simple-project-card__content {
     padding: 20px;
+  }
+
+  .simple-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .simple-category-card {
+    min-height: 210px;
   }
 
   .site-dialog {

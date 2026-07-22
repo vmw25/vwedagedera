@@ -1,0 +1,20 @@
+{{ $content := .wcBlock.content }}
+{{ $section := index $content "section" }}
+{{ $items := (where site.RegularPages "Section" $section).ByWeight }}
+
+<div class="simple-index">
+  <header class="simple-index__header">
+    <span class="simple-index__eyebrow">{{ index $content "title" }}</span>
+    <h1>{{ index $content "title" }}</h1>
+    {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  {{ if $items }}
+    {{ partial "simple-project-cards.html" (dict "items" $items "link_label" (index $content "item_label")) }}
+  {{ else }}
+    <div class="simple-empty-state">
+      <span aria-hidden="true">+</span>
+      <p>{{ index $content "empty_text" }}</p>
+    </div>
+  {{ end }}
+</div>

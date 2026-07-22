@@ -62,8 +62,8 @@
   </div>
 
   <label class="site-field" for="site-search-input">
-    <span>Search projects and writing</span>
-    <input id="site-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Try ‘cardiac’, ‘healthtech’ or ‘research’">
+    <span>Search projects, articles, resources and advice</span>
+    <input id="site-search-input" type="search" inputmode="search" autocomplete="off" placeholder="Try ‘CS50’, ‘medicine’ or ‘research’">
   </label>
   <p class="site-search__status" id="site-search-status" aria-live="polite">Start typing to search the public pages.</p>
 
@@ -91,12 +91,7 @@
 
   <p class="contact-dialog__introduction">Use this form for research, healthtech, speaking, community or general professional enquiries.</p>
 
-  <form class="contact-form" action="https://formsubmit.co/{{ $contactEmail }}" method="POST">
-    <input type="hidden" name="_subject" value="New website enquiry for Vidun Wedagedera">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_next" value="{{ "contact-thanks/" | absURL }}">
-    <input type="hidden" name="_url" value="{{ site.Home.Permalink }}">
-    <label class="site-honeypot" aria-hidden="true">Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+  <form class="contact-form" id="contact-form" data-contact-email="{{ $contactEmail }}">
 
     <div class="contact-form__row">
       <label class="site-field">
@@ -128,7 +123,7 @@
 
     <label class="site-field">
       <span>Question or message</span>
-      <textarea name="message" rows="5" required maxlength="3000"></textarea>
+      <textarea name="message" rows="5" required maxlength="1500"></textarea>
     </label>
 
     <label class="contact-form__consent">
@@ -136,10 +131,11 @@
       <span>I will not include patient information or confidential, sensitive or urgent medical details.</span>
     </label>
 
-    <p class="contact-form__privacy">Submitting sends these details through <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a> to {{ $contactEmail }}. This is not a clinical advice or emergency service.</p>
+    <p class="contact-form__privacy">Your email app will open with these details prepared for you to review and send to {{ $contactEmail }}. No third-party form service is used. This is not a clinical advice or emergency service.</p>
+    <p class="contact-form__status" id="contact-form-status" aria-live="polite"></p>
 
     <div class="contact-form__actions">
-      <button class="site-button site-button--primary" type="submit">Send enquiry</button>
+      <button class="site-button site-button--primary" type="submit">Continue in email app</button>
       <a href="mailto:{{ $contactEmail }}">Or email directly</a>
     </div>
   </form>
@@ -167,6 +163,8 @@
     const searchEntries = Array.from(document.querySelectorAll('[data-search-entry]'));
     const contactDialog = document.getElementById('contact-dialog');
     const contactOpen = document.getElementById('contact-dialog-open');
+    const contactForm = document.getElementById('contact-form');
+    const contactStatus = document.getElementById('contact-form-status');
 
     function updateThemeButton() {
       const isLight = document.documentElement.dataset.theme === 'light';
@@ -229,6 +227,30 @@
       } else {
         searchStatus.textContent = `${matches} result${matches === 1 ? '' : 's'} found.`;
       }
+    });
+
+    contactForm?.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (!this.reportValidity()) return;
+
+      const formData = new FormData(this);
+      const value = (name) => String(formData.get(name) || '').trim();
+      const subject = `Website enquiry — ${value('subject')}`;
+      const message = [
+        `Name: ${value('name')}`,
+        `Reply email: ${value('email')}`,
+        `Reason: ${value('reason')}`,
+        '',
+        'Message:',
+        value('message'),
+        '',
+        `Sent from: ${window.location.href}`
+      ].join('\n');
+      const emailAddress = this.dataset.contactEmail;
+      const mailtoURL = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+
+      if (contactStatus) contactStatus.textContent = 'Opening your email app…';
+      window.location.href = mailtoURL;
     });
 
     updateThemeButton();

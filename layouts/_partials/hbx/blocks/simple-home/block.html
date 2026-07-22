@@ -1,7 +1,6 @@
 {{/* A deliberately quiet homepage inspired by a compact personal blog layout. */}}
 {{ $content := .wcBlock.content }}
 {{ $avatar := resources.GetMatch "media/authors/me.*" }}
-{{ $projects := (where site.RegularPages "Section" "projects").ByWeight }}
 
 <div class="simple-home">
   <section class="simple-profile" aria-labelledby="profile-name">
@@ -34,6 +33,28 @@
 
   <section class="simple-featured" id="work" aria-labelledby="featured-title">
     <h2 id="featured-title">{{ index $content "featured_title" }}</h2>
-    {{ partial "simple-project-cards.html" (dict "projects" $projects) }}
+    {{ with index $content "featured_introduction" }}<p class="simple-featured__introduction">{{ . }}</p>{{ end }}
+
+    <div class="simple-category-grid">
+      {{ range index $content "categories" }}
+        {{ $category := . }}
+        {{ $section := index $category "section" }}
+        {{ $items := (where site.RegularPages "Section" $section).ByWeight }}
+        {{ $categoryURL := (printf "%s/" $section) | relLangURL }}
+        <a class="simple-category-card" href="{{ $categoryURL }}">
+          <span class="simple-category-card__label">{{ index $category "title" }}</span>
+          {{ with first 1 $items }}
+            {{ $leadItem := index . 0 }}
+            <h3>{{ $leadItem.Title }}</h3>
+            <p>{{ $leadItem.Summary | plainify }}</p>
+            <span class="simple-category-card__link">Explore {{ index $category "title" | lower }} <span aria-hidden="true">→</span></span>
+          {{ else }}
+            <h3>{{ index $category "title" }}</h3>
+            <p>{{ index $category "empty_text" | default (index $category "description") }}</p>
+            <span class="simple-category-card__link">View category <span aria-hidden="true">→</span></span>
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
   </section>
 </div>
