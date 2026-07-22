@@ -11,9 +11,6 @@ on:
         options:
         - Stable
         - Beta (Preview)
-  schedule:
-    # Run at 05:00 on Monday
-    - cron: '0 5 * * 1'
 
 permissions:
   contents: write
@@ -55,7 +52,8 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          # Keep automated maintenance on the site's tested Hugo release.
+          hugo-version: '0.161.1'
           extended: true
 
       - name: Run Upgrade CLI
