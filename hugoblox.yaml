@@ -1,5 +1,6 @@
 build:
-  hugo_version: '0.161.0'
+  # Keep this aligned with the local, Codespaces, and GitHub Actions builds.
+  hugo_version: '0.161.1'
 deploy:
   # Deployment target: github-pages, netlify, vercel, cloudflare, or none
   host: 'github-pages'

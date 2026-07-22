@@ -1,0 +1,46 @@
+{{/* Personal hero block: intentionally static, accessible, and animation-free. */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ $avatar := resources.GetMatch "media/authors/me.*" }}
+
+<div class="personal-hero">
+  <div class="personal-hero__copy">
+    {{ with index $content "eyebrow" }}<p class="personal-hero__eyebrow">{{ . }}</p>{{ end }}
+    <h1 class="personal-hero__title">
+      <span class="personal-hero__name">{{ index $content "name" }}</span>
+      <span class="personal-hero__headline">{{ index $content "headline" }}</span>
+    </h1>
+    {{ with index $content "text" }}<p class="personal-hero__text">{{ . }}</p>{{ end }}
+    {{ with index $content "focus" }}<p class="personal-hero__focus">{{ . }}</p>{{ end }}
+
+    <div class="personal-hero__actions">
+      {{ with index $content "primary_button" }}
+        <a class="personal-button personal-button--primary" href="{{ index . "url" | safeURL }}">{{ index . "text" }}</a>
+      {{ end }}
+      {{ with index $content "secondary_button" }}
+        <a class="personal-button personal-button--secondary" href="{{ index . "url" | safeURL }}">{{ index . "text" }}</a>
+      {{ end }}
+    </div>
+
+    {{ with index $content "social" }}
+      <a class="personal-hero__social" href="{{ index . "url" | safeURL }}" target="_blank" rel="noopener noreferrer">{{ index . "text" }} <span aria-hidden="true">↗</span></a>
+    {{ end }}
+  </div>
+
+  {{ if $avatar }}
+    {{ $display_avatar := $avatar }}
+    {{ if reflect.IsImageResourceProcessable $avatar }}
+      {{ $display_avatar = $avatar.Fill "720x840 webp Center" }}
+    {{ end }}
+    <figure class="personal-profile">
+      <img src="{{ $display_avatar.RelPermalink }}" alt="Portrait of {{ index $content "name" }}" width="720" height="840" fetchpriority="high">
+    </figure>
+  {{ else }}
+    <div class="personal-monogram" aria-label="Temporary VW monogram" role="img">
+      <div class="personal-monogram__signal" aria-hidden="true"></div>
+      <span class="personal-monogram__letters" aria-hidden="true">VW</span>
+      <span class="personal-monogram__label" aria-hidden="true">Medicine · Research · Healthtech</span>
+    </div>
+  {{ end }}
+</div>

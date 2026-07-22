@@ -1,0 +1,10 @@
+{{ $content := .wcBlock.content }}
+{{ $projects := (where site.RegularPages "Section" "projects").ByWeight }}
+
+<div class="simple-index">
+  <header class="simple-index__header">
+    <h1>{{ index $content "title" }}</h1>
+    {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
+  </header>
+  {{ partial "simple-project-cards.html" (dict "projects" $projects) }}
+</div>

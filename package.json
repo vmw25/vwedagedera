@@ -1,12 +1,13 @@
 {
-  "name": "hugo-blox-dev-portfolio-free",
+  "name": "vidun-wedagedera-portfolio",
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.14.0",
-  "description": "Modern developer portfolio template for Hugo Blox with Tailwind CSS v4 - Free version",
+  "description": "Vidun Wedagedera's medicine, research and healthtech portfolio",
   "scripts": {
     "dev": "hugo server --disableFastRender",
-    "build": "hugo --minify && pnpm run pagefind",
+    "build": "hugo --gc --minify --cleanDestinationDir && pnpm run pagefind",
+    "build:production": "hugo --gc --minify --cleanDestinationDir --baseURL https://vmw25.github.io/vwedagedera/ && pnpm run pagefind",
     "pagefind": "pagefind --site public"
   },
   "dependencies": {

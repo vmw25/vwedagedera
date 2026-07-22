@@ -1,0 +1,24 @@
+{{/* Compact skill groups without proficiency bars or inflated claims. */}}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+
+<div class="personal-section personal-skills">
+  <header class="personal-section__header">
+    <h2>{{ index $content "title" }}</h2>
+    {{ with index $content "subtitle" }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="personal-skills__grid">
+    {{ range index $content "groups" }}
+      <section class="personal-skills__group">
+        <div class="personal-skills__heading">
+          <h3>{{ index . "name" }}</h3>
+          {{ with index . "note" }}<span>{{ . }}</span>{{ end }}
+        </div>
+        <ul>
+          {{ range index . "items" }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </section>
+    {{ end }}
+  </div>
+</div>
