@@ -170,7 +170,19 @@ Repository → select the `codex/personal-brand-site` branch → Code → Codesp
 
 Wait for the Codespace to finish preparing. It automatically installs the site dependencies.
 
-Before continuing, check that the terminal prompt names the branch you intended to preview. If both `hugo version` and `pnpm --version` say `command not found`, the development container was not applied. Press `F1`, choose `Codespaces: Rebuild Container`, wait for the rebuild to finish, and then run those two version checks again.
+Before continuing, check that the terminal prompt names the branch you intended to preview. The Codespace uses GitHub's standard, maintained development features to install the exact Hugo and pnpm versions required by this site.
+
+If the Codespace says it is in recovery mode, do not install Hugo or pnpm manually. Press `F1`, choose `Codespaces: Rebuild Container`, and wait for the rebuild to finish. Then run these checks one at a time:
+
+```bash
+hugo version
+```
+
+```bash
+pnpm --version
+```
+
+The first command should show Hugo `0.161.1`. The second should show pnpm `10.14.0`.
 
 In the terminal, run:
 
@@ -180,7 +192,7 @@ pnpm dev
 
 This starts the preview server. Success looks like a message containing `Web Server is available at` and port `1313`. Leave the command running.
 
-Open the `PORTS` tab at the bottom of Codespaces, find port `1313`, then click the globe icon or `Open in Browser`. The first start may take a short time.
+Open the `PORTS` tab at the bottom of Codespaces and find port `1313`. Right-click that row, choose `Port Visibility`, then choose `Public`. Click the globe icon or `Open in Browser`. If the address does not already end with `/vwedagedera/`, add `/vwedagedera/` to the end and press Enter. The first start may take a short time.
 
 ## 14. How to publish an update
 
@@ -228,7 +240,7 @@ GitHub creates a new pull request that reverses the earlier changes. Review and 
 - `failed to render`: Hugo could not turn one content or template file into a page. Read the first file path and line number in the error.
 - `SetInMap: assignment to entry in nil map`: a Hugo/HugoBlox compatibility problem previously seen with Hugo 0.162.0. Confirm that `hugoblox.yaml` still pins `0.161.1`.
 - `binary "tailwindcss" is not a Node.js script`: the wrong pnpm version created an incompatible command wrapper. Confirm that `package.json` still declares `pnpm@10.14.0`, then reinstall with the frozen lockfile.
-- Both `hugo` and `pnpm` say `command not found`: confirm that the terminal is on the intended branch, then press `F1` and run `Codespaces: Rebuild Container`. The repository-owned container installs both tools automatically.
+- Both `hugo` and `pnpm` say `command not found`: confirm that the terminal is on the intended branch, then press `F1` and run `Codespaces: Rebuild Container`. The configured development features install both tools automatically.
 - A page works locally but not on GitHub Pages: look for a root-relative URL that forgot `/vwedagedera/`.
 - A draft is visible: confirm its front matter contains `draft: true`, then rebuild.
 
