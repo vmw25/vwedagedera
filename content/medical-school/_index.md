@@ -1,13 +1,13 @@
 ---
 title: 'Medical School'
-summary: 'Articles about applying to medical school and preparing thoughtfully.'
+summary: 'Articles about applying to medical school and thriving once you are there.'
 type: landing
 
 sections:
   - block: simple-collection
     content:
-      title: 'Get into medical school'
-      text: 'Guidance for understanding the application process and preparing thoughtfully.'
+      title: 'Med school'
+      text: 'Guidance for applying to medical school, studying effectively once you are there and making the most of the experience.'
       section: 'articles'
       filter_param: 'help_topic'
       filter_value: 'medical-school'

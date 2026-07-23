@@ -195,22 +195,85 @@ textarea:focus-visible {
   list-style: none;
 }
 
-.simple-nav__menu a {
+.simple-nav__menu a,
+.simple-nav__more-toggle {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
   padding: 0;
+  border: 0;
   color: var(--simple-text);
+  background: transparent;
+  font: inherit;
   font-size: 0.9rem;
   font-weight: 400;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .simple-nav__menu a:hover,
-.simple-nav__menu a.active {
+.simple-nav__menu a.active,
+.simple-nav__more-toggle:hover,
+.simple-nav__more-toggle[aria-expanded="true"] {
   color: var(--simple-text);
   text-decoration: underline;
   text-underline-offset: 0.32em;
+}
+
+.simple-nav__item--dropdown {
+  position: relative;
+}
+
+.simple-nav__more-toggle {
+  gap: 0.3rem;
+}
+
+.simple-nav__more-chevron {
+  display: inline-block;
+  font-size: 0.85rem;
+  transition: transform 160ms ease;
+}
+
+.simple-nav__more-toggle[aria-expanded="true"] .simple-nav__more-chevron {
+  transform: rotate(180deg);
+}
+
+.simple-nav__dropdown {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  display: none;
+  min-width: 210px;
+  margin: 0;
+  padding: 0.45rem;
+  border: 1px solid var(--simple-glass-border);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, var(--simple-glass-highlight), transparent 42%),
+    var(--simple-glass-strong);
+  box-shadow: 0 16px 36px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight);
+  list-style: none;
+  backdrop-filter: blur(24px) saturate(165%);
+  -webkit-backdrop-filter: blur(24px) saturate(165%);
+}
+
+.simple-nav__dropdown.is-open {
+  display: grid;
+}
+
+.simple-nav__dropdown a {
+  width: 100%;
+  min-height: 38px;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.simple-nav__dropdown a:hover,
+.simple-nav__dropdown a.active {
+  background: var(--simple-glass-highlight);
+  text-decoration: none;
 }
 
 .simple-nav__actions {
@@ -1205,12 +1268,35 @@ footer .opacity-80,
   }
 
   .simple-nav__menu li,
-  .simple-nav__menu a {
+  .simple-nav__menu a,
+  .simple-nav__more-toggle {
     width: 100%;
   }
 
-  .simple-nav__menu a {
+  .simple-nav__menu > li > a,
+  .simple-nav__more-toggle {
     padding: 0.35rem 0;
+  }
+
+  .simple-nav__more-toggle {
+    justify-content: space-between;
+  }
+
+  .simple-nav__dropdown {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 0.25rem;
+    padding: 0.2rem 0 0.5rem 0.75rem;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .simple-nav__dropdown a {
+    color: var(--simple-muted);
   }
 }
 
