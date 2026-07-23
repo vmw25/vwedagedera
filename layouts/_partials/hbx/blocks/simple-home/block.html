@@ -38,21 +38,12 @@
     <div class="simple-category-grid">
       {{ range index $content "categories" }}
         {{ $category := . }}
-        {{ $section := index $category "section" }}
-        {{ $items := (where site.RegularPages "Section" $section).ByWeight }}
-        {{ $categoryURL := (printf "%s/" $section) | relLangURL }}
+        {{ $categoryURL := (index $category "url") | relLangURL }}
         <a class="simple-category-card" href="{{ $categoryURL }}">
-          <span class="simple-category-card__label">{{ index $category "title" }}</span>
-          {{ with first 1 $items }}
-            {{ $leadItem := index . 0 }}
-            <h3>{{ $leadItem.Title }}</h3>
-            <p>{{ $leadItem.Summary | plainify }}</p>
-            <span class="simple-category-card__link">Explore {{ index $category "title" | lower }} <span aria-hidden="true">→</span></span>
-          {{ else }}
-            <h3>{{ index $category "title" }}</h3>
-            <p>{{ index $category "empty_text" | default (index $category "description") }}</p>
-            <span class="simple-category-card__link">View category <span aria-hidden="true">→</span></span>
-          {{ end }}
+          <span class="simple-category-card__label">{{ index $category "label" }}</span>
+          <h3>{{ index $category "title" }}</h3>
+          <p>{{ index $category "description" }}</p>
+          <span class="simple-category-card__link">{{ index $category "link_text" }} <span aria-hidden="true">→</span></span>
         </a>
       {{ end }}
     </div>

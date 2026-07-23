@@ -3,15 +3,15 @@ main:
   - name: Home
     url: /
     weight: 10
-  - name: Projects
-    url: /projects/
+  - name: Productivity
+    url: /productivity/
     weight: 20
-  - name: Articles
-    url: /articles/
+  - name: Study
+    url: /study/
     weight: 30
-  - name: Resources
-    url: /resources/
+  - name: Med School
+    url: /medical-school/
     weight: 40
-  - name: Advice
-    url: /advice/
+  - name: More
+    url: /articles/
     weight: 50
