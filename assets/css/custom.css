@@ -859,10 +859,12 @@ textarea:focus-visible {
   text-transform: uppercase;
 }
 
+.simple-category-card h2,
 .simple-category-card h3 {
   margin: 1.3rem 0 0;
   color: var(--simple-text);
   font-size: 1.08rem;
+  font-weight: 700;
   line-height: 1.35;
 }
 

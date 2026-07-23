@@ -1,0 +1,21 @@
+{{ $content := .wcBlock.content }}
+
+<div class="simple-index">
+  <header class="simple-index__header">
+    <span class="simple-index__eyebrow">{{ index $content "title" }}</span>
+    <h1>{{ index $content "title" }}</h1>
+    {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="simple-category-grid">
+    {{ range index $content "categories" }}
+      {{ $categoryURL := (index . "url") | relLangURL }}
+      <a class="simple-category-card" href="{{ $categoryURL }}">
+        <span class="simple-category-card__label">{{ index . "label" }}</span>
+        <h2>{{ index . "title" }}</h2>
+        <p>{{ index . "description" }}</p>
+        <span class="simple-category-card__link">{{ index . "link_text" }} <span aria-hidden="true">→</span></span>
+      </a>
+    {{ end }}
+  </div>
+</div>

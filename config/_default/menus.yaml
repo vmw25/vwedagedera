@@ -21,43 +21,8 @@ main:
   - name: More
     identifier: more
     weight: 70
-  - name: Productivity
-    identifier: more-productivity
-    parent: more
-    url: /productivity/
-    weight: 10
-  - name: Study
-    identifier: more-study
-    parent: more
-    url: /study/
-    weight: 20
-  - name: Med School
-    identifier: more-medical-school
-    parent: more
-    url: /medical-school/
-    weight: 30
-  - name: Projects
-    identifier: more-projects
-    parent: more
-    url: /projects/
-    weight: 40
-  - name: Research
-    identifier: more-research
-    parent: more
-    url: /research/
-    weight: 50
-  - name: Resources
-    identifier: more-resources
-    parent: more
-    url: /resources/
-    weight: 60
-  - name: Advice
-    identifier: more-advice
-    parent: more
-    url: /advice/
-    weight: 70
   - name: All Articles
     identifier: more-articles
     parent: more
     url: /articles/
-    weight: 80
+    weight: 10
