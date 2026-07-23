@@ -1,6 +1,10 @@
 {{ $content := .wcBlock.content }}
 {{ $section := index $content "section" }}
 {{ $items := (where site.RegularPages "Section" $section).ByWeight }}
+{{ with index $content "filter_value" }}
+  {{ $filterPath := printf "Params.%s" (index $content "filter_param") }}
+  {{ $items = where $items $filterPath "eq" . }}
+{{ end }}
 
 <div class="simple-index">
   <header class="simple-index__header">
