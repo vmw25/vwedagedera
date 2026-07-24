@@ -1,0 +1,187 @@
+{{ $portfolio := hugo.Data.portfolio }}
+{{ $hero := $portfolio.hero }}
+
+<div class="portfolio-shell" data-portfolio data-pagefind-body>
+  <section class="portfolio-hero" aria-labelledby="portfolio-title">
+    <div class="portfolio-hero__copy">
+      <span class="portfolio-eyebrow">{{ $hero.eyebrow }}</span>
+      <h1 id="portfolio-title">{{ $hero.title }}</h1>
+      <p class="portfolio-hero__introduction">{{ $hero.introduction }}</p>
+      <p class="portfolio-hero__interests">{{ $hero.interests }}</p>
+
+      <div class="portfolio-hero__links" aria-label="Portfolio links">
+        {{ range $hero.links }}
+          <a href="{{ .url | safeURL }}"{{ if findRE `^https?://` .url }} target="_blank" rel="noopener noreferrer"{{ end }}>
+            {{ .label }} <span aria-hidden="true">↗</span>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="portfolio-stats" aria-label="Selected highlights">
+      {{ range $portfolio.stats }}
+        <article class="portfolio-stat">
+          <strong>{{ .value }}</strong>
+          <span>{{ .label }}</span>
+        </article>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="portfolio-explorer" aria-labelledby="portfolio-explorer-title">
+    <div class="portfolio-explorer__heading">
+      <div>
+        <span class="portfolio-eyebrow">Portfolio explorer</span>
+        <h2 id="portfolio-explorer-title">Explore the full picture</h2>
+      </div>
+      <p>Filter the portfolio, search for a topic, or expand every entry.</p>
+    </div>
+
+    <div class="portfolio-toolbar">
+      <div class="portfolio-filters" role="group" aria-label="Filter portfolio sections">
+        <button type="button" class="is-active" data-portfolio-filter="all" aria-pressed="true">All</button>
+        {{ range $portfolio.sections }}
+          <button type="button" data-portfolio-filter="{{ .id }}" aria-pressed="false">{{ .label }}</button>
+        {{ end }}
+      </div>
+
+      <label class="portfolio-search">
+        <span>Search this portfolio</span>
+        <input type="search" placeholder="Try ‘cardiovascular’, ‘R’ or ‘leadership’" autocomplete="off" data-portfolio-search>
+      </label>
+
+      <div class="portfolio-toolbar__actions">
+        <button type="button" data-portfolio-expand>Expand visible</button>
+        <button type="button" data-portfolio-collapse>Collapse all</button>
+        <p data-portfolio-status aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="portfolio-sections">
+    {{ range $sectionIndex, $section := $portfolio.sections }}
+      <section class="portfolio-section" data-portfolio-section="{{ $section.id }}" aria-labelledby="portfolio-section-{{ $section.id }}">
+        <header class="portfolio-section__header">
+          <span class="portfolio-section__index" aria-hidden="true">{{ printf "%02d" (add $sectionIndex 1) }}</span>
+          <div>
+            <h2 id="portfolio-section-{{ $section.id }}">{{ $section.title }}</h2>
+            <p>{{ $section.introduction }}</p>
+          </div>
+        </header>
+
+        <div class="portfolio-timeline">
+          {{ range $section.entries }}
+            <details class="portfolio-entry{{ if .featured }} portfolio-entry--featured{{ end }}" data-portfolio-entry data-category="{{ $section.id }}">
+              <summary>
+                <span class="portfolio-entry__marker" aria-hidden="true"></span>
+                <span class="portfolio-entry__summary">
+                  <span class="portfolio-entry__topline">
+                    {{ with .badge }}<span class="portfolio-entry__badge">{{ . }}</span>{{ end }}
+                    {{ with .period }}<span class="portfolio-entry__period">{{ . }}</span>{{ end }}
+                  </span>
+                  <strong>{{ .title }}</strong>
+                  {{ with .organisation }}<span class="portfolio-entry__organisation">{{ . }}</span>{{ end }}
+                  {{ with .summary }}<span class="portfolio-entry__description">{{ . }}</span>{{ end }}
+                </span>
+                <span class="portfolio-entry__toggle" aria-hidden="true">+</span>
+              </summary>
+
+              <div class="portfolio-entry__body">
+                {{ with .points }}
+                  <ul>
+                    {{ range . }}<li>{{ . }}</li>{{ end }}
+                  </ul>
+                {{ end }}
+
+                {{ with .tags }}
+                  <div class="portfolio-tags" aria-label="Skills and topics">
+                    {{ range . }}<span>{{ . }}</span>{{ end }}
+                  </div>
+                {{ end }}
+
+                {{ with .links }}
+                  <div class="portfolio-entry__links">
+                    {{ range . }}
+                      <a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">{{ .label }} <span aria-hidden="true">↗</span></a>
+                    {{ end }}
+                  </div>
+                {{ end }}
+              </div>
+            </details>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+  </div>
+
+  <section class="portfolio-privacy-note">
+    <span aria-hidden="true">i</span>
+    <p>This public portfolio intentionally excludes private contact details, patient information, confidential research information and unpublished findings.</p>
+  </section>
+</div>
+
+<script>
+  (function initialisePortfolioExplorer() {
+    const root = document.querySelector('[data-portfolio]');
+    if (!root) return;
+
+    const filterButtons = Array.from(root.querySelectorAll('[data-portfolio-filter]'));
+    const entries = Array.from(root.querySelectorAll('[data-portfolio-entry]'));
+    const sections = Array.from(root.querySelectorAll('[data-portfolio-section]'));
+    const searchInput = root.querySelector('[data-portfolio-search]');
+    const status = root.querySelector('[data-portfolio-status]');
+    const expandButton = root.querySelector('[data-portfolio-expand]');
+    const collapseButton = root.querySelector('[data-portfolio-collapse]');
+    let activeFilter = 'all';
+
+    function updatePortfolio() {
+      const query = searchInput?.value.trim().toLowerCase() || '';
+      let visibleCount = 0;
+
+      entries.forEach((entry) => {
+        const matchesFilter = activeFilter === 'all' || entry.dataset.category === activeFilter;
+        const matchesSearch = !query || entry.textContent.toLowerCase().includes(query);
+        const isVisible = matchesFilter && matchesSearch;
+        entry.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      sections.forEach((section) => {
+        const hasVisibleEntry = Array.from(section.querySelectorAll('[data-portfolio-entry]')).some((entry) => !entry.hidden);
+        section.hidden = !hasVisibleEntry;
+      });
+
+      if (status) {
+        status.textContent = `${visibleCount} entr${visibleCount === 1 ? 'y' : 'ies'} shown`;
+      }
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeFilter = button.dataset.portfolioFilter;
+        filterButtons.forEach((candidate) => {
+          const isActive = candidate === button;
+          candidate.classList.toggle('is-active', isActive);
+          candidate.setAttribute('aria-pressed', String(isActive));
+        });
+        updatePortfolio();
+      });
+    });
+
+    searchInput?.addEventListener('input', updatePortfolio);
+
+    expandButton?.addEventListener('click', () => {
+      entries.forEach((entry) => {
+        if (!entry.hidden) entry.open = true;
+      });
+    });
+
+    collapseButton?.addEventListener('click', () => {
+      entries.forEach((entry) => {
+        entry.open = false;
+      });
+    });
+
+    updatePortfolio();
+  })();
+</script>

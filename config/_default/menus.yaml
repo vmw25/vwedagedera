@@ -1,7 +1,7 @@
 # Compact navigation modelled on a simple personal site.
 main:
-  - name: Home
-    url: /
+  - name: Portfolio
+    url: /portfolio/
     weight: 10
   - name: Productivity
     url: /productivity/
