@@ -3,7 +3,7 @@
 {{ $contactEmail := hugo.Data.authors.me.email }}
 {{ $mascot := resources.Get "media/assistant-mascot.png" }}
 {{ if and $mascot (reflect.IsImageResourceProcessable $mascot) }}
-  {{ $mascot = $mascot.Resize "320x webp q90" }}
+  {{ $mascot = $mascot.Resize "200x webp q80" }}
 {{ end }}
 
 <script>
@@ -69,7 +69,7 @@
   </nav>
 </header>
 
-<dialog class="site-dialog site-search" id="site-search-dialog" aria-labelledby="site-search-title">
+<dialog class="site-dialog site-search" id="site-search-dialog" aria-labelledby="site-search-title" data-pagefind-url="{{ "pagefind/pagefind.js" | relURL }}">
   <div class="site-dialog__header">
     <div>
       <p class="site-dialog__eyebrow">Website search</p>
@@ -84,17 +84,7 @@
   </label>
   <p class="site-search__status" id="site-search-status" aria-live="polite">Start typing to search the public pages.</p>
 
-  <ul class="site-search__results" id="site-search-results">
-    {{ range site.RegularPages.ByTitle }}
-      {{ $searchText := printf "%s %s %s" .Title (.Summary | plainify) (.Plain | plainify) }}
-      <li data-search-entry data-search-text="{{ $searchText | lower }}" hidden>
-        <a href="{{ .RelPermalink }}">
-          <span>{{ .Title }}</span>
-          {{ with .Summary }}<small>{{ . | plainify | truncate 150 }}</small>{{ end }}
-        </a>
-      </li>
-    {{ end }}
-  </ul>
+  <ul class="site-search__results" id="site-search-results"></ul>
 </dialog>
 
 <dialog class="site-dialog contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title">
@@ -161,140 +151,10 @@
 {{ with $mascot }}
   <button class="assistant-launcher" id="contact-dialog-open" type="button" aria-haspopup="dialog" aria-controls="contact-dialog">
     <span class="assistant-launcher__label">Ask Vidun</span>
-    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" aria-hidden="true">
+    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" loading="lazy" decoding="async" aria-hidden="true">
     <span class="sr-only">Open the contact form</span>
   </button>
 {{ end }}
 
-<script>
-  (function initialiseSiteControls() {
-    const navToggle = document.querySelector('.simple-nav__toggle');
-    const navMenu = document.getElementById('simple-nav-menu');
-    const moreToggle = document.querySelector('[data-more-toggle]');
-    const moreMenu = document.getElementById('simple-nav-more-menu');
-    const moreItem = moreToggle?.closest('.simple-nav__item--dropdown');
-    const themeButton = document.getElementById('theme-toggle');
-    const themeIcon = themeButton?.querySelector('[data-theme-icon]');
-    const themeLabel = themeButton?.querySelector('[data-theme-label]');
-    const searchDialog = document.getElementById('site-search-dialog');
-    const searchOpen = document.getElementById('site-search-open');
-    const searchInput = document.getElementById('site-search-input');
-    const searchStatus = document.getElementById('site-search-status');
-    const searchEntries = Array.from(document.querySelectorAll('[data-search-entry]'));
-    const contactDialog = document.getElementById('contact-dialog');
-    const contactOpen = document.getElementById('contact-dialog-open');
-    const contactForm = document.getElementById('contact-form');
-    const contactStatus = document.getElementById('contact-form-status');
-
-    function updateThemeButton() {
-      const isLight = document.documentElement.dataset.theme === 'light';
-      if (themeIcon) themeIcon.textContent = isLight ? '☾' : '☀';
-      if (themeLabel) themeLabel.textContent = isLight ? 'Dark' : 'Light';
-      themeButton?.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
-    }
-
-    function setMoreMenu(isOpen) {
-      moreToggle?.setAttribute('aria-expanded', String(isOpen));
-      moreMenu?.classList.toggle('is-open', isOpen);
-    }
-
-    navToggle?.addEventListener('click', function () {
-      const isOpen = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', String(!isOpen));
-      navMenu?.classList.toggle('is-open', !isOpen);
-      if (isOpen) setMoreMenu(false);
-    });
-
-    moreToggle?.addEventListener('click', function (event) {
-      event.stopPropagation();
-      setMoreMenu(this.getAttribute('aria-expanded') !== 'true');
-    });
-
-    document.addEventListener('click', (event) => {
-      if (moreItem && !moreItem.contains(event.target)) setMoreMenu(false);
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && moreToggle?.getAttribute('aria-expanded') === 'true') {
-        setMoreMenu(false);
-        moreToggle.focus();
-      }
-    });
-
-    themeButton?.addEventListener('click', function () {
-      const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-      document.documentElement.dataset.theme = nextTheme;
-      document.documentElement.classList.toggle('dark', nextTheme === 'dark');
-      try { localStorage.setItem('vidun-theme', nextTheme); } catch (error) {}
-      updateThemeButton();
-    });
-
-    function openDialog(dialog, firstField) {
-      if (!dialog) return;
-      dialog.showModal();
-      window.setTimeout(() => firstField?.focus(), 0);
-    }
-
-    searchOpen?.addEventListener('click', () => openDialog(searchDialog, searchInput));
-    contactOpen?.addEventListener('click', () => openDialog(contactDialog, contactDialog?.querySelector('input[name="name"]')));
-
-    document.querySelectorAll('[data-dialog-close]').forEach((button) => {
-      button.addEventListener('click', () => button.closest('dialog')?.close());
-    });
-
-    document.querySelectorAll('dialog').forEach((dialog) => {
-      dialog.addEventListener('click', (event) => {
-        const bounds = dialog.getBoundingClientRect();
-        const isBackdrop = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
-        if (isBackdrop) dialog.close();
-      });
-    });
-
-    searchInput?.addEventListener('input', function () {
-      const query = this.value.trim().toLowerCase();
-      const terms = query.split(/\s+/).filter(Boolean);
-      let matches = 0;
-
-      searchEntries.forEach((entry) => {
-        const text = entry.dataset.searchText || '';
-        const isMatch = terms.length > 0 && terms.every((term) => text.includes(term));
-        entry.hidden = !isMatch;
-        if (isMatch) matches += 1;
-      });
-
-      if (!query) {
-        searchStatus.textContent = 'Start typing to search the public pages.';
-      } else if (matches === 0) {
-        searchStatus.textContent = `No results for “${this.value.trim()}”.`;
-      } else {
-        searchStatus.textContent = `${matches} result${matches === 1 ? '' : 's'} found.`;
-      }
-    });
-
-    contactForm?.addEventListener('submit', function (event) {
-      event.preventDefault();
-      if (!this.reportValidity()) return;
-
-      const formData = new FormData(this);
-      const value = (name) => String(formData.get(name) || '').trim();
-      const subject = `Website enquiry — ${value('subject')}`;
-      const message = [
-        `Name: ${value('name')}`,
-        `Reply email: ${value('email')}`,
-        `Reason: ${value('reason')}`,
-        '',
-        'Message:',
-        value('message'),
-        '',
-        `Sent from: ${window.location.href}`
-      ].join('\n');
-      const emailAddress = this.dataset.contactEmail;
-      const mailtoURL = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-
-      if (contactStatus) contactStatus.textContent = 'Opening your email app…';
-      window.location.href = mailtoURL;
-    });
-
-    updateThemeButton();
-  })();
-</script>
+{{ $siteControls := resources.Get "js/site-controls.js" | minify | fingerprint }}
+<script src="{{ $siteControls.RelPermalink }}" integrity="{{ $siteControls.Data.Integrity }}" crossorigin="anonymous" defer></script>

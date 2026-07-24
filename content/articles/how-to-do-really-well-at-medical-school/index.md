@@ -7,6 +7,8 @@ authors: ['Vidun Wedagedera']
 show_breadcrumb: true
 help_topic: 'medical-school'
 weight: 10
+build:
+  publishResources: false
 ---
 
 At the beginning of clinical school, we were given a piece of advice that sounds almost impossible to disagree with: go into the wards every day, see patients and research the conditions you encounter. We were told by our dean that doing this consistently was the route to a distinction (roughly, finishing within the top 15% of the year).
@@ -87,4 +89,4 @@ The wards and the exam solve different problems. Question banks give systematic 
 
 Clinical school gives you much more independence than preclinical medicine. The mistake is interpreting that independence as an absence of structure. It means the responsibility for building the structure has quietly moved to you.
 
-And finally, I want to wish everyone the very best of luck, and please do get in touch if you have any questions at all! As promised, the full conditions list with all my notes (along with a few other resources which I think massively helped me) are on the resources page of my website. 
+And finally, I want to wish everyone the very best of luck, and please do get in touch if you have any questions at all! As promised, the full conditions list with all my notes (along with a few other resources which I think massively helped me) are on the resources page of my website.

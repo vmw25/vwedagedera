@@ -2,7 +2,7 @@
 {{ $content := .wcBlock.content }}
 {{ $avatar := resources.GetMatch "media/authors/me.*" }}
 
-<div class="simple-home">
+<div class="simple-home" data-pagefind-body>
   <section class="simple-profile" aria-labelledby="profile-name">
     {{ if $avatar }}
       {{ $display_avatar := $avatar }}
