@@ -1,0 +1,25 @@
+{{ if ne .Params.share false }}
+<section class="flex flex-row flex-wrap justify-center pt-4 text-xl">
+  <a
+    target="_blank"
+    rel="noopener noreferrer"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="https://github.com/vmw25"
+    title="Visit my GitHub profile"
+    aria-label="Visit my GitHub profile"
+  >
+    {{ partial "functions/get_icon" (dict "name" "brands/github" "attributes" "style=\"height: 1em;\"") }}
+  </a>
+
+  <a
+    target="_blank"
+    rel="noopener noreferrer"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="https://www.linkedin.com/in/vidun-wedagedera-6aa65025a/"
+    title="Visit my LinkedIn profile"
+    aria-label="Visit my LinkedIn profile"
+  >
+    {{ partial "functions/get_icon" (dict "name" "brands/linkedin" "attributes" "style=\"height: 1em;\"") }}
+  </a>
+</section>
+{{ end }}
