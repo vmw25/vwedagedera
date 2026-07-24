@@ -17,6 +17,11 @@ sections:
       featured_title: 'How can I help?'
       featured_introduction: 'Choose what you would like to explore.'
       categories:
+        - label: 'Portfolio'
+          title: 'Explore my work'
+          url: 'portfolio/'
+          description: 'Education, experience, research, leadership, skills and selected achievements.'
+          link_text: 'View portfolio'
         - label: 'Productivity'
           title: 'Be more productive'
           url: 'productivity/'
