@@ -9,12 +9,27 @@
       <a href="{{ .RelPermalink }}">
         {{ if $cardImage }}
           {{ $displayImage := $cardImage }}
+          {{ $smallImage := $cardImage }}
+          {{ $mediumImage := $cardImage }}
           {{ if reflect.IsImageResourceProcessable $cardImage }}
-            {{ $displayImage = $cardImage.Fill "1200x675 webp Center" }}
+            {{ $displayImage = $cardImage.Fill "1200x675 webp q78 Center" }}
+            {{ $smallImage = $cardImage.Fill "480x270 webp q76 Center" }}
+            {{ $mediumImage = $cardImage.Fill "768x432 webp q76 Center" }}
           {{ end }}
           {{ $imageAlt := .Params.image_alt | default (printf "Project image for %s" .Title) }}
           <div class="simple-project-card__media">
-            <img src="{{ $displayImage.RelPermalink }}" alt="{{ $imageAlt }}" width="1200" height="675" loading="lazy">
+            <img
+              src="{{ $displayImage.RelPermalink }}"
+              {{ if reflect.IsImageResourceProcessable $cardImage }}
+                srcset="{{ $smallImage.RelPermalink }} 480w, {{ $mediumImage.RelPermalink }} 768w, {{ $displayImage.RelPermalink }} 1200w"
+                sizes="(max-width: 760px) calc(100vw - 36px), 720px"
+              {{ end }}
+              alt="{{ $imageAlt }}"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+            >
           </div>
         {{ else }}
           <div class="simple-project-card__media simple-project-card__placeholder" aria-hidden="true">

@@ -1,7 +1,7 @@
 {{ $content := .wcBlock.content }}
 {{ $projects := (where site.RegularPages "Section" "projects").ByWeight }}
 
-<div class="simple-index">
+<div class="simple-index" data-pagefind-body>
   <header class="simple-index__header">
     <h1>{{ index $content "title" }}</h1>
     {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
