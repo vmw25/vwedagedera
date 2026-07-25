@@ -98,7 +98,7 @@ jobs:
         HUGO_ENVIRONMENT: production
         HUGO_BLOX_LICENSE: ${{ secrets.HUGO_BLOX_LICENSE }}
       run: |
-        hugo --gc --minify --cleanDestinationDir --baseURL "${{ steps.pages.outputs.base_url }}/"
+        hugo --gc --minify --cleanDestinationDir --baseURL "https://vwedagedera.com/"
 
     - name: Generate Pagefind search index
       run: pnpm run pagefind
