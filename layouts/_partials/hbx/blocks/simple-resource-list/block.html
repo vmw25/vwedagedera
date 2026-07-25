@@ -1,0 +1,24 @@
+{{ $content := .wcBlock.content }}
+
+<div class="simple-index" data-pagefind-body>
+  <header class="simple-index__header">
+    <span class="simple-index__eyebrow">{{ index $content "title" }}</span>
+    <h1>{{ index $content "title" }}</h1>
+    {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="simple-category-grid">
+    {{ range index $content "items" }}
+      {{ $resourceURL := index . "url" }}
+      {{ $isExternal := gt (len (findRE `^https?://` $resourceURL)) 0 }}
+      {{ if not $isExternal }}{{ $resourceURL = $resourceURL | relLangURL }}{{ end }}
+      <a class="simple-category-card simple-resource-card" href="{{ $resourceURL | safeURL }}" target="_blank" rel="noopener noreferrer">
+        <span class="simple-category-card__label">{{ index . "label" }}</span>
+        <h2>{{ index . "title" }}</h2>
+        <p>{{ index . "description" }}</p>
+        {{ with index . "meta" }}<span class="simple-resource-card__meta">{{ . }}</span>{{ end }}
+        <span class="simple-category-card__link">{{ index . "link_text" }} <span aria-hidden="true">↗</span></span>
+      </a>
+    {{ end }}
+  </div>
+</div>

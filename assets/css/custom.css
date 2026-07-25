@@ -914,6 +914,15 @@ textarea:focus-visible {
   font-weight: 600;
 }
 
+.simple-resource-card__meta {
+  margin: -0.45rem 0 1rem;
+  color: var(--simple-accent-strong);
+  font-family: var(--simple-font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 .simple-project-list {
   display: grid;
   gap: 1.3rem;
