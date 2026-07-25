@@ -31,7 +31,7 @@ I began by trying to learn everything properly. I used the Cambridge conditions 
 
 The plan looked excellent on Notion. This was part of the problem.
 
-{{< figure src="conditions-list.png" alt="conditions list" caption="The conditions list on my notion (link to notion is in the resources section of the website)." >}}
+{{< figure src="conditions-list.png" alt="conditions list" caption="The conditions list on my Notion page.)." >}}
 
 Within weeks, I had created a system capable of consuming every available hour while still leaving me convinced I was behind. Making comprehensive cards before testing myself meant spending enormous amounts of time deciding what might matter. I was memorising clinical medicine as though I would later have to reproduce it in a preclinical essay.
 
@@ -57,6 +57,8 @@ Initially, I worked through one specialty at a time. Later, I mixed everything t
 
 That number is not sacred. The useful principle is that question volume only helps when mistakes generate learning. Two hundred questions completed on autopilot can become an elaborate way of clicking buttons.
 
+This is more than enough to comfortably get >70% on the SBA. But if you want to be aiming for >80%, I recommend the following. At cambridge, the questions require you to think a little and carry out 2/3 steps before arriving at the answer, whereas PassMed (most of the time) just relies on rote memorisation. Because of this, I highly recommend doing all the moodle questions available and going through the reasoning behind answers to each question thoroughly, along with prioritising your revision around the conditions tested in these questions.
+
 ## What to do on the wards?
 
 This is not an argument for abandoning placement. Cambridge assesses attendance and overall performance on placements as well as formal examinations. More importantly, the wards teach things a question bank cannot: how illness varies, how patients describe symptoms, how uncertainty feels and how clinical teams make decisions.
@@ -75,8 +77,6 @@ Nearer the exam, I practised the sequences repeatedly with friends and, when no 
 
 I also benefited from a three-day gap between the SBA and my OSCEs. Some students had their OSCE the following morning, so I would not build an entire strategy around receiving the same kindness from the timetable.
 
-I strongly recommend Arun Kiru’s retrospective method: start from what you need to deliver in the station, then work backwards to the examination, findings, presentation and viva structure required.
-
 ## Final thoughts.
 
 Exam success is easy to overinterpret. Doing very well in SBAs may show broad knowledge, strong recall and good pattern recognition. It does not automatically mean you will be excellent with real patients.
@@ -87,4 +87,4 @@ The wards and the exam solve different problems. Question banks give systematic 
 
 Clinical school gives you much more independence than preclinical medicine. The mistake is interpreting that independence as an absence of structure. It means the responsibility for building the structure has quietly moved to you.
 
-And finally, I want to wish everyone the very best of luck, and please do get in touch if you have any questions at all! As promised, the full conditions list with all my notes (along with a few other resources which I think massively helped me) are on the resources page of my website. 
+And finally, I want to wish everyone the very best of luck, and please do get in touch if you have any questions at all!
