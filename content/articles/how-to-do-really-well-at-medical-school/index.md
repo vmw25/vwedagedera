@@ -33,7 +33,7 @@ I began by trying to learn everything properly. I used the Cambridge conditions 
 
 The plan looked excellent on Notion. This was part of the problem.
 
-{{< figure src="conditions-list.png" alt="conditions list" caption="The conditions list on my Notion page.)." >}}
+{{< figure src="conditions-list.png" alt="conditions list" caption="The conditions list on my Notion page." >}}
 
 Within weeks, I had created a system capable of consuming every available hour while still leaving me convinced I was behind. Making comprehensive cards before testing myself meant spending enormous amounts of time deciding what might matter. I was memorising clinical medicine as though I would later have to reproduce it in a preclinical essay.
 
@@ -44,7 +44,9 @@ Around January, I shifted towards learning through questions. At first, I planne
 Neither meant I had fixed the gap.
 
 ## What actually works and how to smash the SBA.
+
 {{< figure src="4th-year-sba-breakdown.jpg" alt="Breakdown of 4th year sba by specialty" caption="Breakdown of the 4th year Cambridge SBA exam by specialty." >}}
+
 The method improved when I stopped treating a wrong question as something to repeat and started treating it as evidence.
 
 Every incorrect answer had a cause. Perhaps I did not know the investigation of choice, confused two similar presentations or had forgotten an important contraindication. That missing concept — not the whole condition and not the original question — earned an Anki card.
