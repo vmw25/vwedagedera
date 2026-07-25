@@ -16,6 +16,7 @@
   const contactOpen = document.getElementById('contact-dialog-open');
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-form-status');
+  const serviceWorkerURL = document.getElementById('site-header')?.dataset.serviceWorkerUrl;
   let pagefindPromise;
   let searchTimer;
   let searchSequence = 0;
@@ -48,6 +49,25 @@
       });
     }
     return pagefindPromise;
+  }
+
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator) || !serviceWorkerURL) return;
+
+    const register = () => navigator.serviceWorker.register(serviceWorkerURL).catch(() => {});
+    const schedule = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(register, { timeout: 2500 });
+      } else {
+        window.setTimeout(register, 1500);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
+    }
   }
 
   function stripMarkup(value) {
@@ -199,4 +219,5 @@
   });
 
   updateThemeButton();
+  registerServiceWorker();
 })();

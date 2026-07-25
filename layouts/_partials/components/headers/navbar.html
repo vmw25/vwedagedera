@@ -6,21 +6,7 @@
   {{ $mascot = $mascot.Resize "200x webp q80" }}
 {{ end }}
 
-<script>
-  (function setInitialTheme() {
-    try {
-      const savedTheme = localStorage.getItem('vidun-theme');
-      const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-      const initialTheme = savedTheme || systemTheme;
-      document.documentElement.dataset.theme = initialTheme;
-      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
-    } catch (error) {
-      document.documentElement.dataset.theme = 'dark';
-    }
-  })();
-</script>
-
-<header id="site-header">
+<header id="site-header" data-service-worker-url="{{ "service-worker.js" | relURL }}">
   <nav class="simple-nav" aria-label="Primary navigation">
     <a class="simple-nav__brand" href="{{ site.Home.RelPermalink }}">{{ $branding.name }}</a>
 
@@ -151,7 +137,7 @@
 {{ with $mascot }}
   <button class="assistant-launcher" id="contact-dialog-open" type="button" aria-haspopup="dialog" aria-controls="contact-dialog">
     <span class="assistant-launcher__label">Ask Vidun</span>
-    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" loading="lazy" decoding="async" aria-hidden="true">
+    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" loading="lazy" decoding="async" fetchpriority="low" aria-hidden="true">
     <span class="sr-only">Open the contact form</span>
   </button>
 {{ end }}

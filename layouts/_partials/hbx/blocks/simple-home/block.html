@@ -5,11 +5,21 @@
 <div class="simple-home" data-pagefind-body>
   <section class="simple-profile" aria-labelledby="profile-name">
     {{ if $avatar }}
-      {{ $display_avatar := $avatar }}
+      {{ $avatar_one_x := $avatar }}
+      {{ $avatar_two_x := $avatar }}
       {{ if reflect.IsImageResourceProcessable $avatar }}
-        {{ $display_avatar = $avatar.Fill "440x440 webp TopLeft" }}
+        {{ $avatar_one_x = $avatar.Fill "220x220 webp q82 TopLeft" }}
+        {{ $avatar_two_x = $avatar.Fill "440x440 webp q82 TopLeft" }}
       {{ end }}
-      <img class="simple-profile__image" src="{{ $display_avatar.RelPermalink }}" alt="Portrait of {{ index $content "name" }}" width="220" height="220" fetchpriority="high">
+      <img
+        class="simple-profile__image"
+        src="{{ $avatar_one_x.RelPermalink }}"
+        srcset="{{ $avatar_one_x.RelPermalink }} 1x, {{ $avatar_two_x.RelPermalink }} 2x"
+        alt="Portrait of {{ index $content "name" }}"
+        width="220"
+        height="220"
+        fetchpriority="high"
+      >
     {{ else }}
       <div class="simple-profile__monogram" role="img" aria-label="Temporary VW monogram">
         <span aria-hidden="true">VW</span>
