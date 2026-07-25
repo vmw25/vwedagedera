@@ -14,11 +14,9 @@ HugoBlox is the design and page-building system used on top of Hugo. This websit
 
 ## 3. What GitHub Pages is
 
-GitHub Pages hosts the finished static website. It serves this repository at:
+GitHub Pages hosts the finished static website at the custom domain:
 
-<https://vmw25.github.io/vwedagedera/>
-
-The `/vwedagedera/` part matters because this is a project site rather than an account-root site.
+<https://vwedagedera.com/>
 
 ## 4. How the three fit together
 
@@ -188,7 +186,7 @@ Then open `content/_index.md`. In the homepage `social:` list, add:
           label: 'Download CV'
 ```
 
-Hugo will include the correct `/vwedagedera/` project path.
+Hugo will generate the correct address beneath `https://vwedagedera.com/`.
 
 Education and longer biographical details are recorded in `data/authors/me.yaml`. Add dates only after checking them; the public homepage intentionally stays concise.
 
@@ -222,7 +220,7 @@ pnpm dev
 
 This starts the preview server. Success looks like a message containing `Web Server is available at` and port `1313`. Leave the command running.
 
-Open the `PORTS` tab at the bottom of Codespaces and find port `1313`. Right-click that row, choose `Port Visibility`, then choose `Public`. Click the globe icon or `Open in Browser`. If the address does not already end with `/vwedagedera/`, add `/vwedagedera/` to the end and press Enter. The first start may take a short time.
+Open the `PORTS` tab at the bottom of Codespaces and find port `1313`. Right-click that row, choose `Port Visibility`, then choose `Public`. Click the globe icon or `Open in Browser`. The first start may take a short time.
 
 ## 14. How to publish an update
 
@@ -271,7 +269,7 @@ GitHub creates a new pull request that reverses the earlier changes. Review and 
 - `SetInMap: assignment to entry in nil map`: a Hugo/HugoBlox compatibility problem previously seen with Hugo 0.162.0. Confirm that `hugoblox.yaml` still pins `0.161.1`.
 - `binary "tailwindcss" is not a Node.js script`: the wrong pnpm version created an incompatible command wrapper. Confirm that `package.json` still declares `pnpm@10.14.0`, then reinstall with the frozen lockfile.
 - Both `hugo` and `pnpm` say `command not found`: confirm that the terminal is on the intended branch, then press `F1` and run `Codespaces: Rebuild Container`. The configured development features install both tools automatically.
-- A page works locally but not on GitHub Pages: look for a root-relative URL that forgot `/vwedagedera/`.
+- A page works locally but not on GitHub Pages: check that its link uses a Hugo-generated permalink rather than an old hard-coded address.
 - A draft is visible: confirm its front matter contains `draft: true`, then rebuild.
 
 ## Verified build command
