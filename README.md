@@ -2,7 +2,7 @@
 
 A HugoBlox website for Vidun Wedagedera, a University of Cambridge medical student exploring cardiovascular medicine, cardiac electrophysiology, research and health technology.
 
-Live site: <https://vmw25.github.io/vwedagedera/>
+Live site: <https://vwedagedera.com/>
 
 ## What this repository contains
 
@@ -27,7 +27,7 @@ Start the preview:
 pnpm dev
 ```
 
-Build exactly as the public GitHub Pages project site:
+Build exactly as the public website:
 
 ```bash
 pnpm run build:production
