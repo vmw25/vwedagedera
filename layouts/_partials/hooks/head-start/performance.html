@@ -1,0 +1,14 @@
+{{- if .IsHome -}}
+  {{- $avatar := resources.GetMatch "media/authors/me.*" -}}
+  {{- if and $avatar (reflect.IsImageResourceProcessable $avatar) -}}
+    {{- $avatarOneX := $avatar.Fill "220x220 webp q82 TopLeft" -}}
+    {{- $avatarTwoX := $avatar.Fill "440x440 webp q82 TopLeft" -}}
+    <link
+      rel="preload"
+      as="image"
+      href="{{ $avatarOneX.RelPermalink }}"
+      imagesrcset="{{ $avatarOneX.RelPermalink }} 1x, {{ $avatarTwoX.RelPermalink }} 2x"
+      fetchpriority="high"
+    >
+  {{- end -}}
+{{- end -}}

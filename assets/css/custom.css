@@ -1,21 +1,4 @@
 @font-face {
-  font-family: "IBM Plex Sans";
-  font-style: normal;
-  font-weight: 400 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url("../fonts/ibm-plex/ibm-plex-sans-latin.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("../fonts/ibm-plex/ibm-plex-mono-500-latin.woff2") format("woff2");
-}
-
-@font-face {
   font-family: "IBM Plex Mono";
   font-style: normal;
   font-weight: 600;
@@ -53,7 +36,7 @@
   --simple-glass-strong: rgba(37, 39, 46, 0.82);
   --simple-glass-border: rgba(255, 255, 255, 0.14);
   --simple-glass-highlight: rgba(255, 255, 255, 0.1);
-  --simple-font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --simple-font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --simple-font-display: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --simple-width: 720px;
   --simple-header-width: 1072px;
@@ -107,7 +90,6 @@ body {
   font-family: var(--simple-font-body);
   font-size: 18px;
   line-height: 1.6;
-  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -122,6 +104,11 @@ button,
 .simple-category-card__label,
 .simple-index__eyebrow {
   font-family: var(--simple-font-display);
+}
+
+button,
+.simple-nav {
+  font-weight: 600;
 }
 
 body.page-wrapper,
@@ -1832,6 +1819,7 @@ textarea:focus-visible {
 .portfolio-entry {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  contain: paint;
 }
 
 .assistant-launcher img {
@@ -1854,6 +1842,16 @@ textarea:focus-visible {
 }
 
 @media (max-width: 760px) {
+  #site-header,
+  .simple-nav__menu,
+  .simple-nav__dropdown,
+  .site-dialog,
+  .site-dialog::backdrop,
+  .portfolio-explorer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .portfolio-shell {
     padding: 1.35rem 1rem 4rem;
   }
@@ -2027,8 +2025,8 @@ footer .opacity-80,
     border-radius: 0 0 18px 18px;
     background: var(--simple-glass-strong);
     box-shadow: 0 14px 24px var(--simple-shadow);
-    backdrop-filter: blur(24px) saturate(165%);
-    -webkit-backdrop-filter: blur(24px) saturate(165%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .simple-nav__menu.is-open {
@@ -2151,6 +2149,13 @@ footer .opacity-80,
   #section-content-markdown > div {
     padding-right: 18px !important;
     padding-left: 18px !important;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .assistant-launcher img {
+    animation: none;
+    will-change: auto;
   }
 }
 

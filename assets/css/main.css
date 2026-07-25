@@ -1,0 +1,8 @@
+/* Keep only the framework layers used by this custom site. */
+@import "tailwindcss";
+@import "config/theme.css";
+@import "framework/base.css";
+
+@source "hugo_stats.json";
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hover (&:hover);
