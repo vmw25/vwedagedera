@@ -15,14 +15,19 @@ main:
   - name: Projects
     url: /projects/
     weight: 50
-  - name: Research
-    url: /research/
+  - name: Resources
+    url: /resources/
     weight: 60
   - name: More
     identifier: more
     weight: 70
+  - name: Research
+    identifier: more-research
+    parent: more
+    url: /research/
+    weight: 10
   - name: All Articles
     identifier: more-articles
     parent: more
     url: /articles/
-    weight: 10
+    weight: 20

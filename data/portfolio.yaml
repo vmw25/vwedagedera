@@ -138,7 +138,7 @@ sections:
     entries:
       - title: 'Vice President'
         organisation: 'Cambridge University MedTech Society'
-        period: 'Present'
+        period: '2026–Present'
         badge: 'Medtech'
         summary: 'Vice President of the Cambridge University MedTech Society.'
         featured: true
