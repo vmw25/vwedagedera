@@ -1204,6 +1204,71 @@ textarea:focus-visible {
   color: var(--simple-text);
 }
 
+/*
+ * Restore the rhythm normally supplied by the typography layer, which is
+ * intentionally excluded from the performance-focused CSS bundle. Keep these
+ * rules inside authored Markdown pages so cards and custom page layouts retain
+ * their existing spacing.
+ */
+.page-body.my-10 article main > .prose[data-pagefind-body] > :where(p, ul, ol, blockquote, pre, table) {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > :where(ul, ol) {
+  padding-left: 1.625em;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > ul {
+  list-style: disc;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > ol {
+  list-style: decimal;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] li {
+  margin-top: 0.45em;
+  margin-bottom: 0.45em;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > :where(h2, h3, h4) {
+  margin-bottom: 0.8em;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > :where(h2, h3, h4) + :where(p, ul, ol, blockquote, figure) {
+  margin-top: 0;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > figure {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > figure > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > figure > figcaption {
+  max-width: 60ch;
+  margin: 0.75rem auto 0;
+  color: var(--simple-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > :first-child {
+  margin-top: 0;
+}
+
+.page-body.my-10 article main > .prose[data-pagefind-body] > :last-child {
+  margin-bottom: 0;
+}
+
 /* Interactive portfolio */
 .portfolio-shell {
   width: min(100%, var(--simple-header-width));
