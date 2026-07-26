@@ -21,7 +21,7 @@ hugoblox:
     # Short tagline displayed on your site
     tagline: "Clinician-in-training, researcher and emerging healthtech builder"
     # Site meta description for search engines and social sharing
-    description: "Vidun Wedagedera is a University of Cambridge medical student exploring cardiovascular medicine, cardiac electrophysiology, research and health technology."
+    description: "Official website of Vidun Wedagedera, a University of Cambridge medical student writing about medicine, research, health technology and medical education."
     # Social accounts (used for meta tags like Twitter Cards)
     social: {}
 
@@ -127,7 +127,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   seo:
     # Browser tab title override (defaults to identity.name if not set)
-    title: "Vidun Wedagedera | Medicine, Research and Healthtech"
+    title: "Vidun Wedagedera | Cambridge Medical Student"
     # For local_business identity type only
     location:
       address:

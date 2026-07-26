@@ -1,6 +1,6 @@
 ---
 title: ''
-summary: 'Cambridge medical student exploring cardiovascular medicine, cardiac electrophysiology, research and health technology.'
+summary: 'Official website of Vidun Wedagedera, a University of Cambridge medical student writing about medicine, research, health technology and medical education.'
 type: landing
 
 sections:
