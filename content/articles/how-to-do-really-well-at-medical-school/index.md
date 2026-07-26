@@ -25,6 +25,8 @@ Once I understood the format, the basic principle became obvious: revise accordi
 
 PS. All the resources that I used/mention are uploaded onto the resources page of the website. I hope these are of some use to you all.
 
+**PSS. Perhaps the most important factor that contributed to my success is mentioned at the end (and no, its not more revision).**
+
 ## The system that nearly burnt me out at the start.
 
 The transition from preclinical to clinical medicine was surprisingly disorientating. Preclinical learning was mostly structured around lectures. In clinical school, much more of the responsibility suddenly belonged to you.
@@ -80,6 +82,14 @@ In all honesty, I left concentrated OSCE revision quite late. I had practised ex
 Nearer the exam, I practised the sequences repeatedly with friends and, when no friend was available, on a pillow. The aim was to make the basic order automatic. In an OSCE, you do not want to spend your limited attention remembering what comes after inspection; you want to notice findings, communicate clearly and structure the viva.
 
 I also benefited from a three-day gap between the SBA and my OSCEs. Some students had their OSCE the following morning, so I would not build an entire strategy around receiving the same kindness from the timetable.
+
+## The most important thing...
+
+In my three pre-clinical years, I thought revising all day, every day during Easter term was the best way to get as much information as possible into my brain before the exam. Very wrong. You need breaks. Otherwise, you cannot be efficient, your memory gets worse, and you simply cannot think straight, at least that was the case for me.
+
+For me, the gym is so important. I made my 1 hour 20 minute gym session every day during Easter term of fourth year a non-negotiable. It ensured I had a way to de-stress after a long day of work, and I would go at night after I had finished everything for the day. This one thing had compounding effects on my efficiency and recall.
+
+So, my advice would be to dedicate at least an hour, even during exam season, to doing an activity you love, preferably one that involves moving your body, as this is directly correlated with improvements in memory and the release of endorphins.
 
 ## Final thoughts.
 
