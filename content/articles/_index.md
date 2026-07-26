@@ -39,11 +39,6 @@ sections:
           url: 'resources/'
           description: 'Find practical resources and useful materials in one place.'
           link_text: 'Explore resources'
-        - label: 'Advice'
-          title: 'Advice'
-          url: 'advice/'
-          description: 'Read practical advice about learning, study and making progress.'
-          link_text: 'Explore advice'
     design:
       spacing:
         padding: ['0', '0', '0', '0']
