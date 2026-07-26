@@ -21,7 +21,7 @@ My argument is not that every doctor needs to become a professional software eng
 
 Healthcare is becoming increasingly dependent on software. The people who understand its problems most closely should have more than the ability to point at those problems and hope somebody else builds the solution.
 
-##Knowing how to build changes what you notice
+## Knowing how to build changes what you notice
 
 Medical students are exposed to potential healthtech problems constantly.
 
@@ -33,7 +33,7 @@ That can work. Excellent healthcare technology is almost always multidisciplinar
 
 Paul Graham, the co-founder of Y Combinator, argues that the best startup ideas usually emerge from problems founders have experienced themselves. They are not manufactured by sitting in a room and attempting to think of something that sounds sufficiently disruptive. They are noticed by people whose experience has prepared them to recognise that something is missing. His version is: “Live in the future, then build what’s missing.”
 
-##Medicine gives people one half of that preparation. Software engineering gives them the other.
+## Medicine gives people one half of that preparation. Software engineering gives them the other.
 
 Clinical training teaches you how healthcare actually behaves rather than how a process diagram says it behaves. You see which information matters, where uncertainty enters and why a minor inconvenience can become clinically important. Learning software then changes the questions you ask about those observations.
 
@@ -45,7 +45,7 @@ Graham makes a similar point about combining programming with another domain: on
 
 The first version will probably be unimpressive. This is useful. It is much cheaper to discover that an idea is bad when it is an ugly prototype than after a large team has built a beautiful product that nobody wants.
 
-##The clinician-founder advantage
+## The clinician-founder advantage
 
 I think some of the best healthcare founders will be people who have lived inside healthcare.
 
@@ -65,7 +65,7 @@ A medic who can code can participate differently. They can judge what is technic
 
 That last skill may be the most commercially valuable one.
 
-##Where My Interests Are
+## Where My Interests Are
 
 My interest in this began partly through medtech in atrial fibrillation ablation. Cardiac electrophysiology is a useful example because it produces large amounts of complex physiological data, while clinical decisions still depend on anatomy, procedural context and individual patient factors.
 
@@ -85,7 +85,7 @@ Learning software engineering will not make a medical student capable of indepen
 
 Technical literacy is therefore not only about creating products. It is also a defence against being excessively impressed by them.
 
-##The future may be agentic but medicine must remain human.
+## The future may be agentic but medicine must remain human.
 
 I think the next major shift will be towards more agentic software: systems that do not simply generate a single answer, but can plan and carry out a sequence of linked tasks.
 
@@ -95,7 +95,7 @@ But the question is not simply whether a task can be automated. It is whether it
 
 The closer software moves towards clinical decisions, the more dangerous it becomes to treat medicine as a tidy optimisation problem. Patients do not arrive as complete datasets. They may value outcomes differently. They may need an explanation, reassurance or the sense that another human being has taken responsibility for what happens next.
 
-##Technology cannot replicate the full empathy and human nature of medicine. Nor should that be its goal.
+## Technology cannot replicate the full empathy and human nature of medicine. Nor should that be its goal.
 
 The 2019 Topol Review described one of the main opportunities of healthcare technology as the “gift of time”: automation should reduce avoidable work so that clinicians have more time for trust, presence, empathy and communication. It also warned that new technologies require clinical validation and should not dehumanise care.
 
@@ -105,7 +105,7 @@ The World Health Organization similarly argues that AI for health must place eth
 
 Doctors need technical knowledge partly so that these decisions are not made after a system has already been built. Clinical judgement, patient needs and ethical constraints should shape the architecture from the beginning.
 
-##Not every medic needs another degree...
+## Not every medic needs another degree...
 
 The strongest objection is obvious: medical education is already overloaded.
 
@@ -129,6 +129,6 @@ Clinical medicine allows a doctor to create profound value for the patient in fr
 
 But the possibility matters.
 
-##Concluding thoughts
+## Concluding thoughts
 
 Medical training teaches us to recognise disease, uncertainty and failures in care. Software engineering can give some medics the ability to turn those observations into something tangible, testable and potentially scalable. In summary, I think the future of healthcare should not be built by doctors alone, but more of it should be built by doctors who know how to build.
