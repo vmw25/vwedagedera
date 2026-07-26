@@ -6,8 +6,8 @@ main:
   - name: Productivity
     url: /productivity/
     weight: 20
-  - name: Study
-    url: /study/
+  - name: School
+    url: /school/
     weight: 30
   - name: Med School
     url: /medical-school/
