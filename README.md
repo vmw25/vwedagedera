@@ -2,7 +2,7 @@
 
 A HugoBlox website for Vidun Wedagedera, a University of Cambridge medical student exploring cardiovascular medicine, cardiac electrophysiology, research and health technology.
 
-Live site: <https://vwedagedera.com/>
+Live site: <https://vidunwedagedera.com/>
 
 ## What this repository contains
 

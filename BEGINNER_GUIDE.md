@@ -16,7 +16,7 @@ HugoBlox is the design and page-building system used on top of Hugo. This websit
 
 GitHub Pages hosts the finished static website at the custom domain:
 
-<https://vwedagedera.com/>
+<https://vidunwedagedera.com/>
 
 ## 4. How the three fit together
 
@@ -186,7 +186,7 @@ Then open `content/_index.md`. In the homepage `social:` list, add:
           label: 'Download CV'
 ```
 
-Hugo will generate the correct address beneath `https://vwedagedera.com/`.
+Hugo will generate the correct address beneath `https://vidunwedagedera.com/`.
 
 Education and longer biographical details are recorded in `data/authors/me.yaml`. Add dates only after checking them; the public homepage intentionally stays concise.
 

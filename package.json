@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "hugo server --disableFastRender",
     "build": "hugo --gc --minify --cleanDestinationDir && pnpm run pagefind",
-    "build:production": "hugo --gc --minify --cleanDestinationDir --baseURL https://vwedagedera.com/ && pnpm run pagefind",
+    "build:production": "hugo --gc --minify --cleanDestinationDir --baseURL https://vidunwedagedera.com/ && pnpm run pagefind",
     "pagefind": "pagefind --site public"
   },
   "dependencies": {

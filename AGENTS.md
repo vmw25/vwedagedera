@@ -8,7 +8,7 @@ This repository is Vidun Wedagedera's personal-brand website for healthtech netw
 
 - Keep the site as Hugo and HugoBlox. Do not replace it with React, Next.js, Astro, Jekyll or plain static HTML.
 - Preserve the existing GitHub Actions Pages architecture.
-- The production URL is `https://vwedagedera.com/`. GitHub Pages remains the hosting platform.
+- The production URL is `https://vidunwedagedera.com/`. GitHub Pages remains the hosting platform.
 - Keep Hugo pinned to `0.161.1` in `hugoblox.yaml`, Codespaces and any hosting configuration unless a proposed version passes local, production-base-URL and GitHub Actions builds.
 - Preserve the package manager and lockfile. Use the `packageManager` version declared in `package.json`.
 - Do not introduce a second deployment workflow, a `gh-pages` branch or a Jekyll workflow.
@@ -28,7 +28,7 @@ This repository is Vidun Wedagedera's personal-brand website for healthtech netw
 - Prefer Hugo helpers and generated permalinks.
 - Test navigation from both the homepage and inner pages.
 - Do not add hard-coded references to a GitHub Pages project URL.
-- Canonical, Open Graph, sitemap, robots and 404 URLs must use `https://vwedagedera.com/`.
+- Canonical, Open Graph, sitemap, robots and 404 URLs must use `https://vidunwedagedera.com/`.
 
 ## Required validation
 
