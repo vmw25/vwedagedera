@@ -1,5 +1,5 @@
 ---
-title: "Why Medics Should Learn Software Engineering"
+title: "Why Medics Should Learn to Code and How to Do It"
 summary: "Why medics who enjoy building should learn software engineering to turn clinical problems into scalable healthcare solutions."
 date: 2026-07-26
 draft: false
@@ -11,9 +11,9 @@ build:
   publishResources: false
 ---
 
-At the beginning of fourth year, I started learning software engineering.
+At the beginning of fourth year, I started learning how to code (very briefly).
 
-Medical school was not exactly leaving me short of things to do. But my interest in medtech, particularly atrial fibrillation ablation, conversations with other students and the problems I kept noticing in general practice were all pushing me towards the same conclusion: I did not only want to understand healthcare. I wanted the ability to build within it.
+Medical school was not exactly leaving me short of things to do. But my interest in medtech, particularly atrial fibrillation ablation (we had to choose a project to research during a specific block in the year, and my choice was AF), conversations with other students and the problems I kept noticing in general practice were all pushing me towards the same conclusion: I did not only want to understand healthcare. I wanted the ability to build within it.
 
 I am now around halfway through CS50 and CS50 AI. I have built this website from scratch, although I have not yet built a full application or serious software product. Separate articles on both courses will come once I have finished them. For now, I am writing from the middle of the process rather than pretending I have reached the end.
 
@@ -79,12 +79,6 @@ This is precisely why healthcare technology needs people who understand both the
 
 A software engineer may build an excellent model without fully understanding whether its output changes a meaningful decision. A clinician may recognise an important decision but underestimate bias, data quality or the difference between an algorithm working retrospectively and a product working safely in practice.
 
-Neither perspective is enough alone.
-
-Learning software engineering will not make a medical student capable of independently building and validating an AI system for AF ablation. It can, however, make them far better prepared to ask what data the model learned from, what outcome it optimises, how it fails and whether that outcome is one patients or clinicians actually care about.
-
-Technical literacy is therefore not only about creating products. It is also a defence against being excessively impressed by them.
-
 ## The future may be agentic but medicine must remain human.
 
 I think the next major shift will be towards more agentic software: systems that do not simply generate a single answer, but can plan and carry out a sequence of linked tasks.
@@ -103,8 +97,6 @@ That is the standard worth using. Good healthcare software should not make the p
 
 The World Health Organization similarly argues that AI for health must place ethics and human rights at the centre of its design and use, with clear human responsibility and routes for accountability when systems cause harm.
 
-Doctors need technical knowledge partly so that these decisions are not made after a system has already been built. Clinical judgement, patient needs and ethical constraints should shape the architecture from the beginning.
-
 ## Not every medic needs another degree...
 
 The strongest objection is obvious: medical education is already overloaded.
@@ -119,16 +111,12 @@ NHS workforce reviews have already argued that healthcare professionals need bro
 
 Going further should be a choice.
 
-Software engineering is difficult, and becoming good requires sustained effort. Medics should pursue it deeply because they enjoy building, not because attaching “AI” to their CV currently seems wise. Enjoyment matters because the work involves long periods of confusion, debugging and discovering that the computer has followed your instructions with far greater precision than you intended.
-
 For those who do enjoy it, courses such as CS50 provide a strong starting point. The immediate goal does not need to be founding a company. It can be writing a small programme, analysing a dataset or building something useful for yourself and your friends.
 
-The important step is to begin acquiring agency.
-
-Clinical medicine allows a doctor to create profound value for the patient in front of them. Software creates a different kind of leverage: something useful can be deployed repeatedly, across clinicians, patients and healthcare systems, without its creator being present for every use. That does not guarantee impact. Most software will not affect millions of people, and scale can distribute a bad decision just as efficiently as a good one.
-
-But the possibility matters.
+In my opinion, the most important step is to begin acquiring agency.
 
 ## Concluding thoughts
 
 Medical training teaches us to recognise disease, uncertainty and failures in care. Software engineering can give some medics the ability to turn those observations into something tangible, testable and potentially scalable. In summary, I think the future of healthcare should not be built by doctors alone, but more of it should be built by doctors who know how to build.
+
+As always, any questions, please do get in touch!
