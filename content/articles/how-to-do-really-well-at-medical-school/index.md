@@ -11,6 +11,8 @@ build:
   publishResources: false
 ---
 
+At the start of 4th year (start of clinical school at Cambridge) I was very lost on where to start and how to even approach the year. After trying everything, I have tried to put together what worked and what didnt, so hopefully you don't waste time figuring it out like me...
+
 At the beginning of clinical school, we were given a piece of advice that sounds almost impossible to disagree with: go into the wards every day, see patients and research the conditions you encounter. We were told by our dean that doing this consistently was the route to a distinction (roughly, finishing within the top 15% of the year).
 
 There is a lot that is right about this. It will probably make you a better doctor.
