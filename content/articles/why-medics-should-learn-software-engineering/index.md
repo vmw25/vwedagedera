@@ -1,7 +1,7 @@
 ---
-title: "Why Medics Should Learn to Code and How to Do It"
+title: "Should Medics Should Learn to Code?"
 summary: "Why medics who enjoy building should learn software engineering to turn clinical problems into scalable healthcare solutions."
-date: 2026-07-26
+date: 2026-07-30
 draft: false
 authors: ['Vidun Wedagedera']
 show_breadcrumb: true
@@ -11,13 +11,11 @@ build:
   publishResources: false
 ---
 
-At the beginning of fourth year, I started learning how to code (very briefly).
+At the beginning of fourth year, I started learning how to code (very very briefly).
 
-Medical school was not exactly leaving me short of things to do. But my interest in medtech, particularly atrial fibrillation ablation (we had to choose a project to research during a specific block in the year, and my choice was AF), conversations with other students and the problems I kept noticing in general practice were all pushing me towards the same conclusion: I did not only want to understand healthcare. I wanted the ability to build within it.
+Medical school was not exactly leaving me short of things to do. But my interest in medtech, along with some conversations with other students and the problems I kept noticing in general practice were all pushing me towards the same conclusion: I did not only want to understand healthcare. I wanted the ability to build within it.
 
-I am now around halfway through CS50 and CS50 AI. I have built this website from scratch, although I have not yet built a full application or serious software product. Separate articles on both courses will come once I have finished them. For now, I am writing from the middle of the process rather than pretending I have reached the end.
-
-My argument is not that every doctor needs to become a professional software engineer. Every medic should have a basic level of technical literacy: enough to understand code, write small programmes and analyse data. Medics who genuinely enjoy building should go much further.
+In my opinion, not  every doctor needs to become a pro software engineer. I think if medics had a basic level of technical literacy (eg enough to understand code, write small programmes and analyse data) we could make healthcare change for the better at such a fast pace. And medics who genuinely enjoy building should go much further.
 
 Healthcare is becoming increasingly dependent on software. The people who understand its problems most closely should have more than the ability to point at those problems and hope somebody else builds the solution.
 
