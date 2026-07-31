@@ -1,6 +1,8 @@
 {{/* A deliberately quiet homepage inspired by a compact personal blog layout. */}}
 {{ $content := .wcBlock.content }}
 {{ $avatar := resources.GetMatch "media/authors/me.*" }}
+{{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 
 <div class="simple-home" data-pagefind-body>
   <section class="simple-profile" aria-labelledby="profile-name">
@@ -59,5 +61,7 @@
     </div>
   </section>
 
-  {{ partial "newsletter-panel.html" (dict "context" "home") }}
+  {{ if $newsletterEnabled }}
+    {{ partial "newsletter-panel.html" (dict "context" "home") }}
+  {{ end }}
 </div>

@@ -1,5 +1,7 @@
 {{ define "main" }}
 {{ $page := . }}
+{{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $avatar := resources.GetMatch "media/authors/me.*" }}
 {{ if and $avatar (reflect.IsImageResourceProcessable $avatar) }}
   {{ $avatar = $avatar.Fill "96x96 webp q82 TopLeft" }}
@@ -44,7 +46,9 @@
             <small>{{ .Date | time.Format (site.Params.hugoblox.locale.date_format | default ":date_long") }} · {{ .ReadingTime }} min read</small>
           </div>
         </div>
-        <button class="editorial-article__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">Get weekly articles</button>
+        {{ if $newsletterEnabled }}
+          <button class="editorial-article__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">Get weekly articles</button>
+        {{ end }}
       </div>
     </header>
 
@@ -87,9 +91,11 @@
           {{ .Content }}
         </div>
 
-        <div class="editorial-article__newsletter">
-          {{ partial "newsletter-panel.html" (dict "context" "article") }}
-        </div>
+        {{ if $newsletterEnabled }}
+          <div class="editorial-article__newsletter">
+            {{ partial "newsletter-panel.html" (dict "context" "article") }}
+          </div>
+        {{ end }}
 
         <footer class="editorial-article__footer">
           <p>Last updated {{ .Lastmod | time.Format (site.Params.hugoblox.locale.date_format | default ":date_long") }}</p>

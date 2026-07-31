@@ -1,5 +1,6 @@
 {{ $context := .context | default "page" }}
 {{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
 {{ $mascot := resources.Get "media/assistant-mascot.png" }}
 {{ if and $mascot (reflect.IsImageResourceProcessable $mascot) }}
@@ -9,6 +10,7 @@
 {{ $emailID := printf "newsletter-panel-%s-email" $context }}
 {{ $checkID := printf "newsletter-panel-%s-check" $context }}
 
+{{ if $newsletterEnabled }}
 <section class="newsletter-panel newsletter-panel--{{ $context }}" aria-labelledby="{{ $titleID }}">
   <div class="newsletter-panel__visual" aria-hidden="true">
     <span class="newsletter-panel__orb newsletter-panel__orb--one"></span>
@@ -51,3 +53,4 @@
     <p class="newsletter-panel__privacy">Free to join. Confirm through the email Brevo sends you and unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
   </div>
 </section>
+{{ end }}
