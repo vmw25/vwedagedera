@@ -170,10 +170,10 @@ textarea:focus-visible {
   border-radius: 18px;
   background:
     linear-gradient(135deg, var(--simple-glass-highlight), transparent 38%),
-    var(--simple-glass) !important;
-  box-shadow: 0 12px 36px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight) !important;
-  backdrop-filter: blur(24px) saturate(165%);
-  -webkit-backdrop-filter: blur(24px) saturate(165%);
+    var(--simple-header-bg) !important;
+  box-shadow: 0 8px 24px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .simple-nav {
@@ -916,7 +916,7 @@ textarea:focus-visible {
   height: auto;
   filter: drop-shadow(0 8px 10px var(--simple-shadow));
   transform-origin: 50% 82%;
-  animation: assistant-float 3.6s ease-in-out infinite;
+  animation: none;
 }
 
 .assistant-launcher__label {
@@ -930,8 +930,8 @@ textarea:focus-visible {
   color: var(--simple-text);
   background: var(--simple-glass-strong);
   box-shadow: 0 8px 24px var(--simple-shadow);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   font-size: 0.72rem;
   font-weight: 700;
   opacity: 0;
@@ -973,10 +973,10 @@ textarea:focus-visible {
   color: var(--simple-text);
   background:
     linear-gradient(135deg, var(--simple-glass-highlight), transparent 42%),
-    var(--simple-glass-strong);
-  box-shadow: 0 22px 56px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
+    var(--simple-header-bg);
+  box-shadow: 0 14px 36px var(--simple-shadow), inset 0 1px 0 var(--simple-glass-highlight);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   opacity: 0;
   transform: translate(10px, 8px) scale(0.97);
   transform-origin: 100% 100%;
@@ -1794,11 +1794,10 @@ textarea:focus-visible {
 }
 
 .editorial-article__toc {
-  position: sticky;
-  top: 98px;
+  position: static;
   align-self: start;
-  max-height: calc(100vh - 120px);
-  overflow: auto;
+  max-height: none;
+  overflow: visible;
   padding: 1rem;
   border: 1px solid var(--simple-glass-border);
   border-radius: 16px;
@@ -2628,6 +2627,7 @@ textarea:focus-visible {
 .simple-category-card,
 .simple-project-card,
 .simple-empty-state,
+.portfolio-explorer,
 .portfolio-entry {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -2635,7 +2635,7 @@ textarea:focus-visible {
 }
 
 .assistant-launcher img {
-  will-change: transform;
+  will-change: auto;
 }
 
 @supports (content-visibility: auto) {
