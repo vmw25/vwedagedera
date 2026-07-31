@@ -1,0 +1,53 @@
+{{ $context := .context | default "page" }}
+{{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterAction := index $newsletter "form_action" | default "" }}
+{{ $mascot := resources.Get "media/assistant-mascot.png" }}
+{{ if and $mascot (reflect.IsImageResourceProcessable $mascot) }}
+  {{ $mascot = $mascot.Resize "180x webp q80" }}
+{{ end }}
+{{ $titleID := printf "newsletter-panel-%s-title" $context }}
+{{ $emailID := printf "newsletter-panel-%s-email" $context }}
+{{ $checkID := printf "newsletter-panel-%s-check" $context }}
+
+<section class="newsletter-panel newsletter-panel--{{ $context }}" aria-labelledby="{{ $titleID }}">
+  <div class="newsletter-panel__visual" aria-hidden="true">
+    <span class="newsletter-panel__orb newsletter-panel__orb--one"></span>
+    <span class="newsletter-panel__orb newsletter-panel__orb--two"></span>
+    {{ with $mascot }}
+      <img src="{{ .RelPermalink }}" alt="" width="132" height="170" loading="lazy" decoding="async">
+    {{ end }}
+    <div class="newsletter-panel__notes">
+      <span>School</span>
+      <span>Med school</span>
+      <span>Research</span>
+    </div>
+  </div>
+
+  <div class="newsletter-panel__content">
+    <p class="newsletter-panel__eyebrow">A useful article, once a week</p>
+    <h2 id="{{ $titleID }}">Keep the useful bits in your inbox.</h2>
+    <p class="newsletter-panel__description">Short, practical writing on school, medical school, productivity, research, medicine and healthtech. You’ll get the opening idea and a link to read the rest.</p>
+
+    <form
+      class="newsletter-inline-form"
+      action="{{ $newsletterAction }}"
+      method="post"
+      target="newsletter-signup-target"
+      data-newsletter-form
+      data-newsletter-configured="{{ ne $newsletterAction "" }}"
+    >
+      <label class="sr-only" for="{{ $emailID }}">Email address</label>
+      <input id="{{ $emailID }}" type="email" name="EMAIL" inputmode="email" autocomplete="email" placeholder="Your email address" required>
+      <div class="site-honeypot" aria-hidden="true">
+        <label for="{{ $checkID }}">Leave this field empty</label>
+        <input id="{{ $checkID }}" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="locale" value="en">
+      <input type="hidden" name="html_type" value="simple">
+      <button class="site-button site-button--primary" type="submit">Subscribe</button>
+      <p class="newsletter-inline-form__status" data-newsletter-status aria-live="polite"></p>
+    </form>
+
+    <p class="newsletter-panel__privacy">Free to join. Confirm through the email Brevo sends you and unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
+  </div>
+</section>

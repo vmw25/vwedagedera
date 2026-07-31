@@ -3,33 +3,37 @@ main:
   - name: Portfolio
     url: /portfolio/
     weight: 10
+  - name: All Articles
+    identifier: articles
+    weight: 20
+  - name: Browse All
+    identifier: articles-all
+    parent: articles
+    url: /articles/
+    weight: 10
   - name: School
+    identifier: articles-school
+    parent: articles
     url: /school/
     weight: 20
   - name: Med School
+    identifier: articles-medical-school
+    parent: articles
     url: /medical-school/
+    weight: 30
+  - name: Research
+    identifier: articles-research
+    parent: articles
+    url: /research/
+    weight: 40
+  - name: Productivity
+    identifier: articles-productivity
+    parent: articles
+    url: /productivity/
+    weight: 50
+  - name: Resources
+    url: /resources/
     weight: 30
   - name: Projects
     url: /projects/
     weight: 40
-  - name: Resources
-    url: /resources/
-    weight: 50
-  - name: More
-    identifier: more
-    weight: 60
-  - name: Productivity
-    identifier: more-productivity
-    parent: more
-    url: /productivity/
-    weight: 10
-  - name: Research
-    identifier: more-research
-    parent: more
-    url: /research/
-    weight: 20
-  - name: All Articles
-    identifier: more-articles
-    parent: more
-    url: /articles/
-    weight: 30
