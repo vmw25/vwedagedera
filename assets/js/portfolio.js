@@ -16,7 +16,7 @@
   const desktopViewport = window.matchMedia('(min-width: 761px)');
   let activeFilter = 'all';
   let isDocked = false;
-  let scrollFrame = null;
+  let dockingTimer = null;
 
   function updatePortfolio() {
     const query = searchInput?.value.trim().toLowerCase() || '';
@@ -67,7 +67,7 @@
   }
 
   function updateDocking() {
-    scrollFrame = null;
+    dockingTimer = null;
     if (!explorer || !explorerAnchor || !desktopViewport.matches) {
       setDocked(false);
       return;
@@ -79,8 +79,8 @@
   }
 
   function requestDockingUpdate() {
-    if (scrollFrame !== null) return;
-    scrollFrame = window.requestAnimationFrame(updateDocking);
+    if (dockingTimer !== null) return;
+    dockingTimer = window.setTimeout(updateDocking, 120);
   }
 
   filterButtons.forEach((button) => {

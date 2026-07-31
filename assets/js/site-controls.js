@@ -131,7 +131,7 @@
     let maximumScrollDepth = 0;
     let previousTick = Date.now();
     let hasShown = false;
-    let scrollFrame;
+    let scrollTimer;
 
     const updateScrollDepth = () => {
       const pageHeight = Math.max(document.documentElement.scrollHeight, 1);
@@ -139,11 +139,11 @@
         maximumScrollDepth,
         Math.min(1, (window.scrollY + window.innerHeight) / pageHeight)
       );
-      scrollFrame = null;
     };
 
     const stopListening = () => {
       window.clearInterval(engagementTimer);
+      window.clearTimeout(scrollTimer);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
@@ -163,8 +163,11 @@
     };
 
     const onScroll = () => {
-      if (scrollFrame) return;
-      scrollFrame = window.requestAnimationFrame(updateScrollDepth);
+      if (scrollTimer) return;
+      scrollTimer = window.setTimeout(() => {
+        scrollTimer = null;
+        updateScrollDepth();
+      }, 180);
     };
 
     const onVisibilityChange = () => {
