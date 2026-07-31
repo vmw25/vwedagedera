@@ -16,7 +16,18 @@
   const contactOpen = document.getElementById('contact-dialog-open');
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-form-status');
+  const newsletterDialog = document.getElementById('newsletter-dialog');
+  const newsletterNudge = document.getElementById('newsletter-nudge');
+  const newsletterAccept = document.querySelector('[data-newsletter-accept]');
+  const newsletterForm = document.getElementById('newsletter-form');
+  const newsletterEmail = document.getElementById('newsletter-email');
+  const newsletterStatus = document.getElementById('newsletter-form-status');
+  const assistantLauncher = document.querySelector('.assistant-launcher');
+  const engagementPage = document.getElementById('site-header')?.dataset.engagementPage;
   const serviceWorkerURL = document.getElementById('site-header')?.dataset.serviceWorkerUrl;
+  const newsletterSubscribedKey = 'vidun-newsletter-subscribed';
+  const newsletterCooldownKey = 'vidun-newsletter-cooldown-until';
+  const dayInMilliseconds = 24 * 60 * 60 * 1000;
   let pagefindPromise;
   let searchTimer;
   let searchSequence = 0;
@@ -68,6 +79,102 @@
     } else {
       window.addEventListener('load', schedule, { once: true });
     }
+  }
+
+  function readStoredValue(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function storeValue(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {}
+  }
+
+  function setNewsletterCooldown(days) {
+    storeValue(newsletterCooldownKey, String(Date.now() + (days * dayInMilliseconds)));
+  }
+
+  function hideNewsletterNudge(cooldownDays = 0) {
+    if (!newsletterNudge) return;
+    newsletterNudge.classList.remove('is-visible');
+    assistantLauncher?.classList.remove('is-inviting');
+    window.setTimeout(() => {
+      newsletterNudge.hidden = true;
+    }, 180);
+    if (cooldownDays) setNewsletterCooldown(cooldownDays);
+  }
+
+  function showNewsletterNudge() {
+    if (!newsletterNudge || document.querySelector('dialog[open]')) return false;
+    newsletterNudge.hidden = false;
+    window.requestAnimationFrame(() => newsletterNudge.classList.add('is-visible'));
+    assistantLauncher?.classList.add('is-inviting');
+    return true;
+  }
+
+  function initialiseNewsletterPrompt() {
+    if (!newsletterNudge || engagementPage === 'excluded') return;
+    if (readStoredValue(newsletterSubscribedKey) === 'true') return;
+
+    const cooldownUntil = Number(readStoredValue(newsletterCooldownKey) || 0);
+    if (cooldownUntil > Date.now()) return;
+
+    const isArticle = engagementPage === 'article';
+    const requiredActiveTime = isArticle ? 35000 : 90000;
+    const requiredScrollDepth = isArticle ? 0.35 : 0.6;
+    let activeTime = 0;
+    let maximumScrollDepth = 0;
+    let previousTick = Date.now();
+    let hasShown = false;
+    let scrollFrame;
+
+    const updateScrollDepth = () => {
+      const pageHeight = Math.max(document.documentElement.scrollHeight, 1);
+      maximumScrollDepth = Math.max(
+        maximumScrollDepth,
+        Math.min(1, (window.scrollY + window.innerHeight) / pageHeight)
+      );
+      scrollFrame = null;
+    };
+
+    const stopListening = () => {
+      window.clearInterval(engagementTimer);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+
+    const checkEngagement = () => {
+      const now = Date.now();
+      if (document.visibilityState === 'visible') activeTime += now - previousTick;
+      previousTick = now;
+      updateScrollDepth();
+
+      const isEngaged = activeTime >= requiredActiveTime
+        && maximumScrollDepth >= requiredScrollDepth;
+      if (!hasShown && isEngaged && showNewsletterNudge()) {
+        hasShown = true;
+        stopListening();
+      }
+    };
+
+    const onScroll = () => {
+      if (scrollFrame) return;
+      scrollFrame = window.requestAnimationFrame(updateScrollDepth);
+    };
+
+    const onVisibilityChange = () => {
+      previousTick = Date.now();
+    };
+
+    updateScrollDepth();
+    const engagementTimer = window.setInterval(checkEngagement, 5000);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('visibilitychange', onVisibilityChange);
   }
 
   function stripMarkup(value) {
@@ -163,6 +270,15 @@
     openDialog(contactDialog, contactDialog?.querySelector('input[name="name"]'));
   });
 
+  newsletterAccept?.addEventListener('click', () => {
+    hideNewsletterNudge(7);
+    openDialog(newsletterDialog, newsletterEmail);
+  });
+
+  document.querySelectorAll('[data-newsletter-dismiss]').forEach((button) => {
+    button.addEventListener('click', () => hideNewsletterNudge(30));
+  });
+
   document.querySelectorAll('[data-dialog-close]').forEach((button) => {
     button.addEventListener('click', () => button.closest('dialog')?.close());
   });
@@ -218,6 +334,32 @@
     window.location.href = mailtoURL;
   });
 
+  newsletterForm?.addEventListener('submit', function (event) {
+    if (!this.reportValidity()) {
+      event.preventDefault();
+      return;
+    }
+
+    if (this.dataset.newsletterConfigured !== 'true' || !this.action) {
+      event.preventDefault();
+      if (newsletterStatus) {
+        newsletterStatus.textContent = 'Newsletter signup is being connected. Please try again shortly.';
+      }
+      return;
+    }
+
+    storeValue(newsletterSubscribedKey, 'true');
+    setNewsletterCooldown(3650);
+    if (newsletterStatus) {
+      newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
+    }
+    window.setTimeout(() => {
+      this.reset();
+      newsletterDialog?.close();
+    }, 2600);
+  });
+
   updateThemeButton();
   registerServiceWorker();
+  initialiseNewsletterPrompt();
 })();
