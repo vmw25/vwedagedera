@@ -124,27 +124,13 @@
     const cooldownUntil = Number(readStoredValue(newsletterCooldownKey) || 0);
     if (cooldownUntil > Date.now()) return;
 
-    const isArticle = engagementPage === 'article';
-    const requiredActiveTime = isArticle ? 35000 : 90000;
-    const requiredScrollDepth = isArticle ? 0.35 : 0.6;
+    const requiredActiveTime = 15000;
     let activeTime = 0;
-    let maximumScrollDepth = 0;
     let previousTick = Date.now();
     let hasShown = false;
-    let scrollTimer;
-
-    const updateScrollDepth = () => {
-      const pageHeight = Math.max(document.documentElement.scrollHeight, 1);
-      maximumScrollDepth = Math.max(
-        maximumScrollDepth,
-        Math.min(1, (window.scrollY + window.innerHeight) / pageHeight)
-      );
-    };
 
     const stopListening = () => {
       window.clearInterval(engagementTimer);
-      window.clearTimeout(scrollTimer);
-      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
 
@@ -152,31 +138,19 @@
       const now = Date.now();
       if (document.visibilityState === 'visible') activeTime += now - previousTick;
       previousTick = now;
-      updateScrollDepth();
 
-      const isEngaged = activeTime >= requiredActiveTime
-        && maximumScrollDepth >= requiredScrollDepth;
+      const isEngaged = activeTime >= requiredActiveTime;
       if (!hasShown && isEngaged && showNewsletterNudge()) {
         hasShown = true;
         stopListening();
       }
     };
 
-    const onScroll = () => {
-      if (scrollTimer) return;
-      scrollTimer = window.setTimeout(() => {
-        scrollTimer = null;
-        updateScrollDepth();
-      }, 180);
-    };
-
     const onVisibilityChange = () => {
       previousTick = Date.now();
     };
 
-    updateScrollDepth();
-    const engagementTimer = window.setInterval(checkEngagement, 5000);
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const engagementTimer = window.setInterval(checkEngagement, 1000);
     document.addEventListener('visibilitychange', onVisibilityChange);
   }
 
