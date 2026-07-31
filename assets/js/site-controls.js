@@ -19,9 +19,9 @@
   const newsletterDialog = document.getElementById('newsletter-dialog');
   const newsletterNudge = document.getElementById('newsletter-nudge');
   const newsletterAccept = document.querySelector('[data-newsletter-accept]');
-  const newsletterForm = document.getElementById('newsletter-form');
+  const newsletterOpeners = document.querySelectorAll('[data-newsletter-open]');
+  const newsletterForms = document.querySelectorAll('[data-newsletter-form]');
   const newsletterEmail = document.getElementById('newsletter-email');
-  const newsletterStatus = document.getElementById('newsletter-form-status');
   const assistantLauncher = document.querySelector('.assistant-launcher');
   const engagementPage = document.getElementById('site-header')?.dataset.engagementPage;
   const serviceWorkerURL = document.getElementById('site-header')?.dataset.serviceWorkerUrl;
@@ -275,6 +275,13 @@
     openDialog(newsletterDialog, newsletterEmail);
   });
 
+  newsletterOpeners.forEach((button) => {
+    button.addEventListener('click', () => {
+      hideNewsletterNudge(7);
+      openDialog(newsletterDialog, newsletterEmail);
+    });
+  });
+
   document.querySelectorAll('[data-newsletter-dismiss]').forEach((button) => {
     button.addEventListener('click', () => hideNewsletterNudge(30));
   });
@@ -334,29 +341,33 @@
     window.location.href = mailtoURL;
   });
 
-  newsletterForm?.addEventListener('submit', function (event) {
-    if (!this.reportValidity()) {
-      event.preventDefault();
-      return;
-    }
+  newsletterForms.forEach((form) => {
+    form.addEventListener('submit', function (event) {
+      const newsletterStatus = this.querySelector('[data-newsletter-status]');
 
-    if (this.dataset.newsletterConfigured !== 'true' || !this.action) {
-      event.preventDefault();
-      if (newsletterStatus) {
-        newsletterStatus.textContent = 'Newsletter signup is being connected. Please try again shortly.';
+      if (!this.reportValidity()) {
+        event.preventDefault();
+        return;
       }
-      return;
-    }
 
-    storeValue(newsletterSubscribedKey, 'true');
-    setNewsletterCooldown(3650);
-    if (newsletterStatus) {
-      newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
-    }
-    window.setTimeout(() => {
-      this.reset();
-      newsletterDialog?.close();
-    }, 2600);
+      if (this.dataset.newsletterConfigured !== 'true' || !this.action) {
+        event.preventDefault();
+        if (newsletterStatus) {
+          newsletterStatus.textContent = 'Newsletter signup is being connected. Please try again shortly.';
+        }
+        return;
+      }
+
+      storeValue(newsletterSubscribedKey, 'true');
+      setNewsletterCooldown(3650);
+      if (newsletterStatus) {
+        newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
+      }
+      window.setTimeout(() => {
+        this.reset();
+        if (this.id === 'newsletter-form') newsletterDialog?.close();
+      }, 2600);
+    });
   });
 
   updateThemeButton();

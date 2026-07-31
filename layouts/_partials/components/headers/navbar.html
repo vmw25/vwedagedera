@@ -46,6 +46,9 @@
       </ul>
 
       <div class="simple-nav__actions">
+        <button class="simple-nav__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">
+          Newsletter
+        </button>
         <button class="simple-nav__action" id="site-search-open" type="button" aria-label="Search website" aria-haspopup="dialog" aria-controls="site-search-dialog">
           <span class="simple-nav__action-icon" aria-hidden="true">⌕</span>
           <span class="simple-nav__action-label">Search</span>
@@ -158,6 +161,7 @@
     action="{{ $newsletterAction }}"
     method="post"
     target="newsletter-signup-target"
+    data-newsletter-form
     data-newsletter-configured="{{ ne $newsletterAction "" }}"
   >
     <label class="site-field" for="newsletter-email">
@@ -174,7 +178,7 @@
 
     <button class="site-button site-button--primary" type="submit">Keep me updated</button>
     <p class="newsletter-form__privacy">By subscribing, you agree to receive Vidun’s weekly article email. Confirm through the email Brevo sends you, then unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
-    <p class="newsletter-form__status" id="newsletter-form-status" aria-live="polite"></p>
+    <p class="newsletter-form__status" id="newsletter-form-status" data-newsletter-status aria-live="polite"></p>
   </form>
   <iframe class="newsletter-signup-target" name="newsletter-signup-target" title="Newsletter signup response" tabindex="-1"></iframe>
 </dialog>
