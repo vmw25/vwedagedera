@@ -3,6 +3,7 @@
 {{ $contactEmail := hugo.Data.authors.me.email }}
 {{ $mascot := resources.Get "media/assistant-mascot.png" }}
 {{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
 {{ $isArticle := and .IsPage (eq .Section "articles") }}
 {{ $engagementPage := cond $isArticle "article" "site" }}
@@ -46,9 +47,11 @@
       </ul>
 
       <div class="simple-nav__actions">
-        <button class="simple-nav__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">
-          Newsletter
-        </button>
+        {{ if $newsletterEnabled }}
+          <button class="simple-nav__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">
+            Newsletter
+          </button>
+        {{ end }}
         <button class="simple-nav__action" id="site-search-open" type="button" aria-label="Search website" aria-haspopup="dialog" aria-controls="site-search-dialog">
           <span class="simple-nav__action-icon" aria-hidden="true">⌕</span>
           <span class="simple-nav__action-label">Search</span>
@@ -144,7 +147,8 @@
   </form>
 </dialog>
 
-<dialog class="site-dialog newsletter-dialog" id="newsletter-dialog" aria-labelledby="newsletter-dialog-title">
+{{ if $newsletterEnabled }}
+  <dialog class="site-dialog newsletter-dialog" id="newsletter-dialog" aria-labelledby="newsletter-dialog-title">
   <div class="site-dialog__header">
     <div>
       <p class="site-dialog__eyebrow">The useful bit, once a week</p>
@@ -181,19 +185,22 @@
     <p class="newsletter-form__status" id="newsletter-form-status" data-newsletter-status aria-live="polite"></p>
   </form>
   <iframe class="newsletter-signup-target" name="newsletter-signup-target" title="Newsletter signup response" tabindex="-1"></iframe>
-</dialog>
+  </dialog>
+{{ end }}
 
 {{ with $mascot }}
-  <aside class="assistant-nudge" id="newsletter-nudge" aria-labelledby="newsletter-nudge-title" hidden>
-    <button class="assistant-nudge__close" type="button" data-newsletter-dismiss aria-label="Dismiss newsletter suggestion">×</button>
-    <p class="assistant-nudge__eyebrow">A quick thought</p>
-    <p class="assistant-nudge__message" id="newsletter-nudge-title"><strong>Hey — you’ve been here a while.</strong> I write one useful article each week on studying smarter, getting into and thriving at med school, productivity, medicine and healthtech.</p>
-    <p class="assistant-nudge__question">Want the next one in your inbox? No spam — just the useful bit.</p>
-    <div class="assistant-nudge__actions">
-      <button class="site-button site-button--primary" type="button" data-newsletter-accept>Yes, send it</button>
-      <button class="assistant-nudge__later" type="button" data-newsletter-dismiss>Not now</button>
-    </div>
-  </aside>
+  {{ if $newsletterEnabled }}
+    <aside class="assistant-nudge" id="newsletter-nudge" aria-labelledby="newsletter-nudge-title" hidden>
+      <button class="assistant-nudge__close" type="button" data-newsletter-dismiss aria-label="Dismiss newsletter suggestion">×</button>
+      <p class="assistant-nudge__eyebrow">A quick thought</p>
+      <p class="assistant-nudge__message" id="newsletter-nudge-title"><strong>Hey — you’ve been here a while.</strong> I write one useful article each week on studying smarter, getting into and thriving at med school, productivity, medicine and healthtech.</p>
+      <p class="assistant-nudge__question">Want the next one in your inbox? No spam — just the useful bit.</p>
+      <div class="assistant-nudge__actions">
+        <button class="site-button site-button--primary" type="button" data-newsletter-accept>Yes, send it</button>
+        <button class="assistant-nudge__later" type="button" data-newsletter-dismiss>Not now</button>
+      </div>
+    </aside>
+  {{ end }}
 
   <button class="assistant-launcher" id="contact-dialog-open" type="button" aria-haspopup="dialog" aria-controls="contact-dialog">
     <span class="assistant-launcher__label">Ask Vidun</span>
