@@ -287,3 +287,9 @@ hugoblox:
     # Affiliate referral code for rewards program
     # Join affiliate program: https://hugoblox.com/affiliates
     affiliate_code: ""
+
+# Lightweight newsletter signup. Brevo supplies the form action after the
+# double-opt-in form has been created; no API key is exposed in this static site.
+newsletter:
+  provider: "brevo"
+  form_action: "https://8d879641.sibforms.com/serve/MUIFAJvvCz1iLk-0wNGLd5GNBLSxcc2YRDuzAIty9QSWg172r7nHnu1Hf70M5_UWZc48vP8WGtdXEytIp3oUeKKSV8r3z84CHhp4rSaZCkbx_v3lQ-TK8YUnuDH2kGLYoQPOvd3EOsUvVs3R5F2lM1GPdVaRwWzC0ZRyXvCRSYCJG7U4F78-oFUdO1nxmsF8tvXO2PCU2AsB0eYx"
