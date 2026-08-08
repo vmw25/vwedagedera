@@ -295,3 +295,9 @@ newsletter:
   enabled: false
   provider: "brevo"
   form_action: "https://8d879641.sibforms.com/serve/MUIFAJvvCz1iLk-0wNGLd5GNBLSxcc2YRDuzAIty9QSWg172r7nHnu1Hf70M5_UWZc48vP8WGtdXEytIp3oUeKKSV8r3z84CHhp4rSaZCkbx_v3lQ-TK8YUnuDH2kGLYoQPOvd3EOsUvVs3R5F2lM1GPdVaRwWzC0ZRyXvCRSYCJG7U4F78-oFUdO1nxmsF8tvXO2PCU2AsB0eYx"
+
+# Direct contact-form delivery. Formspree supplies a public form endpoint; no
+# private API secret is stored in this static website.
+contact_form:
+  provider: "formspree"
+  endpoint: "https://formspree.io/f/xeajeklr"

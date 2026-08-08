@@ -294,28 +294,54 @@
     searchTimer = window.setTimeout(() => runSearch(query, currentSequence), 120);
   });
 
-  contactForm?.addEventListener('submit', function (event) {
+  contactForm?.addEventListener('submit', async function (event) {
     event.preventDefault();
     if (!this.reportValidity()) return;
 
-    const formData = new FormData(this);
-    const value = (name) => String(formData.get(name) || '').trim();
-    const subject = `Website enquiry — ${value('subject')}`;
-    const message = [
-      `Name: ${value('name')}`,
-      `Reply email: ${value('email')}`,
-      `Reason: ${value('reason')}`,
-      '',
-      'Message:',
-      value('message'),
-      '',
-      `Sent from: ${window.location.href}`
-    ].join('\n');
-    const emailAddress = this.dataset.contactEmail;
-    const mailtoURL = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    if (this.dataset.contactConfigured !== 'true' || !this.action) {
+      if (contactStatus) {
+        contactStatus.textContent = 'The contact form is being connected. Please try again shortly.';
+      }
+      return;
+    }
 
-    if (contactStatus) contactStatus.textContent = 'Opening your email app…';
-    window.location.href = mailtoURL;
+    const submitButton = this.querySelector('[data-contact-submit]');
+    const originalLabel = submitButton?.textContent || 'Send enquiry';
+    const formData = new FormData(this);
+    formData.set('source_page', window.location.href);
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending…';
+    }
+    if (contactStatus) contactStatus.textContent = 'Sending your enquiry…';
+
+    try {
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' }
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || result.error || (Array.isArray(result.errors) && result.errors.length > 0)) {
+        throw new Error('Contact form submission failed');
+      }
+
+      this.reset();
+      if (contactStatus) {
+        contactStatus.textContent = 'Thanks — your enquiry has been sent. I’ll get back to you as soon as I can.';
+      }
+    } catch (error) {
+      if (contactStatus) {
+        contactStatus.textContent = 'I couldn’t send that just now. Please check your connection and try again.';
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    }
   });
 
   newsletterForms.forEach((form) => {

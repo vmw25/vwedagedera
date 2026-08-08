@@ -5,6 +5,9 @@
 {{ $newsletter := site.Params.newsletter | default dict }}
 {{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
+{{ $contactForm := site.Params.contact_form | default dict }}
+{{ $contactEndpoint := index $contactForm "endpoint" | default "" }}
+{{ $contactConfigured := ne $contactEndpoint "" }}
 {{ $isArticle := and .IsPage (eq .Section "articles") }}
 {{ $engagementPage := cond $isArticle "article" "site" }}
 {{ if or (eq .RelPermalink "/privacy/") (eq .RelPermalink "/contact-thanks/") }}
@@ -97,7 +100,21 @@
 
   <p class="contact-dialog__introduction">Use this form for research, healthtech, speaking, community or general professional enquiries.</p>
 
-  <form class="contact-form" id="contact-form" data-contact-email="{{ $contactEmail }}">
+  <form
+    class="contact-form"
+    id="contact-form"
+    action="{{ $contactEndpoint }}"
+    method="post"
+    data-contact-configured="{{ $contactConfigured }}"
+  >
+
+    <input type="hidden" name="_subject" value="New website enquiry for Vidun">
+    <input type="hidden" name="source_page" value="">
+
+    <div class="site-honeypot" aria-hidden="true">
+      <label for="contact-botcheck">Leave this field empty</label>
+      <input id="contact-botcheck" type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off">
+    </div>
 
     <div class="contact-form__row">
       <label class="site-field">
@@ -137,12 +154,11 @@
       <span>I will not include patient information or confidential, sensitive or urgent medical details.</span>
     </label>
 
-    <p class="contact-form__privacy">Your email app will open with these details prepared for you to review and send to {{ $contactEmail }}. No third-party form service is used. This is not a clinical advice or emergency service.</p>
-    <p class="contact-form__status" id="contact-form-status" aria-live="polite"></p>
+    <p class="contact-form__privacy">Your enquiry is sent securely through Formspree to {{ $contactEmail }}. Do not include patient or confidential information. This is not a clinical advice or emergency service. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
+    <p class="contact-form__status" id="contact-form-status" role="status" aria-live="polite"></p>
 
     <div class="contact-form__actions">
-      <button class="site-button site-button--primary" type="submit">Continue in email app</button>
-      <a href="mailto:{{ $contactEmail }}">Or email directly</a>
+      <button class="site-button site-button--primary" type="submit" data-contact-submit>Send enquiry</button>
     </div>
   </form>
 </dialog>
