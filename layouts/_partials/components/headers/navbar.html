@@ -5,6 +5,7 @@
 {{ $newsletter := site.Params.newsletter | default dict }}
 {{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
+{{ $newsletterEmailField := index $newsletter "email_field" | default "email_address" }}
 {{ $contactForm := site.Params.contact_form | default dict }}
 {{ $contactEndpoint := index $contactForm "endpoint" | default "" }}
 {{ $contactConfigured := ne $contactEndpoint "" }}
@@ -167,7 +168,7 @@
   <dialog class="site-dialog newsletter-dialog" id="newsletter-dialog" aria-labelledby="newsletter-dialog-title">
   <div class="site-dialog__header">
     <div>
-      <p class="site-dialog__eyebrow">The useful bit, once a week</p>
+      <p class="site-dialog__eyebrow">The useful bit, when it’s ready</p>
       <h2 id="newsletter-dialog-title">Get the next article in your inbox.</h2>
     </div>
     <button class="site-dialog__close" type="button" data-dialog-close aria-label="Close newsletter signup">×</button>
@@ -186,18 +187,16 @@
   >
     <label class="site-field" for="newsletter-email">
       <span>Email address</span>
-      <input id="newsletter-email" type="email" name="EMAIL" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+      <input id="newsletter-email" type="email" name="{{ $newsletterEmailField }}" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
     </label>
 
     <div class="site-honeypot" aria-hidden="true">
       <label for="newsletter-email-check">Leave this field empty</label>
       <input id="newsletter-email-check" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
     </div>
-    <input type="hidden" name="locale" value="en">
-    <input type="hidden" name="html_type" value="simple">
 
     <button class="site-button site-button--primary" type="submit">Keep me updated</button>
-    <p class="newsletter-form__privacy">By subscribing, you agree to receive Vidun’s weekly article email. Confirm through the email Brevo sends you, then unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
+    <p class="newsletter-form__privacy">By subscribing, you agree to receive Vidun’s new-article emails. Confirm through the email Kit sends you, then unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
     <p class="newsletter-form__status" id="newsletter-form-status" data-newsletter-status aria-live="polite"></p>
   </form>
   <iframe class="newsletter-signup-target" name="newsletter-signup-target" title="Newsletter signup response" tabindex="-1"></iframe>
@@ -209,8 +208,8 @@
     <aside class="assistant-nudge" id="newsletter-nudge" aria-labelledby="newsletter-nudge-title" hidden>
       <button class="assistant-nudge__close" type="button" data-newsletter-dismiss aria-label="Dismiss newsletter suggestion">×</button>
       <p class="assistant-nudge__eyebrow">A quick thought</p>
-      <p class="assistant-nudge__message" id="newsletter-nudge-title"><strong>Hey — you’ve been here a while.</strong> I write one useful article each week on studying smarter, getting into and thriving at med school, productivity, medicine and healthtech.</p>
-      <p class="assistant-nudge__question">Want the next one in your inbox? No spam — just the useful bit.</p>
+      <p class="assistant-nudge__message" id="newsletter-nudge-title"><strong>Hey — you’ve been here a while.</strong> I write useful articles on studying smarter, getting into and thriving at med school, productivity, medicine and healthtech.</p>
+      <p class="assistant-nudge__question">Want each new one in your inbox? Just the useful bit.</p>
       <div class="assistant-nudge__actions">
         <button class="site-button site-button--primary" type="button" data-newsletter-accept>Yes, send it</button>
         <button class="assistant-nudge__later" type="button" data-newsletter-dismiss>Not now</button>
