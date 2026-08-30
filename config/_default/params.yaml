@@ -290,11 +290,11 @@ hugoblox:
 
 # Lightweight newsletter signup. Kit supplies the public form action after the
 # double-opt-in form has been created; no private API key is exposed here.
-# Keep disabled until the Kit form action and GitHub Actions secret are set.
+# The API key remains in GitHub Actions secrets; only the public form action is stored here.
 newsletter:
-  enabled: false
+  enabled: true
   provider: "kit"
-  form_action: ""
+  form_action: "https://app.kit.com/forms/9863151/subscriptions"
   email_field: "email_address"
 
 # Direct contact-form delivery. Formspree supplies a public form endpoint; no
