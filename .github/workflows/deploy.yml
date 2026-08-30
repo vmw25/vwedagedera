@@ -36,3 +36,31 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
+  notify-subscribers:
+    name: Notify newsletter subscribers
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.KIT_NEWSLETTER_ENABLED == 'true'
+    needs: deploy
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: Checkout article history
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: Test newsletter publisher
+      run: node --test scripts/newsletter/*.test.mjs
+
+    - name: Publish new article notifications
+      env:
+        AFTER_SHA: ${{ github.sha }}
+        BEFORE_SHA: ${{ github.event.before }}
+        KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
+        NEWSLETTER_RSS_URL: https://vidunwedagedera.com/articles/index.xml
+        NEWSLETTER_SEND_DELAY_MINUTES: '10'
+        NEWSLETTER_SEND_SPACING_MINUTES: '10'
+        NEWSLETTER_SITE_URL: https://vidunwedagedera.com/
+      run: node scripts/newsletter/publish-new-articles.mjs

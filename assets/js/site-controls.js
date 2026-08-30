@@ -21,6 +21,7 @@
   const newsletterAccept = document.querySelector('[data-newsletter-accept]');
   const newsletterOpeners = document.querySelectorAll('[data-newsletter-open]');
   const newsletterForms = document.querySelectorAll('[data-newsletter-form]');
+  const newsletterTarget = document.querySelector('iframe[name="newsletter-signup-target"]');
   const newsletterEmail = document.getElementById('newsletter-email');
   const assistantLauncher = document.querySelector('.assistant-launcher');
   const engagementPage = document.getElementById('site-header')?.dataset.engagementPage;
@@ -347,13 +348,15 @@
   newsletterForms.forEach((form) => {
     form.addEventListener('submit', function (event) {
       const newsletterStatus = this.querySelector('[data-newsletter-status]');
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalLabel = submitButton?.textContent || 'Subscribe';
 
       if (!this.reportValidity()) {
         event.preventDefault();
         return;
       }
 
-      if (this.dataset.newsletterConfigured !== 'true' || !this.action) {
+      if (this.dataset.newsletterConfigured !== 'true' || !this.action || !newsletterTarget) {
         event.preventDefault();
         if (newsletterStatus) {
           newsletterStatus.textContent = 'Newsletter signup is being connected. Please try again shortly.';
@@ -361,15 +364,48 @@
         return;
       }
 
-      storeValue(newsletterSubscribedKey, 'true');
-      setNewsletterCooldown(3650);
-      if (newsletterStatus) {
-        newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
+      if (this.dataset.newsletterSubmitting === 'true') {
+        event.preventDefault();
+        return;
       }
-      window.setTimeout(() => {
+
+      this.dataset.newsletterSubmitting = 'true';
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Subscribing…';
+      }
+      if (newsletterStatus) newsletterStatus.textContent = 'Adding you securely…';
+
+      let completed = false;
+      const finishSubmission = (providerResponded) => {
+        if (completed) return;
+        completed = true;
+        delete this.dataset.newsletterSubmitting;
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+
+        if (!providerResponded) {
+          if (newsletterStatus) newsletterStatus.textContent = 'I could not confirm that signup. Please check your connection and try again.';
+          return;
+        }
+
+        storeValue(newsletterSubscribedKey, 'true');
+        setNewsletterCooldown(3650);
         this.reset();
-        if (this.id === 'newsletter-form') newsletterDialog?.close();
-      }, 2600);
+        if (newsletterStatus) newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
+        if (this.id === 'newsletter-form') {
+          window.setTimeout(() => newsletterDialog?.close(), 2600);
+        }
+      };
+
+      const onProviderResponse = () => finishSubmission(true);
+      newsletterTarget.addEventListener('load', onProviderResponse, { once: true });
+      window.setTimeout(() => {
+        newsletterTarget.removeEventListener('load', onProviderResponse);
+        finishSubmission(false);
+      }, 15000);
     });
   });
 
