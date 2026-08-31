@@ -649,6 +649,11 @@ textarea:focus-visible {
   gap: 0.8rem;
 }
 
+.newsletter-form__fields {
+  display: grid;
+  gap: 0.8rem;
+}
+
 .newsletter-form .site-button {
   justify-self: start;
 }
@@ -674,13 +679,35 @@ textarea:focus-visible {
   color: var(--simple-accent-strong);
 }
 
-.newsletter-signup-target {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  border: 0;
-  clip-path: inset(50%);
-  overflow: hidden;
+.formkit-alert {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--simple-border);
+  border-radius: 10px;
+  list-style: none;
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+.formkit-alert:empty {
+  display: none;
+}
+
+.formkit-alert-error {
+  color: #ffb7b7;
+  border-color: color-mix(in srgb, #ff8a8a 42%, var(--simple-border));
+  background: color-mix(in srgb, #8c2f39 18%, transparent);
+}
+
+.formkit-alert-success {
+  color: var(--simple-text);
+  border-color: color-mix(in srgb, var(--simple-accent) 52%, var(--simple-border));
+  background: color-mix(in srgb, var(--simple-accent) 14%, transparent);
+}
+
+.formkit-submit[data-active] {
+  cursor: wait;
+  opacity: 0.72;
 }
 
 /* Reusable newsletter panels */
@@ -808,11 +835,16 @@ textarea:focus-visible {
 
 .newsletter-inline-form {
   display: grid;
+  gap: 0.6rem;
+}
+
+.newsletter-inline-form__fields {
+  display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.6rem;
 }
 
-.newsletter-inline-form > input[type="email"] {
+.newsletter-inline-form__fields > input[type="email"] {
   min-width: 0;
   min-height: 48px;
   padding: 0.72rem 0.9rem;
@@ -824,7 +856,7 @@ textarea:focus-visible {
   font-size: 0.82rem;
 }
 
-.newsletter-inline-form > input[type="email"]::placeholder {
+.newsletter-inline-form__fields > input[type="email"]::placeholder {
   color: var(--simple-muted);
 }
 
@@ -1923,7 +1955,7 @@ textarea:focus-visible {
   font-size: 0.8rem;
 }
 
-.editorial-article__newsletter .newsletter-inline-form {
+.editorial-article__newsletter .newsletter-inline-form__fields {
   grid-template-columns: 1fr;
 }
 
@@ -3010,7 +3042,7 @@ footer .opacity-80,
     padding: 1.35rem;
   }
 
-  .newsletter-inline-form {
+  .newsletter-inline-form__fields {
     grid-template-columns: 1fr;
   }
 

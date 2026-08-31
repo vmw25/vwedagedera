@@ -14,10 +14,10 @@ The bridge is disabled by default. It never stores or prints the API key.
 
 1. Create a Kit Form under **Audience growth → Landing Pages & Forms → + New → Form → Inline**.
 2. In the Form settings, leave **Auto-confirm new subscribers** off so double opt-in stays enabled, then save and publish the Form.
-3. Open **Embed → HTML** and copy the public URL from the Form opening tag, for example `https://app.kit.com/forms/1234567/subscriptions`.
-4. Put that public URL in `newsletter.form_action` in `config/_default/params.yaml`, then change `newsletter.enabled` to `true`.
+3. Open **Embed → JavaScript** and copy the Form's public script. Record its `data-uid`, script URL, numeric Form ID, and public subscription action.
+4. Put those public values in `newsletter.form_uid`, `newsletter.runtime_url`, `newsletter.form_id`, and `newsletter.form_action` in `config/_default/params.yaml`, then change `newsletter.enabled` to `true`.
 
-The public Form action can be committed to the site. The private API key must never be pasted into this file or into chat.
+The website keeps its own visual design while using Kit's official browser runtime for anti-bot verification, error handling, and the confirmation success message. To protect initial page speed, that runtime loads only when a signup form is near the viewport or a visitor interacts with it. These public Form values can be committed to the site. The private API key must never be pasted into this file or into chat.
 
 ## One-time GitHub setup
 
