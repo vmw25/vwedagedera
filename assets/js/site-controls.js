@@ -20,16 +20,18 @@
   const newsletterNudge = document.getElementById('newsletter-nudge');
   const newsletterAccept = document.querySelector('[data-newsletter-accept]');
   const newsletterOpeners = document.querySelectorAll('[data-newsletter-open]');
-  const newsletterForms = document.querySelectorAll('[data-newsletter-form]');
-  const newsletterTarget = document.querySelector('iframe[name="newsletter-signup-target"]');
-  const newsletterEmail = document.getElementById('newsletter-email');
+  const newsletterForms = document.querySelectorAll('[data-sv-form]');
+  const siteHeader = document.getElementById('site-header');
+  const newsletterUID = siteHeader?.dataset.newsletterUid || '';
+  const newsletterRuntimeURL = siteHeader?.dataset.newsletterRuntime || '';
   const assistantLauncher = document.querySelector('.assistant-launcher');
-  const engagementPage = document.getElementById('site-header')?.dataset.engagementPage;
-  const serviceWorkerURL = document.getElementById('site-header')?.dataset.serviceWorkerUrl;
+  const engagementPage = siteHeader?.dataset.engagementPage;
+  const serviceWorkerURL = siteHeader?.dataset.serviceWorkerUrl;
   const newsletterSubscribedKey = 'vidun-newsletter-subscribed';
   const newsletterCooldownKey = 'vidun-newsletter-cooldown-until';
   const dayInMilliseconds = 24 * 60 * 60 * 1000;
   let pagefindPromise;
+  let newsletterRuntimePromise;
   let searchTimer;
   let searchSequence = 0;
 
@@ -49,6 +51,64 @@
     if (!dialog) return;
     dialog.showModal();
     window.setTimeout(() => firstField?.focus(), 0);
+  }
+
+  function newsletterRuntimeReady(form) {
+    return Boolean(Array.from(window.__sv_forms || []).some((entry) => (
+      entry === form || entry?.element === form
+    )));
+  }
+
+  function showNewsletterRuntimeError(form) {
+    const errors = form?.querySelector('[data-element="errors"]');
+    if (!errors) return;
+
+    const item = document.createElement('li');
+    item.textContent = 'Secure signup could not load. Please check your connection and try again.';
+    errors.replaceChildren(item);
+  }
+
+  function loadNewsletterRuntime() {
+    if (!newsletterForms.length || Array.from(newsletterForms).every(newsletterRuntimeReady)) {
+      return Promise.resolve();
+    }
+    if (newsletterRuntimePromise) return newsletterRuntimePromise;
+    if (!newsletterRuntimeURL) {
+      return Promise.reject(new Error('Newsletter runtime URL is missing.'));
+    }
+
+    newsletterRuntimePromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = newsletterRuntimeURL;
+      script.async = true;
+      script.dataset.newsletterRuntime = 'true';
+
+      script.addEventListener('load', () => {
+        const deadline = Date.now() + 3000;
+        const waitForForms = () => {
+          if (Array.from(newsletterForms).every(newsletterRuntimeReady)) {
+            resolve();
+          } else if (Date.now() >= deadline) {
+            reject(new Error('Kit did not initialise the newsletter forms.'));
+          } else {
+            window.setTimeout(waitForForms, 50);
+          }
+        };
+        waitForForms();
+      }, { once: true });
+
+      script.addEventListener('error', () => {
+        reject(new Error('Kit runtime failed to load.'));
+      }, { once: true });
+
+      document.head.appendChild(script);
+    }).catch((error) => {
+      newsletterRuntimePromise = null;
+      newsletterForms.forEach(showNewsletterRuntimeError);
+      throw error;
+    });
+
+    return newsletterRuntimePromise;
   }
 
   function loadPagefind() {
@@ -250,15 +310,65 @@
 
   newsletterAccept?.addEventListener('click', () => {
     hideNewsletterNudge(7);
-    openDialog(newsletterDialog, newsletterEmail);
+    openDialog(newsletterDialog, newsletterDialog?.querySelector('input[name="email_address"]'));
+    loadNewsletterRuntime().catch(() => {});
   });
 
   newsletterOpeners.forEach((button) => {
     button.addEventListener('click', () => {
       hideNewsletterNudge(7);
-      openDialog(newsletterDialog, newsletterEmail);
+      openDialog(newsletterDialog, newsletterDialog?.querySelector('input[name="email_address"]'));
+      loadNewsletterRuntime().catch(() => {});
     });
   });
+
+  newsletterForms.forEach((form) => {
+    const warmNewsletterRuntime = () => loadNewsletterRuntime().catch(() => {});
+    form.addEventListener('focusin', warmNewsletterRuntime, { once: true });
+    form.addEventListener('pointerenter', warmNewsletterRuntime, { once: true });
+
+    form.addEventListener('submit', async function (event) {
+      if (newsletterRuntimeReady(this)) return;
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const submitButton = this.querySelector('[data-element="submit"]');
+      const originalLabel = submitButton?.textContent || 'Subscribe';
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Loading secure signup…';
+      }
+
+      try {
+        await loadNewsletterRuntime();
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+        this.requestSubmit();
+      } catch (error) {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+        showNewsletterRuntimeError(this);
+      }
+    }, { capture: true });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const newsletterObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      newsletterObserver.disconnect();
+      loadNewsletterRuntime().catch(() => {});
+    }, { rootMargin: '500px 0px' });
+
+    document.querySelectorAll('.newsletter-inline-form').forEach((form) => {
+      newsletterObserver.observe(form);
+    });
+  }
 
   document.querySelectorAll('[data-newsletter-dismiss]').forEach((button) => {
     button.addEventListener('click', () => hideNewsletterNudge(30));
@@ -345,68 +455,11 @@
     }
   });
 
-  newsletterForms.forEach((form) => {
-    form.addEventListener('submit', function (event) {
-      const newsletterStatus = this.querySelector('[data-newsletter-status]');
-      const submitButton = this.querySelector('button[type="submit"]');
-      const originalLabel = submitButton?.textContent || 'Subscribe';
-
-      if (!this.reportValidity()) {
-        event.preventDefault();
-        return;
-      }
-
-      if (this.dataset.newsletterConfigured !== 'true' || !this.action || !newsletterTarget) {
-        event.preventDefault();
-        if (newsletterStatus) {
-          newsletterStatus.textContent = 'Newsletter signup is being connected. Please try again shortly.';
-        }
-        return;
-      }
-
-      if (this.dataset.newsletterSubmitting === 'true') {
-        event.preventDefault();
-        return;
-      }
-
-      this.dataset.newsletterSubmitting = 'true';
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Subscribing…';
-      }
-      if (newsletterStatus) newsletterStatus.textContent = 'Adding you securely…';
-
-      let completed = false;
-      const finishSubmission = (providerResponded) => {
-        if (completed) return;
-        completed = true;
-        delete this.dataset.newsletterSubmitting;
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = originalLabel;
-        }
-
-        if (!providerResponded) {
-          if (newsletterStatus) newsletterStatus.textContent = 'I could not confirm that signup. Please check your connection and try again.';
-          return;
-        }
-
-        storeValue(newsletterSubscribedKey, 'true');
-        setNewsletterCooldown(3650);
-        this.reset();
-        if (newsletterStatus) newsletterStatus.textContent = 'Nearly there — check your inbox and confirm your email address.';
-        if (this.id === 'newsletter-form') {
-          window.setTimeout(() => newsletterDialog?.close(), 2600);
-        }
-      };
-
-      const onProviderResponse = () => finishSubmission(true);
-      newsletterTarget.addEventListener('load', onProviderResponse, { once: true });
-      window.setTimeout(() => {
-        newsletterTarget.removeEventListener('load', onProviderResponse);
-        finishSubmission(false);
-      }, 15000);
-    });
+  document.addEventListener('ckjs:submission:complete', (event) => {
+    const completedUID = String(event.detail?.uid || '');
+    if (!newsletterUID || !completedUID.startsWith(newsletterUID)) return;
+    storeValue(newsletterSubscribedKey, 'true');
+    setNewsletterCooldown(3650);
   });
 
   updateThemeButton();

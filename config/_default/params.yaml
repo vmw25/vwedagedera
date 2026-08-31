@@ -295,6 +295,9 @@ newsletter:
   enabled: true
   provider: "kit"
   form_action: "https://app.kit.com/forms/9863151/subscriptions"
+  form_id: "9863151"
+  form_uid: "22396b0ba5"
+  runtime_url: "https://f.convertkit.com/ckjs/ck.5.js"
   email_field: "email_address"
 
 # Direct contact-form delivery. Formspree supplies a public form endpoint; no

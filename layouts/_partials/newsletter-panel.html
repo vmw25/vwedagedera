@@ -3,13 +3,15 @@
 {{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
 {{ $newsletterEmailField := index $newsletter "email_field" | default "email_address" }}
+{{ $newsletterFormID := index $newsletter "form_id" | default "" }}
+{{ $newsletterFormUID := index $newsletter "form_uid" | default "" }}
 {{ $mascot := resources.Get "media/assistant-mascot.png" }}
 {{ if and $mascot (reflect.IsImageResourceProcessable $mascot) }}
   {{ $mascot = $mascot.Resize "200x webp q80" }}
 {{ end }}
 {{ $titleID := printf "newsletter-panel-%s-title" $context }}
 {{ $emailID := printf "newsletter-panel-%s-email" $context }}
-{{ $checkID := printf "newsletter-panel-%s-check" $context }}
+{{ $contextFormUID := printf "%s-%s" $newsletterFormUID $context }}
 
 {{ if $newsletterEnabled }}
 <section class="newsletter-panel newsletter-panel--{{ $context }}" aria-labelledby="{{ $titleID }}">
@@ -32,21 +34,21 @@
     <p class="newsletter-panel__description">Short, practical writing on school, medical school, productivity, research, medicine and healthtech. Whenever I publish, you’ll get the opening idea and a link to read the rest.</p>
 
     <form
-      class="newsletter-inline-form"
+      class="newsletter-inline-form formkit-form"
       action="{{ $newsletterAction }}"
       method="post"
-      target="newsletter-signup-target"
-      data-newsletter-form
-      data-newsletter-configured="{{ ne $newsletterAction "" }}"
+      data-sv-form="{{ $newsletterFormID }}"
+      data-uid="{{ $contextFormUID }}"
+      data-format="inline"
+      data-version="5"
+      data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"Thank you — check your inbox and click the confirmation link to finish subscribing."},"recaptcha":{"enabled":false},"return_visitor":{"action":"show"}},"features":{"email_typo_suggestion":true}}'
     >
-      <label class="sr-only" for="{{ $emailID }}">Email address</label>
-      <input id="{{ $emailID }}" type="email" name="{{ $newsletterEmailField }}" inputmode="email" autocomplete="email" placeholder="Your email address" required>
-      <div class="site-honeypot" aria-hidden="true">
-        <label for="{{ $checkID }}">Leave this field empty</label>
-        <input id="{{ $checkID }}" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
+      <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert" aria-live="polite"></ul>
+      <div class="newsletter-inline-form__fields" data-element="fields">
+        <label class="sr-only" for="{{ $emailID }}">Email address</label>
+        <input id="{{ $emailID }}" type="email" name="{{ $newsletterEmailField }}" inputmode="email" autocomplete="email" placeholder="Your email address" required>
+        <button class="site-button site-button--primary formkit-submit" type="submit" data-element="submit">Subscribe</button>
       </div>
-      <button class="site-button site-button--primary" type="submit">Subscribe</button>
-      <p class="newsletter-inline-form__status" data-newsletter-status aria-live="polite"></p>
     </form>
 
     <p class="newsletter-panel__privacy">Free to join. Confirm through the email Kit sends you and unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>

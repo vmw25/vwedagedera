@@ -6,6 +6,9 @@
 {{ $newsletterEnabled := index $newsletter "enabled" | default false }}
 {{ $newsletterAction := index $newsletter "form_action" | default "" }}
 {{ $newsletterEmailField := index $newsletter "email_field" | default "email_address" }}
+{{ $newsletterFormID := index $newsletter "form_id" | default "" }}
+{{ $newsletterFormUID := index $newsletter "form_uid" | default "" }}
+{{ $newsletterRuntimeURL := index $newsletter "runtime_url" | default "" }}
 {{ $contactForm := site.Params.contact_form | default dict }}
 {{ $contactEndpoint := index $contactForm "endpoint" | default "" }}
 {{ $contactConfigured := ne $contactEndpoint "" }}
@@ -18,7 +21,7 @@
   {{ $mascot = $mascot.Resize "200x webp q80" }}
 {{ end }}
 
-<header id="site-header" data-service-worker-url="{{ "service-worker.js" | relURL }}" data-engagement-page="{{ $engagementPage }}">
+<header id="site-header" data-service-worker-url="{{ "service-worker.js" | relURL }}" data-engagement-page="{{ $engagementPage }}" data-newsletter-uid="{{ $newsletterFormUID }}" data-newsletter-runtime="{{ $newsletterRuntimeURL }}">
   <nav class="simple-nav" aria-label="Primary navigation">
     <a class="simple-nav__brand" href="{{ site.Home.RelPermalink }}">{{ $branding.name }}</a>
 
@@ -177,29 +180,26 @@
   <p class="newsletter-dialog__introduction">A short preview covering smarter study, school, medical school, productivity, medicine or healthtech — then a link if you want to keep reading.</p>
 
   <form
-    class="newsletter-form"
+    class="newsletter-form formkit-form"
     id="newsletter-form"
     action="{{ $newsletterAction }}"
     method="post"
-    target="newsletter-signup-target"
-    data-newsletter-form
-    data-newsletter-configured="{{ ne $newsletterAction "" }}"
+    data-sv-form="{{ $newsletterFormID }}"
+    data-uid="{{ $newsletterFormUID }}"
+    data-format="inline"
+    data-version="5"
+    data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"Thank you — check your inbox and click the confirmation link to finish subscribing."},"recaptcha":{"enabled":false},"return_visitor":{"action":"show"}},"features":{"email_typo_suggestion":true}}'
   >
-    <label class="site-field" for="newsletter-email">
-      <span>Email address</span>
-      <input id="newsletter-email" type="email" name="{{ $newsletterEmailField }}" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
-    </label>
-
-    <div class="site-honeypot" aria-hidden="true">
-      <label for="newsletter-email-check">Leave this field empty</label>
-      <input id="newsletter-email-check" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off">
+    <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert" aria-live="polite"></ul>
+    <div class="newsletter-form__fields" data-element="fields">
+      <label class="site-field" for="newsletter-email">
+        <span>Email address</span>
+        <input id="newsletter-email" type="email" name="{{ $newsletterEmailField }}" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+      </label>
+      <button class="site-button site-button--primary formkit-submit" type="submit" data-element="submit">Keep me updated</button>
     </div>
-
-    <button class="site-button site-button--primary" type="submit">Keep me updated</button>
     <p class="newsletter-form__privacy">By subscribing, you agree to receive Vidun’s new-article emails. Confirm through the email Kit sends you, then unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
-    <p class="newsletter-form__status" id="newsletter-form-status" data-newsletter-status aria-live="polite"></p>
   </form>
-  <iframe class="newsletter-signup-target" name="newsletter-signup-target" title="Newsletter signup response" tabindex="-1"></iframe>
   </dialog>
 {{ end }}
 
