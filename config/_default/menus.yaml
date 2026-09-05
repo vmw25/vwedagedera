@@ -34,6 +34,6 @@ main:
   - name: Resources
     url: /resources/
     weight: 30
-  - name: Projects
-    url: /projects/
+  - name: Sidequests
+    url: /sidequests/
     weight: 40

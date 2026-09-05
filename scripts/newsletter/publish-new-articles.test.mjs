@@ -46,7 +46,7 @@ test('finds only added article bundle index files', () => {
       'content/articles/new-one/index.md',
       'content/articles/new-one/featured.jpg',
       'content/articles/nested/path/index.md',
-      'content/projects/example/index.md',
+      'content/sidequests/example/index.md',
       ''
     ].join('\n')
   });
