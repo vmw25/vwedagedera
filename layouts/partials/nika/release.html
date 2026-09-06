@@ -1,0 +1,9 @@
+{{ $platform := . }}
+{{ $name := cond (eq $platform "macos") "macOS" "Windows" }}
+{{ $url := index hugo.Data.nika (printf "%s_url" $platform) | default "" }}
+{{ $ready := and hugo.Data.nika.launch_ready $url }}
+{{ if $url }}
+  {{ $extension := cond (eq $platform "macos") "(pkg|dmg)" "exe" }}
+  {{ if not (findRE (printf `^https://[^\s/?#]+/[^\s?#]+\.%s(\?[^\s#]*)?$` $extension) $url) }}{{ errorf "nika %s download requires a verified public HTTPS installer URL" $platform }}{{ end }}
+{{ end }}
+{{ return (dict "platform" $platform "name" $name "url" $url "ready" $ready) }}

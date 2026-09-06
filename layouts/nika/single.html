@@ -12,11 +12,12 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="product-nav"><div class="shell nav"><a class="brand" href="{{ .RelPermalink }}" aria-label="nika home"><img src="{{ "media/nika/icon.png" | relURL }}" width="30" height="30" alt="">nika</a><nav aria-label="nika navigation"><a href="#workflow">How it works</a><a href="#plans">Plans</a><a href="{{ hugo.Data.nika.account_url }}/signin">Sign in</a><a class="button small-button" href="{{ hugo.Data.nika.account_url }}/signup">Create account</a></nav></div></header>
+<header class="product-nav"><div class="shell nav"><a class="brand" href="{{ .RelPermalink }}" aria-label="nika home"><img src="{{ "media/nika/icon.png" | relURL }}" width="30" height="30" alt="">nika</a><nav aria-label="nika navigation"><a class="nav-explore" href="#workflow">How it works</a><a class="nav-plans" href="#plans">Plans</a><details class="nav-menu"><summary>Explore</summary><div><a href="#workflow">How it works</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="#download">Downloads</a></div></details><a href="{{ hugo.Data.nika.account_url }}/signin">Sign in</a></nav>{{ partial "nika/download-links.html" (dict "compact" true) }}</div></header>
 <main id="main">
 <section class="hero" aria-labelledby="hero-title">
-  <div class="shell hero-heading"><p class="eyebrow">nika for desktop</p><h1 id="hero-title"><span class="hero-fixed">Make room</span><span class="hero-phrase" id="showcase-phrase" aria-hidden="true">for better cards.</span><span class="sr-only"> for learning, with cards from your material, PassMedicine tools, your own preferences and activity insights.</span></h1><p class="hero-intro">Anki cards that feel like yours.<br>From full PDFs, text, images and the questions that caught you out.</p><div class="actions"><a class="button" href="#download">Get nika</a><a class="text-link" href="#workflow">See how it works <span aria-hidden="true">↓</span></a></div></div>
+  <div class="shell hero-heading"><p class="eyebrow">nika for desktop</p><h1 id="hero-title"><span class="hero-fixed">Anki cards that<br>feel like yours.</span></h1><p class="hero-intro">Turn full PDFs, text, images and question-bank mistakes into cards you can edit and send to Anki.</p>{{ partial "nika/download-links.html" (dict) }}<p class="download-context">{{ if hugo.Data.nika.launch_ready }}Install nika, create your account and start Free. Choose a paid plan later, inside the app.{{ else }}Public installers are not available yet. Check the release status for your computer.{{ end }}</p><a class="text-link" href="#workflow">See how it works <span aria-hidden="true">↓</span></a></div>
   <div class="product-showcase" data-nika-showcase role="region" aria-roledescription="carousel" aria-label="Explore nika features">
+    <p class="showcase-purpose shell" aria-hidden="true">Make room <span id="showcase-phrase">for better cards.</span></p>
     <div class="showcase-controls shell" data-showcase-controls hidden>
       <button class="motion-control" type="button" data-showcase-motion>Pause showcase</button>
       <div class="showcase-choices" role="group" aria-label="Choose a feature">{{ range $index, $item := hugo.Data.nika.showcase }}<button type="button" class="showcase-choice" data-showcase-choice="{{ $index }}" aria-controls="nika-feature-{{ $index }}" aria-pressed="{{ if eq $index 0 }}true{{ else }}false{{ end }}">{{ $item.label }}</button>{{ end }}</div>
@@ -30,6 +31,30 @@
     <p class="sr-only" data-showcase-announcement role="status" aria-live="polite"></p>
   </div>
 </section>
+<section class="download-section" id="download" aria-labelledby="download-title"><div class="shell">
+  <h2 id="download-title">Get nika for your computer.</h2>
+  <p>Install the app first. Create your account in nika and start Free.</p>
+  <div class="download-options">
+  {{ range $platform := slice "macos" "windows" }}
+    {{ $release := partial "nika/release.html" $platform }}
+    {{ $name := $release.name }}{{ $url := $release.url }}{{ $ready := $release.ready }}
+    <article class="download-option" id="download-{{ $platform }}" tabindex="-1" aria-labelledby="download-{{ $platform }}-title">
+      <h3 id="download-{{ $platform }}-title">nika for {{ $name }}</h3>
+      {{ if $ready }}
+        <p class="release-status">Ready to download{{ with hugo.Data.nika.version }} · {{ . }}{{ end }}</p>
+        <p>{{ if eq $platform "macos" }}Apple silicon (M1 or newer), macOS 14 or later.{{ else }}64-bit Windows PC (Intel or AMD).{{ end }}</p>
+        <a class="button" data-installer="{{ $platform }}" href="{{ $url }}">Download for {{ $name }} <span aria-hidden="true">↓</span></a>
+        <p>{{ if eq $platform "macos" }}Open the downloaded installer and follow the steps.{{ else }}Open the downloaded setup file and follow the steps.{{ end }} Then open nika to create your account or sign in.</p>
+      {{ else }}
+        <p class="release-status">Not available yet</p>
+        <p>{{ if eq $platform "macos" }}The Apple silicon installer is in private testing. Public release and installation checks are still in progress. An Intel Mac release is not available.{{ else }}The Windows installer still needs a native build and installation testing. There is no public Windows download yet.{{ end }}</p>
+      {{ end }}
+    </article>
+  {{ end }}
+  </div>
+  <p class="download-note">For adults aged 18+. To send cards directly, you’ll need Anki desktop and AnkiConnect. You can also export your cards. <a href="mailto:nika@vidunwedagedera.com">Need help?</a></p>
+  <ol class="setup-steps" aria-label="Getting started after release"><li><strong>Install nika</strong><span>Choose the download for your computer.</span></li><li><strong>Create your account</strong><span>Confirm your email, then sign in. Free is your starting plan.</span></li><li><strong>Make your first cards</strong><span>Set your preferences or skip them. Add material, review your cards and send them to Anki.</span></li></ol>
+</div></section>
 <section class="section shell" id="workflow">
   <p class="kicker">A clearer way to create</p><h2>From your material.<br>To your next recall.</h2>
   <p class="section-intro">Drop in your study material. Get cards in your style. Review them, send them to Anki and get back to learning.</p>
@@ -55,21 +80,26 @@
     <article><p class="step-number">02</p><h3>Make it yours.</h3><p>Read the question and answer side by side. Edit the wording, remove a card or explore the review tools.</p></article>
     <article><p class="step-number">03</p><h3>Keep learning.</h3><p>Choose your destination deck and add to Anki, or export from the review menu. Your next step stays in sight.</p></article>
   </div>
+  <div class="section-download"><p>Bring your next study session into nika.</p>{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
-<section class="feature-section">
+<section class="feature-section" id="features">
   <div class="shell section-heading"><p class="kicker">Made for your study session</p><h2>Less searching.<br>More doing.</h2><p class="section-intro">Turn a full PDF into a study session. Turn a diagram into hidden-label cards. Turn a question-bank mistake into something you remember to practise.</p></div>
   <div class="shell feature-gallery">
-    <article class="feature-panel"><div class="feature-copy"><p class="kicker">Question-bank workflow</p><h3>Wrong answer?<br>Make it your next card.</h3><p>Start a PassMedicine session. nika spots the result, picks up the mistake and helps turn it into cards to review. Less copying, less switching, more time learning from what caught you out.</p><p class="feature-detail">A pretrained CNN, a small image-recognition model, helps detect correct and incorrect results. You choose when capture starts and review the cards before they reach Anki.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/passmedicine.webp" | relURL }}" aria-label="Open the full-size nika PassMedicine screenshot"><img src="{{ "media/nika/passmedicine.webp" | relURL }}" width="1320" height="900" loading="lazy" alt="The real nika PassMedicine workspace showing its explicit start, pause and capture controls in a demo session."></a></figure></article>
+    <article class="feature-panel"><div class="feature-copy"><p class="kicker">Question-bank workflow</p><h3>Wrong answer?<br>Make it your next card.</h3><p>Start a PassMedicine session. nika spots the result, picks up the mistake and helps turn it into cards to review. You choose when capture starts. Check your cards before they reach Anki.</p><details class="technical-detail"><summary>How result detection works</summary><p>A pretrained CNN, a small image-recognition model, helps detect correct and incorrect results. It can make mistakes. The result is a capture aid, not an assessment of your medical knowledge.</p></details></div><figure><a class="screenshot-link" href="{{ "media/nika/passmedicine.webp" | relURL }}" aria-label="Open the full-size nika PassMedicine screenshot"><img src="{{ "media/nika/passmedicine.webp" | relURL }}" width="1320" height="900" loading="lazy" alt="The real nika PassMedicine workspace showing its explicit start, pause and capture controls in a demo session."></a></figure></article>
     <article class="feature-panel insights-panel"><div class="feature-copy"><p class="kicker">Your insights</p><h3>Track your work.<br>Find your next focus.</h3><p>See the cards you create, the cards you keep and the study sessions behind them. Spot patterns in your activity and decide what to work on next. Your data, made useful.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/insights.webp" | relURL }}" aria-label="Open the full-size nika Insights screenshot"><img src="{{ "media/nika/insights.webp" | relURL }}" width="1320" height="900" loading="lazy" alt="nika Insights with generated and accepted card totals, a session activity grid and source breakdowns, populated with synthetic example data."></a></figure></article>
   </div>
+  <div class="section-download shell">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
 <section class="section shell personal-section">
   <div><p class="kicker">Personal, by design</p><h2>More like you.<br>Still up to you.</h2></div>
-  <div class="personal-copy"><p class="lead">Built with a head start. Shaped by your style.</p><p>Pretrained AI creates the cards. Machine-learning tools rank them and find useful examples. Your preferences and reviewed edits guide the next batch, so you spend less time asking for the same changes.</p><p>Tell nika how you like to learn. Short answers? Cloze for facts? Hidden labels for anatomy? Change your preferences any time, or give one batch a different instruction.</p><p>This adapts the instructions and examples, not the underlying model. No automatic retraining and no separate model for every user. Shared training is a separate, optional choice.</p><a class="text-link" href="{{ hugo.Data.nika.account_url }}/privacy">Your data, your choice <span aria-hidden="true">↗</span></a></div>
+  <div class="personal-copy"><p class="lead">Set your style once. Keep control of every card.</p><p>Tell nika how you like to learn. Short answers? Cloze for facts? Hidden labels for anatomy? Your preferences and reviewed edits guide the next batch. Change your defaults any time, or give just one batch a different instruction.</p><p>Setup is optional. You can skip it, save your progress and edit your answers later. Sharing examples for model training is a separate, optional choice.</p><details class="technical-detail"><summary>How personalisation works</summary><p>Pretrained AI creates the cards. Machine-learning tools rank them and find useful examples. This adapts the instructions and examples, not the underlying model. No automatic retraining and no separate model for every user.</p></details><a class="text-link" href="{{ hugo.Data.nika.account_url }}/privacy">Your data, your choice <span aria-hidden="true">↗</span></a></div>
   <figure class="onboarding-product"><img src="{{ "media/nika/onboarding.png" | relURL }}" width="850" height="940" loading="lazy" alt="The real nika onboarding screen with labelled multiline study-preference questions, example placeholders and skip, save-progress and review controls. Synthetic demo workspace."></figure>
+  <div class="section-download personal-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
 <section class="plans-section" id="plans"><div class="shell">
-  <div class="section-heading"><p class="kicker">More learning. Less card making.</p><h2>Start Free.<br>Make Student your everyday.</h2><p class="section-intro">Try every card type for free. Student gives you 12 times the monthly AI credits, with all the study tools included.</p></div>
+  <div class="section-heading"><p class="kicker">Choose inside the app</p><h2>Start Free.<br>Upgrade when you need more.</h2><p class="section-intro">Every account starts Free. Student gives you 12 times the monthly AI credits, with all the study tools included. You don’t need to choose a paid plan to get started.</p></div>
+  <div class="plan-overview" aria-label="Plans at a glance"><article><h3>Free</h3><p class="overview-price">£0</p><p><strong>25 credits / month</strong><br>Plus 100 welcome credits once.</p><p>Try all the core tools.</p></article><article class="recommended"><p class="plan-badge">Recommended</p><h3>Student</h3><p class="overview-price">£14.99 / month</p><p>or £149 / year</p><p><strong>300 credits / month</strong></p><p>More room for regular study.</p></article><article><h3>Pro</h3><p class="overview-price">£29.99 / month</p><p>or £299 / year</p><p><strong>800 credits / month</strong></p><p>For longer, heavier sessions.</p></article></div>
+  <p class="comparison-hint">Compare every feature below. On a smaller screen, scroll the table sideways.</p>
   <div class="comparison-scroll" tabindex="0" role="region" aria-label="Compare nika plans">
     <table class="comparison"><caption>Choose the plan that fits your study routine</caption><thead><tr><th scope="col">What you get</th><th scope="col"><span>Free</span><strong>£0</strong></th><th scope="col" class="recommended"><span class="recommended-label">Recommended</span><span>Student</span><strong>£14.99<span> / month</span></strong><p>or £149 / year</p></th><th scope="col"><span>Pro</span><strong>£29.99<span> / month</span></strong><p>or £299 / year</p></th></tr></thead>
     <tbody>
@@ -84,13 +114,14 @@
       <tr><th scope="row">Activity insights</th><td>Included</td><td class="recommended">Included</td><td>Included</td></tr>
       <tr><th scope="row">Buy extra credits when needed</th><td>£4.99 / 100</td><td class="recommended">£4.99 / 100</td><td>£4.99 / 100</td></tr>
       <tr><th scope="row">Best for</th><td>Trying your workflow</td><td class="recommended">Regular study</td><td>Longer, heavier sessions</td></tr>
-    </tbody><tfoot><tr><td></td><td><a class="button secondary" href="{{ hugo.Data.nika.account_url }}/signup">Create account</a></td><td class="recommended"><a class="button" href="{{ hugo.Data.nika.account_url }}/signup">Create account</a></td><td><a class="button secondary" href="{{ hugo.Data.nika.account_url }}/signup">Create account</a></td></tr></tfoot></table>
+    </tbody></table>
   </div>
   <p class="plan-explanation">Every plan has the core tools. Larger PDFs and deeper AI processing use more credits. Student gives regular study more room, without locking away your favourite features.</p>
   <p class="plan-explanation">Every account starts Free. Choose Student or Pro inside the app. Welcome credits are granted once after email confirmation, not again when you change plans. Paid plans renew until cancelled. See the credit rules below.</p>
+  <div class="section-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </div></section>
 <section class="section shell questions"><h2>A few good<br>questions.</h2><div class="answers">
-  <details><summary>How will I get started?</summary><p>Create your account and confirm your email. Install nika and sign in. Answer a few short questions, or skip them, then create your first cards. Free is your starting plan. Change your plan inside the app when you need more credits.</p></details>
+  <details><summary>How will I get started?</summary><p>Once downloads are available, install nika for your computer. Create your account in the app, confirm your email and sign in. Answer a few short questions, or skip them, then create and review your first cards. Free is your starting plan. Change your plan inside the app when you need more credits.</p></details>
   <details><summary>Do purchases stay inside the app?</summary><p>You choose your plan or credit top-up in nika. Secure Stripe Checkout or the billing portal may briefly open in your browser to complete payment or manage the subscription. Your plan and credits then update in the app after payment is confirmed.</p></details>
   <details><summary>Do I need Anki?</summary><p>nika creates cards for Anki; it does not replace Anki’s study scheduler. Direct sync needs Anki desktop and AnkiConnect configured. You can also use the app’s export tools.</p></details>
   <details><summary>Will AI always get the answer right?</summary><p>No. AI can make mistakes or miss important context. Read each card, check it against your source and edit it before adding it to your deck.</p></details>
@@ -98,14 +129,11 @@
   <details><summary>How do AI credits work?</summary><p>Credits cover AI processing, not a fixed number of cards. Full PDFs and deeper processing can use more credits. Monthly credits reset at the start of each UTC calendar month without rollover, including on annual plans. Welcome and purchased credits carry forward while your account is open. Need more? Add 100 credits for £4.99.</p></details>
   <details><summary>What do the screenshots show?</summary><p>The real nika desktop interface using example study material and example numbers. They show the workflow, not measured customer results.</p></details>
 </div></section>
-<section class="download-section" id="download"><div class="shell">
+<section class="download-section final-download"><div class="shell">
   <img class="download-icon" src="{{ "media/nika/icon.png" | relURL }}" width="88" height="88" loading="lazy" alt="nika app icon">
-  <p class="kicker">nika for desktop</p><h2>Your next study session.<br>A little more considered.</h2>
-  {{ if hugo.Data.nika.launch_ready }}<p>Download. Confirm your email. Start Free.<br>Upgrade when you’re ready, from inside the app.</p>{{ else }}<p>The new look is here. Public downloads are next.<br>We’re finishing account, payment and desktop release checks.</p>{{ end }}
-  <div class="actions">
-  {{ if and hugo.Data.nika.launch_ready hugo.Data.nika.macos_url }}<a class="button" href="{{ hugo.Data.nika.macos_url }}">Download for macOS <span aria-hidden="true">↓</span></a>{{ else }}<button class="button" disabled>macOS · release checks in progress</button>{{ end }}
-  {{ if and hugo.Data.nika.launch_ready hugo.Data.nika.windows_url }}<a class="button secondary" href="{{ hugo.Data.nika.windows_url }}">Download for Windows <span aria-hidden="true">↓</span></a>{{ else }}<button class="button secondary" disabled>Windows · release checks in progress</button>{{ end }}
-  </div><p class="download-note">For adults aged 18+. Available installers appear here once their release checks pass.</p>
+  <h2>More time learning.<br>Less time making cards.</h2>
+  {{ partial "nika/download-links.html" (dict) }}
+  <p class="download-context">{{ if hugo.Data.nika.launch_ready }}Install nika. Create your account. Start Free.{{ else }}Public installers are not available yet. View your platform’s release status above.{{ end }}</p>
 </div></section>
 </main>
 <footer class="shell footer"><span>nika</span><div><a href="{{ hugo.Data.nika.account_url }}/privacy">Privacy</a><a href="{{ hugo.Data.nika.account_url }}/terms">Terms</a><a href="mailto:nika@vidunwedagedera.com">Contact</a><a href="{{ "/" | relURL }}">Vidun’s website <span aria-hidden="true">↗</span></a><p>nika is an independent product, not affiliated with Anki, PassMedicine, Apple or Stripe.</p></div></footer>

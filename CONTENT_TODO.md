@@ -28,11 +28,12 @@ This file is internal repository documentation. Hugo does not publish it.
 ## Nika release gates
 
 - [x] Page-only premium visual redesign and real desktop screenshots with synthetic example data.
-- [x] Floating glass navigation, readable product copy, plan comparison table and Create account/Sign in links.
+- [x] Floating glass navigation, readable product copy, plan comparison table and persistent Sign in access.
 - [x] Page-only rotating feature headline and screenshot showcase, with manual selection, pause and reduced-motion support.
+- [x] Download-first UX: paired platform actions in seven places, honest per-platform release status, consistent install-first setup, compact navigation and readable plan summaries.
 - [ ] Owner-supplied demonstration video. Set `demo_video_url` only after reviewing the actual recording; do not insert a simulated play button.
 - [ ] Supply an optional short silent MP4 as `demo_preview_url` and English WebVTT captions as `demo_captions_url` when the full recording contains speech. Preview/full-player controls are implemented but remain hidden without real footage.
-- [ ] Approve public publication of the new rotating showcase after reviewing its local preview.
+- [ ] Approve public publication of the rotating showcase and download-first UX after reviewing the local preview.
 - [ ] Resolve the designated Cambridge invitation's Microsoft Defender quarantine and verify fresh confirmation/reset delivery before opening signup.
 - [ ] Deploy and verify personalised onboarding before treating the preview's described customer workflow as released.
 - [ ] Complete account confirmation/recovery acceptance checks and the remaining legal/billing checks before opening public access.

@@ -137,7 +137,22 @@ export function initialiseDemo(root, win = window, doc = document) {
   return { state, sync };
 }
 
+export function initialiseNavigation(menu, doc = document) {
+  const summary = menu.querySelector('summary');
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
+  menu.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.open) {
+      menu.open = false;
+      event.preventDefault();
+      summary.focus();
+    }
+  });
+  doc.addEventListener('click', event => { if (menu.open && !menu.contains(event.target)) menu.open = false; });
+  menu.addEventListener('focusout', event => { if (event.relatedTarget && !menu.contains(event.relatedTarget)) menu.open = false; });
+}
+
 if (typeof document !== 'undefined') {
+  document.querySelectorAll('.nav-menu').forEach(menu => initialiseNavigation(menu));
   document.querySelectorAll('[data-nika-showcase]').forEach(root => initialiseShowcase(root));
   document.querySelectorAll('[data-nika-demo]').forEach(root => initialiseDemo(root));
 }

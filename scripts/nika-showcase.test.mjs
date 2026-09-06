@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialiseShowcase, initialiseDemo, motionAllowed, nextFeature } from '../assets/js/nika-showcase.mjs';
+import { initialiseShowcase, initialiseDemo, initialiseNavigation, motionAllowed, nextFeature } from '../assets/js/nika-showcase.mjs';
 
 class Element {
   constructor() {
@@ -13,6 +13,21 @@ class Element {
   getAttribute(name) { return name === 'src' ? this.src : this.attrs[name]; }
   focus() { this.focused = true; }
 }
+test('compact navigation closes after selection, Escape, outside click and focus leaving', async () => {
+  const menu = new Element(), summary = new Element(), link = new Element(), doc = new Element();
+  menu.querySelector = () => summary;
+  menu.querySelectorAll = () => [link];
+  menu.contains = item => [menu, summary, link].includes(item);
+  initialiseNavigation(menu, doc);
+  menu.open = true; await link.emit('click'); assert.equal(menu.open, false);
+  menu.open = true; let prevented = false;
+  await menu.emit('keydown', { key: 'Escape', preventDefault: () => { prevented = true; } });
+  assert.equal(menu.open, false); assert.equal(summary.focused, true); assert.equal(prevented, true);
+  menu.open = true; await doc.emit('click', { target: link }); assert.equal(menu.open, true);
+  await doc.emit('click'); assert.equal(menu.open, false);
+  menu.open = true; await menu.emit('focusout', { relatedTarget: link }); assert.equal(menu.open, true);
+  await menu.emit('focusout', { relatedTarget: doc }); assert.equal(menu.open, false);
+});
 function environment({ reduced = false, saveData = false } = {}) {
   const preference = Object.assign(new Element(), { matches: reduced });
   const connection = Object.assign(new Element(), { saveData });
