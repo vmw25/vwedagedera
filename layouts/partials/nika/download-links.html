@@ -1,0 +1,9 @@
+{{/* One source of truth for every download entry point. Never fabricate an artifact URL. */}}
+{{ $compact := .compact | default false }}
+<div class="download-links{{ if $compact }} download-links-compact{{ end }}" role="group" aria-label="nika desktop downloads">
+  {{ range $platform := slice "macos" "windows" }}
+    {{ $release := partial "nika/release.html" $platform }}
+    {{ $name := $release.name }}{{ $url := $release.url }}{{ $ready := $release.ready }}
+    <a class="button{{ if eq $platform "windows" }} secondary{{ end }}{{ if $compact }} small-button{{ end }}" data-download-platform="{{ $platform }}" data-download-state="{{ if $ready }}ready{{ else }}pending{{ end }}" href="{{ if $ready }}{{ $url }}{{ else }}#download-{{ $platform }}{{ end }}"{{ if not $ready }} aria-label="{{ $name }} downloads, not available yet"{{ end }}>{{ if $compact }}{{ $name }}{{ else if $ready }}Download for {{ $name }}{{ else }}{{ $name }} downloads{{ end }} <span aria-hidden="true">{{ if $ready }}↓{{ else }}↗{{ end }}</span></a>
+  {{ end }}
+</div>

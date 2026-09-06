@@ -5,5 +5,57 @@ account_url: "https://web-production-1d361.up.railway.app"
 macos_url: ""
 windows_url: ""
 version: ""
-# Owner will supply the demo recording. No simulated video/play button is shown.
+# Owner will supply the real MP4. No simulated footage or dead play button.
+# Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
+demo_preview_url: ""
+demo_captions_url: ""
+showcase:
+  - label: "PDFs & text"
+    phrase: "From full PDFs."
+    title: "A whole PDF. Cards in your words."
+    description: "Open a full PDF or paste your notes. Choose Instant, Balanced or Advanced generation, then review Q&A or cloze cards shaped by your preferences. Check coverage before you finish."
+    image: "media/nika/create.webp"
+    alt: "nika with source material beside editable cards in an example workspace."
+    width: 1320
+    height: 900
+  - label: "Images"
+    phrase: "From diagrams."
+    title: "See it. Hide it. Recall it."
+    description: "Bring screenshots and diagrams into your deck. Turn image text into cards or use image occlusion to hide labels, with masks you can review and adjust."
+    image: "media/nika/create.webp"
+    alt: "nika’s card workspace, including image input and editable cards. Example workspace, not a separate occlusion demonstration."
+    width: 1320
+    height: 900
+  - label: "PassMedicine"
+    phrase: "From your mistakes."
+    title: "Less copying. More learning from mistakes."
+    description: "Use the floating session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
+    image: "media/nika/passmedicine.webp"
+    alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
+    width: 1320
+    height: 900
+  - label: "Your style"
+    phrase: "Shaped by you."
+    title: "Your wording. Your level of detail."
+    description: "Set your study context, preferred formats and answer length. With personal learning enabled, reviewed edits and chosen Anki decks help guide future cards. Override one batch without changing your defaults."
+    image: "media/nika/onboarding.png"
+    alt: "nika onboarding with labelled study-preference questions and controls to skip or save progress. Example workspace."
+    width: 850
+    height: 940
+  - label: "Review & Anki"
+    phrase: "Ready for Anki."
+    title: "Your final edit. Your next deck."
+    description: "Preview, edit or regenerate cards before you keep them. Choose your destination deck, send to Anki through AnkiConnect or export. Your existing study routine stays yours."
+    image: "media/nika/create.webp"
+    alt: "nika showing editable question-and-answer cards beside the source material before adding to Anki. Example workspace."
+    width: 1320
+    height: 900
+  - label: "Insights"
+    phrase: "Progress in view."
+    title: "Your study activity. Made useful."
+    description: "See cards created and kept, source breakdowns and session activity. Spot patterns in how you make cards and choose your next focus. Activity is not a measure of memory or model accuracy."
+    image: "media/nika/insights.webp"
+    alt: "nika Insights with card totals, a session activity grid and source breakdowns. Synthetic example numbers, not customer results."
+    width: 1320
+    height: 900
