@@ -5,3 +5,5 @@ account_url: "https://web-production-1d361.up.railway.app"
 macos_url: ""
 windows_url: ""
 version: ""
+# Owner will supply the demo recording. No simulated video/play button is shown.
+demo_video_url: ""
