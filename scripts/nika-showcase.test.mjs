@@ -28,7 +28,7 @@ test('compact navigation closes after selection, Escape, outside click and focus
   menu.open = true; await menu.emit('focusout', { relatedTarget: link }); assert.equal(menu.open, true);
   await menu.emit('focusout', { relatedTarget: doc }); assert.equal(menu.open, false);
 });
-function environment({ reduced = false, saveData = false } = {}) {
+function environment({ reduced = false, saveData = false, observer = false } = {}) {
   const preference = Object.assign(new Element(), { matches: reduced });
   const connection = Object.assign(new Element(), { saveData });
   const doc = Object.assign(new Element(), { hidden: false });
@@ -36,16 +36,20 @@ function environment({ reduced = false, saveData = false } = {}) {
   const win = { matchMedia: () => preference, navigator: { connection }, requestAnimationFrame: fn => fn(),
     setTimeout: fn => { timers.set(++identity, fn); return identity; }, clearTimeout: id => timers.delete(id),
     location: { assign: url => { win.redirect = url; } } };
-  return { win, doc, preference, connection, timers };
+  const observers = [];
+  if (observer) win.IntersectionObserver = class {
+    constructor(callback, options) { this.callback = callback; this.options = options; observers.push(this); }
+    observe(target) { this.target = target; }
+  };
+  return { win, doc, preference, connection, timers, observers };
 }
 function showcase(options) {
   const env = environment(options), root = new Element(), toggle = new Element(), phrase = new Element(), status = new Element(), controls = new Element();
   controls.hidden = true;
-  const panels = [0, 1, 2, 3].map(i => Object.assign(new Element(), { dataset: { phrase: 'Phrase ' + i }, hidden: i !== 0 }));
+  const panels = [0, 1, 2, 3, 4, 5].map(i => Object.assign(new Element(), { dataset: { phrase: 'Phrase ' + i }, hidden: i !== 0 }));
   const choices = panels.map((_, i) => Object.assign(new Element(), { textContent: 'Feature ' + i }));
   root.querySelectorAll = name => name === '[data-showcase-panel]' ? panels : choices;
-  root.querySelector = name => ({ '[data-showcase-motion]': toggle, '[data-showcase-controls]': controls, '[data-showcase-announcement]': status })[name];
-  env.doc.querySelector = () => phrase;
+  root.querySelector = name => ({ '[data-showcase-motion]': toggle, '[data-showcase-controls]': controls, '[data-showcase-announcement]': status, '#showcase-phrase': phrase })[name];
   const controller = initialiseShowcase(root, env.win, env.doc);
   return { ...env, root, toggle, phrase, status, controls, panels, choices, controller };
 }
@@ -67,7 +71,7 @@ test('automatic switching synchronises copy and exposes only one slide without a
 test('manual feature selection pauses persistently and announces its label', async () => {
   const f = showcase(); await f.choices[2].emit('click');
   assert.equal(f.controller.index, 2); assert.equal(f.timers.size, 0); assert.equal(f.status.textContent, 'Feature 2 selected');
-  await f.root.emit('pointerleave'); assert.equal(f.timers.size, 0);
+  await f.controls.emit('pointerleave'); assert.equal(f.timers.size, 0);
   f.doc.hidden = true; await f.doc.emit('visibilitychange'); f.doc.hidden = false; await f.doc.emit('visibilitychange');
   assert.equal(f.timers.size, 0);
 });
@@ -76,10 +80,30 @@ test('focus pauses; pointer click on Pause must not inadvertently restart rotati
   assert.equal(f.controller.state.paused, true); assert.equal(f.timers.size, 0);
   await f.toggle.emit('click'); assert.equal(f.controller.state.paused, false); assert.equal(f.timers.size, 1);
 });
-test('hover pauses temporarily, page visibility never runs hidden timers', async () => {
-  const f = showcase(); await f.root.emit('pointerenter', { pointerType: 'mouse' }); assert.equal(f.timers.size, 0);
-  await f.root.emit('pointerleave'); assert.equal(f.timers.size, 1);
+test('control hover pauses temporarily, resting elsewhere in the hero does not freeze the headline', async () => {
+  const f = showcase(); await f.root.emit('pointerenter', { pointerType: 'mouse' }); assert.equal(f.timers.size, 1);
+  await f.controls.emit('pointerenter', { pointerType: 'mouse' }); assert.equal(f.timers.size, 0);
+  await f.controls.emit('pointerleave'); assert.equal(f.timers.size, 1);
   f.doc.hidden = true; await f.doc.emit('visibilitychange'); assert.equal(f.timers.size, 0);
+});
+test('opening hero visibility starts rotation even when the screenshots are below the fold', () => {
+  const f = showcase({ observer: true });
+  assert.equal(f.timers.size, 0);
+  assert.equal(f.observers[0].target, f.root);
+  assert.equal(f.observers[0].options.threshold, 0);
+  f.observers[0].callback([{ isIntersecting: true }]); assert.equal(f.timers.size, 1);
+  f.observers[0].callback([{ isIntersecting: false }]); assert.equal(f.timers.size, 0);
+});
+test('all six feature phrases, screenshots and controls cycle together and wrap', () => {
+  const f = showcase();
+  for (let step = 1; step <= 6; step++) {
+    [...f.timers.values()][0]();
+    const index = step % 6;
+    assert.equal(f.phrase.textContent, 'Phrase ' + index);
+    assert.equal(f.panels[index].hidden, false);
+    assert.equal(f.panels.filter(p => !p.hidden).length, 1);
+    assert.equal(f.choices.filter(c => c.attrs['aria-pressed'] === 'true').length, 1);
+  }
 });
 for (const option of ['reduced', 'saveData']) test(`${option} starts static, retains manual feature selection and responds to preference changes`, async () => {
   const f = showcase({ [option]: true }); assert.equal(f.timers.size, 0); assert.equal(f.toggle.disabled, true);

@@ -9,9 +9,10 @@ export function initialiseShowcase(root, win = window, doc = document) {
   const panels = [...root.querySelectorAll('[data-showcase-panel]')];
   const choices = [...root.querySelectorAll('[data-showcase-choice]')];
   const toggle = root.querySelector('[data-showcase-motion]');
-  const phrase = doc.querySelector('#showcase-phrase');
+  const phrase = root.querySelector('#showcase-phrase');
+  const interaction = root.querySelector('[data-showcase-controls]');
   const announcement = root.querySelector('[data-showcase-announcement]');
-  if (panels.length < 2 || choices.length !== panels.length || !toggle || !phrase) return;
+  if (panels.length < 2 || choices.length !== panels.length || !toggle || !phrase || !interaction) return;
   const preference = win.matchMedia('(prefers-reduced-motion: reduce)');
   const connection = win.navigator.connection;
   let index = 0, timer = null, pointerIntent = null;
@@ -39,7 +40,7 @@ export function initialiseShowcase(root, win = window, doc = document) {
     toggle.textContent = toggle.disabled ? 'Automatic motion off' : state.paused ? 'Play showcase' : 'Pause showcase';
     if (motionAllowed(state)) timer = win.setTimeout(() => { show(nextFeature(index, panels.length)); sync(); }, 6500);
   }
-  root.querySelector('[data-showcase-controls]').hidden = false;
+  interaction.hidden = false;
   choices.forEach((choice, i) => choice.addEventListener('click', () => { state.paused = true; show(i, true); sync(); }));
   toggle.addEventListener('pointerdown', () => { pointerIntent = state.paused; });
   toggle.addEventListener('pointercancel', () => { pointerIntent = null; });
@@ -49,15 +50,17 @@ export function initialiseShowcase(root, win = window, doc = document) {
     state.paused = !play;
     sync();
   });
-  root.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { state.hovered = true; sync(); } });
-  root.addEventListener('pointerleave', () => { state.hovered = false; pointerIntent = null; sync(); });
+  // Keep the restored heading animated when the pointer rests elsewhere in the
+  // tall hero. Pause over the actual interactive controls, or on keyboard focus.
+  interaction.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { state.hovered = true; sync(); } });
+  interaction.addEventListener('pointerleave', () => { state.hovered = false; pointerIntent = null; sync(); });
   root.addEventListener('focusin', () => { state.paused = true; sync(); });
   doc.addEventListener('visibilitychange', () => { state.hidden = doc.hidden; sync(); });
   preference.addEventListener('change', () => { state.reduced = preference.matches; sync(); });
   connection?.addEventListener?.('change', () => { state.saveData = !!connection.saveData; sync(); });
   if (win.IntersectionObserver) new win.IntersectionObserver(entries => {
     state.inView = entries[0].isIntersecting; sync();
-  }, { threshold: 0.12 }).observe(root);
+  }, { threshold: 0 }).observe(root);
   sync();
   return { show, state, get index() { return index; } };
 }
