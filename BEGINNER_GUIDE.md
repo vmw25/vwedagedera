@@ -10,7 +10,7 @@ Do not edit the generated `public/` folder. Hugo replaces it during every build.
 
 ## 2. What HugoBlox is
 
-HugoBlox is the design and page-building system used on top of Hugo. This website uses a few small, project-specific blocks to keep the homepage, project list and writing page simple.
+HugoBlox is the design and page-building system used on top of Hugo. This website uses a few small, site-specific blocks to keep the homepage, sidequest list and writing page simple.
 
 ## 3. What GitHub Pages is
 
@@ -27,7 +27,7 @@ GitHub Actions is the automated process that builds and publishes the website wh
 ## 5. Important folders and files
 
 - `content/_index.md`: homepage name, role, introduction and GitHub link.
-- `content/projects/`: one folder for each project page.
+- `content/sidequests/`: one folder for each sidequest page.
 - `content/writing/`: the writing page and draft articles.
 - `data/authors/me.yaml`: your name, biography, interests, education and public profile links.
 - `assets/media/`: the assistant mascot, social-sharing graphic and, later, your photograph.
@@ -50,11 +50,11 @@ Repository → `data` → `authors` → `me.yaml` → pencil icon
 
 Edit only the words below `bio: |`. Keep the two-space indentation at the start of the biography line. This longer biography is used on detailed pages rather than the compact homepage.
 
-## 7. How to add a project
+## 7. How to add a sidequest
 
-The safest method is to copy the structure of an existing project folder in `content/projects/`.
+The safest method is to copy the structure of an existing sidequest folder in `content/sidequests/`.
 
-Create a short lower-case folder name with hyphens, for example `content/projects/my-new-project/`, and add an `index.md` file inside it.
+Create a short lower-case folder name with hyphens, for example `content/sidequests/my-new-sidequest/`, and add an `index.md` file inside it.
 
 At the top, include:
 
@@ -76,21 +76,21 @@ show_breadcrumb: true
 
 Write the page below the second `---`. Do not add results, dates or metrics until you have verified them.
 
-### Add a picture to a project card
+### Add a picture to a sidequest card
 
 Use a landscape image that you own and are comfortable publishing. A `1200 × 675` JPG, PNG or WebP works well. Never upload patient information, confidential research material or an image you do not have permission to use.
 
 In GitHub:
 
-1. Open the project folder, for example `content/projects/cardiac-electrophysiology-problems/`.
+1. Open the sidequest folder, for example `content/sidequests/nika/`.
 2. Select **Add file → Upload files**.
 3. Upload the image into that same folder.
 4. Name it exactly `featured.jpg`, `featured.png` or `featured.webp`.
 5. Commit the upload to your working branch.
 
-The homepage and Projects page will find it automatically. You do not need to add an image path to the code. If there is no `featured` image, the website shows the coloured initial placeholder instead.
+The homepage and Sidequests page will find it automatically. You do not need to add an image path to the code. If there is no `featured` image, the website shows the coloured initial placeholder instead.
 
-For accessible alternative text, add this inside the project's top YAML section:
+For accessible alternative text, add this inside the sidequest's top YAML section:
 
 ```yaml
 image_alt: 'A short, factual description of the image.'
@@ -162,7 +162,7 @@ The assistant picture is `assets/media/assistant-mascot.png`. Replacing that fil
 
 ## 11a. How search and light/dark mode work
 
-- **Search** automatically searches the words in every published project and writing page. Add or edit normal page text, then rebuild the site; there is no separate search list to maintain.
+- **Search** automatically searches the words in every published sidequest and writing page. Add or edit normal page text, then rebuild the site; there is no separate search list to maintain.
 - **Light/dark mode** follows the visitor's device the first time. The button remembers that visitor's choice in their browser.
 - To change the colours, edit the variables at the top of `assets/css/custom.css`. The first `:root` group is dark mode. The `:root[data-theme="light"]` group is light mode.
 
