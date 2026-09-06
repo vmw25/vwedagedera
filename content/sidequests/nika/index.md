@@ -1,5 +1,5 @@
 ---
-title: 'nika — Make room for learning.'
+title: 'nika - Make room for learning.'
 summary: 'Turn your study material into Anki cards. Review, refine and make them yours.'
 description: 'Meet nika for desktop. Create Anki cards from text, images and PDFs, with review and personalisation built in.'
 type: nika
