@@ -1,0 +1,7 @@
+# Publish only verified, signed/notarised artifacts with stable public HTTPS URLs.
+# Keep launch_ready false until email, legal, billing and acceptance checks pass.
+launch_ready: false
+account_url: "https://web-production-1d361.up.railway.app"
+macos_url: ""
+windows_url: ""
+version: ""
