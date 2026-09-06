@@ -25,7 +25,15 @@ This file is internal repository documentation. Hugo does not publish it.
 - [ ] Evidence-checked writing ready for publication.
 - [ ] Any public project links that should appear on project pages.
 
-## Optional
+## Nika release gates
+
+- [x] Page-only premium visual redesign and real desktop screenshots with synthetic example data.
+- [ ] Complete account confirmation/recovery acceptance checks and the remaining legal/billing checks before opening public access.
+- [ ] Publish verified customer installers and populate `data/nika.yaml`; keep `launch_ready: false` until all launch gates pass.
+- [ ] Complete macOS signing/notarisation or document an approved alternative distribution route; independently verify Windows packaging.
+- [ ] Do not publish the founder's personal-mode installer as the account-based customer release.
+
+## Other optional content
 
 - [ ] Preferred public description of the education venture.
 - [ ] A short CV summary for the website.
