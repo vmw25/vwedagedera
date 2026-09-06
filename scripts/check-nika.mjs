@@ -21,6 +21,13 @@ assert.match(html, /Recommended/);
 assert.match(html, /12 times the monthly AI credits/);
 assert.doesNotMatch(html, /<figcaption[ >]|[—–]|&#(?:8211|8212);|&(?:mdash|ndash);/);
 assert.doesNotMatch(html, /<video[ >]/, 'Demo must not appear until the owner supplies a real video');
+assert.match(html, /data-nika-showcase/);
+assert.equal((html.match(/data-showcase-panel[\s>]/g) || []).length, 4);
+assert.equal((html.match(/data-showcase-choice=/g) || []).length, 4);
+assert.match(html, /Pause showcase/);
+assert.match(html, /aria-roledescription=(?:"carousel"|carousel)/);
+assert.match(html, /nika-showcase\./);
+assert.doesNotMatch(html, /data-nika-demo|Watch the demo/, 'No empty video player or dead Watch control without footage');
 assert.doesNotMatch(html, /example\.com|localhost|127\.0\.0\.1|sk_live_|sk_test_|re_[A-Za-z0-9]{20}/);
 const localRefs = [...html.matchAll(/\b(?:href|src)=(?:["']([^"']+)["']|([^\s>]+))/g)].map(m => m[1] || m[2]);
 assert.ok(localRefs.length > 20, 'Expected all rendered navigation, screenshot and account links');
@@ -36,6 +43,7 @@ for (const ref of localRefs) {
 for (const file of ['index.html', 'sidequests/index.html', 'sidequests/cs50/index.html']) {
   const other = readFileSync(join(output, file), 'utf8');
   assert.doesNotMatch(other, /css\/nika\./, 'Nika stylesheet leaked into ' + file);
+  assert.doesNotMatch(other, /nika-showcase\./, 'Nika script leaked into ' + file);
 }
 assert.match(readFileSync(join(output, 'nika/index.html'), 'utf8'), /url=\/sidequests\/nika\//);
 const pages = [];

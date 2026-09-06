@@ -5,5 +5,41 @@ account_url: "https://web-production-1d361.up.railway.app"
 macos_url: ""
 windows_url: ""
 version: ""
-# Owner will supply the demo recording. No simulated video/play button is shown.
+# Owner will supply the real MP4. No simulated footage or dead play button.
+# Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
+demo_preview_url: ""
+demo_captions_url: ""
+showcase:
+  - label: "Create cards"
+    phrase: "for better cards."
+    title: "Your material. Your next deck."
+    description: "Turn text, images and full PDFs into editable Anki cards. Q&A, cloze or image occlusion, ready for your review."
+    image: "media/nika/create.webp"
+    alt: "nika with source material beside editable cards in an example workspace."
+    width: 1320
+    height: 900
+  - label: "PassMedicine"
+    phrase: "for less copying."
+    title: "A mistake worth coming back to."
+    description: "Start a PassMedicine session. Capture the questions that caught you out, then turn them into cards to check and practise."
+    image: "media/nika/passmedicine.webp"
+    alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
+    width: 1320
+    height: 900
+  - label: "Your style"
+    phrase: "for your own style."
+    title: "Short answers? Hidden labels? Your call."
+    description: "Tell nika what you study and how you like your cards. Your preferences and reviewed examples guide the next batch."
+    image: "media/nika/onboarding.png"
+    alt: "nika onboarding with labelled study-preference questions and controls to skip or save progress. Example workspace."
+    width: 850
+    height: 940
+  - label: "Insights"
+    phrase: "for clearer progress."
+    title: "See the work behind your study."
+    description: "Explore your card totals, sources and study activity. Spot patterns in your workflow and choose your next focus."
+    image: "media/nika/insights.webp"
+    alt: "nika Insights with card totals, a session activity grid and source breakdowns. Synthetic example numbers, not customer results."
+    width: 1320
+    height: 900
