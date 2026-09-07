@@ -47,6 +47,38 @@ test('launch gate prevents populated URLs leaking as active downloads', () => {
   assert.equal(status, 0, output);
   assert.doesNotMatch(html, /href="https:\/\/downloads\.invalid|data-installer=/);
 });
+const beta = { launch_ready: false, macos_beta: true, macos_url: mac, windows_url: '',
+  version: '1.5.0 beta', macos_sha256: 'a'.repeat(64), macos_release_notes_url: 'https://downloads.invalid/release' };
+test('explicit Mac beta is downloadable without opening accounts or claiming notarisation', () => {
+  const { status, html, output } = render(beta);
+  assert.equal(status, 0, output);
+  assert.equal(links(html, 'macos').length, 7);
+  links(html, 'macos').forEach(a => {
+    assert.ok(a.includes(`href="${mac}"`));
+    assert.match(a, /data-download-state="beta"/);
+    assert.match(a, /aria-describedby="macos-beta-warning"/);
+  });
+  links(html, 'windows').forEach(a => assert.match(a, /data-download-state="pending"/));
+  assert.match(html, /Not notarised by Apple/);
+  assert.match(html, /public signup and purchases are not open yet/);
+  assert.match(html, /macOS 14/);
+  assert.match(html, /Do not replace a personal\/founder/);
+  assert.match(html, /Release notes and checksum/);
+  assert.match(html, /noindex,follow/);
+  assert.doesNotMatch(html, /data-installer="windows"|Public installers are not available yet|Ready to download/);
+});
+for (const field of ['macos_url', 'version', 'macos_sha256', 'macos_release_notes_url']) {
+  test(`Mac beta fails closed without ${field}`, () => {
+    const result = render({ ...beta, [field]: '' });
+    assert.notEqual(result.status, 0);
+    assert.match(result.output, /Mac beta requires/);
+  });
+}
+test('Windows cannot inherit Mac beta availability', () => {
+  const { status, html, output } = render({ ...beta, windows_url: windows });
+  assert.equal(status, 0, output);
+  assert.doesNotMatch(html, /href="https:\/\/downloads.invalid\/nika-x64.exe"/);
+});
 test('one verified platform can be available without making the other appear released', () => {
   const { status, html, output } = render({ launch_ready: true, macos_url: mac, windows_url: '' });
   assert.equal(status, 0, output);
