@@ -51,10 +51,10 @@
         <p class="release-status">Ready to download{{ with hugo.Data.nika.version }} · {{ . }}{{ end }}</p>
         <p>{{ if eq $platform "macos" }}Apple silicon (M1 or newer), macOS 14 or later.{{ else }}64-bit Windows PC (Intel or AMD).{{ end }}</p>
         <a class="button" data-installer="{{ $platform }}" href="{{ $url }}">Download for {{ $name }} <span aria-hidden="true">↓</span></a>
-        <p>{{ if eq $platform "macos" }}Open the downloaded installer and follow the steps.{{ else }}Open the downloaded setup file and follow the steps.{{ end }} Then open nika to create your account or sign in.</p>
+        <p>{{ if eq $platform "macos" }}Open the .dmg and drag nika into Applications.{{ else }}Open the .exe installer and follow the steps.{{ end }} Then open nika to create your account or sign in. Python is included, there is nothing else to install for nika.</p>
       {{ else }}
         <p class="release-status">Not available yet</p>
-        <p>{{ if eq $platform "macos" }}The Apple silicon installer is in private testing. Public release and installation checks are still in progress. An Intel Mac release is not available.{{ else }}The Windows installer still needs a native build and installation testing. There is no public Windows download yet.{{ end }}</p>
+        <p>{{ if eq $platform "macos" }}The Apple silicon .dmg is in private testing. Public distribution signing and installation checks are still in progress. An Intel Mac release is not available.{{ else }}The Windows .exe installer still needs a native build and installation testing. There is no public Windows download yet.{{ end }}</p>
       {{ end }}
     </article>
   {{ end }}
