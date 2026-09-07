@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process';
 // Render the actual Hugo template in an isolated fixture, not the served preview.
 // Synthetic installer URLs are never fetched or written into production site data.
 const source = resolve(import.meta.dirname, '..');
-const mac = 'https://downloads.invalid/nika-arm64.pkg';
+const mac = 'https://downloads.invalid/nika-arm64.dmg';
 const windows = 'https://downloads.invalid/nika-x64.exe';
 function render(config) {
   const fixture = mkdtempSync(join(tmpdir(), 'nika-download-test-'));
@@ -65,11 +65,15 @@ test('both released platforms have consistent one-click installer links and usef
   assert.match(html, /AnkiConnect/);
   assert.match(html, /Create your account/);
   assert.match(html, /data-installer="windows"/);
+  assert.match(html, /Open the \.dmg and drag nika into Applications/);
+  assert.match(html, /Open the \.exe installer/);
 });
 for (const [platform, url] of [
   ['macos', 'http://downloads.invalid/nika.pkg'],
   ['macos', 'javascript:alert(1)'],
   ['macos', 'https://downloads.invalid/nika.exe'],
+  ['macos', 'https://downloads.invalid/nika.pkg'],
+  ['windows', 'https://downloads.invalid/nika.dmg'],
   ['windows', 'https://downloads.invalid/nika.zip'],
   ['windows', 'https://downloads.invalid/login'],
 ]) test(`invalid ${platform} installer URL fails the build: ${url}`, () => {
