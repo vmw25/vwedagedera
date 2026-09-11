@@ -1,5 +1,6 @@
 ---
 title: 'CS50'
+draft: true
 summary: 'My CS50 project page. Full details will be added later.'
 description: 'A placeholder for my CS50 project.'
 weight: 10

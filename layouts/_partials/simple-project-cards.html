@@ -7,7 +7,11 @@
     {{ if not $cardImage }}{{ $cardImage = .Resources.GetMatch "cover.*" }}{{ end }}
     <article class="simple-project-card">
       <a href="{{ .RelPermalink }}">
-        {{ if $cardImage }}
+        {{ if .Params.card_icon }}
+          <div class="simple-project-card__media" style="display:grid;place-items:center;background:#f5f5f7">
+            <img src="{{ .Params.card_icon | relURL }}" alt="{{ .Params.image_alt | default .Title }}" width="240" height="240" style="width:min(40%,240px);height:auto;object-fit:contain" loading="lazy" decoding="async">
+          </div>
+        {{ else if $cardImage }}
           {{ $displayImage := $cardImage }}
           {{ $smallImage := $cardImage }}
           {{ $mediumImage := $cardImage }}

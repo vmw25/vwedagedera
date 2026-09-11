@@ -1,6 +1,7 @@
 ---
-title: 'Sidequests'
-summary: 'Practical work, experiments and things I am building.'
+title: 'Apps'
+url: /apps/
+summary: 'Explore the apps I am building.'
 type: landing
 aliases:
   - /projects/
@@ -8,11 +9,11 @@ aliases:
 sections:
   - block: simple-collection
     content:
-      title: 'Sidequests'
-      text: 'Practical work, experiments and things I am building.'
+      title: 'Apps'
+      text: 'Explore the apps I am building.'
       section: 'sidequests'
-      item_label: 'View sidequest'
-      empty_text: 'Sidequests will appear here as they are ready.'
+      item_label: 'Explore app'
+      empty_text: 'Apps will appear here as they are ready.'
     design:
       spacing:
         padding: ['0', '0', '0', '0']
