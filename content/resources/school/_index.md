@@ -21,6 +21,12 @@ sections:
           description: 'A complete VW Schools textbook for revising A-Level Chemistry.'
           meta: 'PDF · 207 pages · 28 MB'
           link_text: 'Open chemistry textbook'
+        - label: 'PS'
+          title: 'My Personal Statement'
+          url: '/resources/school/cambridge-medicine-personal-statement/'
+          description: 'Vidun Wedagedera's Personal Statement'
+          meta: 'Text File'
+          link_text: 'Read Vidun's Personal Statement'
     design:
       spacing:
         padding: ['0', '0', '0', '0']

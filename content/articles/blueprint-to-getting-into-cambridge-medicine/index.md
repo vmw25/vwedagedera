@@ -23,8 +23,6 @@ I like to imagine it as a progress bar. At the beginning of Year 12, perhaps you
 
 Everything in this article is about moving that bar.
 
-{{< figure src="royal-papworth.jpg" alt="Royal Papworth Hospital" caption="Royal Papworth Hospital. For me, medicine never felt interesting only as an abstract science; part of the appeal was always where that science ends up — in real hospitals, real teams and real patients." >}}
-
 ## Start by removing things that do not move the progress bar
 
 Let’s go all the way back to the beginning of Year 12.
