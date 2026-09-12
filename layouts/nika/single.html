@@ -25,7 +25,7 @@
       <div class="showcase-choices" role="group" aria-label="Choose a feature">{{ range $index, $item := hugo.Data.nika.showcase }}<button type="button" class="showcase-choice" data-showcase-choice="{{ $index }}" aria-controls="nika-feature-{{ $index }}" aria-pressed="{{ if eq $index 0 }}true{{ else }}false{{ end }}">{{ $item.label }}</button>{{ end }}</div>
     </div>
     {{ partial "nika/download-links.html" (dict) }}
-    <p class="download-context">{{ if hugo.Data.nika.macos_beta }}Mac beta for Apple silicon, macOS 14+. Not notarised, expect a macOS security warning.{{ if not hugo.Data.nika.launch_ready }} Account access is by invitation while signup and payments are being tested.{{ end }} <a href="#download-macos">Read before installing.</a>{{ else if hugo.Data.nika.launch_ready }}Install nika, create your account and start Free. Choose a paid plan later, inside the app.{{ else }}Public installers are not available yet. Check the release status for your computer.{{ end }}</p>
+    <p class="download-context">{{ if hugo.Data.nika.macos_beta }}Mac beta for Apple silicon, macOS 14+. Not notarised, expect a macOS security warning. <a href="#download-macos">Read before installing or updating.</a>{{ else if hugo.Data.nika.launch_ready }}Install nika, create your account and start Free. Choose a paid plan later, inside the app.{{ else }}Public installers are not available yet. Check the release status for your computer.{{ end }}</p>
     <a class="text-link" href="#workflow">See how it works <span aria-hidden="true">↓</span></a>
   </div>
   <div class="product-showcase" role="region" aria-roledescription="carousel" aria-label="Explore nika features">
@@ -40,7 +40,7 @@
 </section>
 <section class="download-section" id="download" aria-labelledby="download-title"><div class="shell">
   <h2 id="download-title">Get nika for your computer.</h2>
-  <p>{{ if and hugo.Data.nika.macos_beta (not hugo.Data.nika.launch_ready) }}The Mac beta is available to download. You need an invited account to use it; public signup and purchases are not open yet.{{ else }}Install the app first. Create your account in nika and start Free.{{ end }}</p>
+  <p>Install the app first. Create your account in nika or sign in to your existing account.</p>
   <div class="download-options">
   {{ range $platform := slice "macos" "windows" }}
     {{ $release := partial "nika/release.html" $platform }}
@@ -51,11 +51,13 @@
         <p class="release-status">{{ if $release.beta }}Early-access beta{{ else }}Ready to download{{ end }}{{ with hugo.Data.nika.version }} · {{ . }}{{ end }}</p>
         <p>{{ if eq $platform "macos" }}Apple silicon (M1 or newer), macOS 14 or later.{{ else }}64-bit Windows PC (Intel or AMD).{{ end }}</p>
         <a class="button" data-installer="{{ $platform }}" href="{{ $url }}"{{ if $release.beta }} aria-describedby="macos-beta-warning"{{ end }}>{{ if $release.beta }}Download Mac beta{{ else }}Download for {{ $name }}{{ end }} <span aria-hidden="true">↓</span></a>
-        <p>{{ if eq $platform "macos" }}Open the .dmg and drag nika into Applications.{{ else }}Open the .exe installer and follow the steps.{{ end }} Then open nika {{ if and $release.beta (not hugo.Data.nika.launch_ready) }}and sign in with your invited account{{ else }}to create your account or sign in{{ end }}. Python is included, there is nothing else to install for nika.</p>
+        <p>{{ if eq $platform "macos" }}Open the .dmg and drag nika into Applications.{{ else }}Open the .exe installer and follow the steps.{{ end }} Then open nika to create your account or sign in. Python is included, there is nothing else to install for nika.</p>
         {{ if $release.beta }}
         <p id="macos-beta-warning"><strong>Not notarised by Apple.</strong> macOS may block the first launch. Only install if you trust this download. Follow <a href="https://support.apple.com/en-gb/102445">Apple’s per-app approval instructions</a>; do not turn off your Mac’s security protection. Managed Macs may not allow this beta.</p>
         <p>Full customer account and payment testing is still in progress. Do not replace a personal/founder nika installation with this customer beta. An Intel Mac version is not available.</p>
-        <p><a href="{{ hugo.Data.nika.macos_release_notes_url }}">Release notes and checksum</a> · 273 MB · Tauri installer</p>
+        <p><strong>Updating an existing customer beta?</strong> Quit nika fully, open the new .dmg, drag nika into Applications and choose Replace. Eject the .dmg, then open nika from Applications. Do not delete your cards or Application Support folders.</p>
+        <p>This version adds signed automatic updates. Future published updates download in the background and install after you quit normally. This does not remove Apple's beta security warning.</p>
+        <p><a href="{{ hugo.Data.nika.macos_release_notes_url }}">Release notes, upgrade instructions and checksum</a> · Tauri installer</p>
         {{ end }}
       {{ else }}
         <p class="release-status">Not available yet</p>
@@ -65,7 +67,7 @@
   {{ end }}
   </div>
   <p class="download-note">For adults aged 18+. To send cards directly, you’ll need Anki desktop and AnkiConnect. You can also export your cards. <a href="mailto:nika@vidunwedagedera.com">Need help?</a></p>
-  <ol class="setup-steps" aria-label="Getting started"><li><strong>Install nika</strong><span>Choose the download for your computer.</span></li><li><strong>{{ if and hugo.Data.nika.macos_beta (not hugo.Data.nika.launch_ready) }}Use your invitation{{ else }}Create your account{{ end }}</strong><span>{{ if and hugo.Data.nika.macos_beta (not hugo.Data.nika.launch_ready) }}Confirm your invited account and sign in. Need access? Contact support before downloading.{{ else }}Confirm your email, then sign in. Free is your starting plan.{{ end }}</span></li><li><strong>Make your first cards</strong><span>Set your preferences or skip them. Add material, review your cards and send them to Anki.</span></li></ol>
+  <ol class="setup-steps" aria-label="Getting started"><li><strong>Install nika</strong><span>Choose the download for your computer.</span></li><li><strong>Create your account</strong><span>Confirm your email, then sign in. Already registered? Sign in to your existing account.</span></li><li><strong>Make your first cards</strong><span>Set your preferences or skip them. Add material, review your cards and send them to Anki.</span></li></ol>
 </div></section>
 <section class="section shell" id="workflow">
   <p class="kicker">A clearer way to create</p><h2>From your material.<br>To your next recall.</h2>
