@@ -24,9 +24,11 @@ sections:
         - label: 'PS'
           title: 'My Personal Statement'
           url: '/resources/school/cambridge-medicine-personal-statement/'
-          description: 'Vidun Wedagedera's Personal Statement'
+          description: "Vidun Wedagedera's Personal Statement"
           meta: 'Text File'
-          link_text: 'Read Vidun's Personal Statement'
+          link_text: "Read Vidun's Personal Statement"
+        
+
     design:
       spacing:
         padding: ['0', '0', '0', '0']
