@@ -3,11 +3,11 @@
 launch_ready: false
 account_url: "https://app.vidunwedagedera.com"
 macos_beta: true
-macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.1-beta.38/nika-customer-v1.5.1-build38-arm64.dmg"
-macos_sha256: "24dcb7f42805fbc81901884168232ff024a39e625bfbd0fbde71b79d19445431"
-macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.1-beta.38"
+macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.3-beta.40/nika-customer-v1.5.3-build40-arm64.dmg"
+macos_sha256: "6fb3a8158dc5d8348d14496718ec5e1db8793d3b10d7a7acc157219c86da5668"
+macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.3-beta.40"
 windows_url: ""
-version: "1.5.1, build 38"
+version: "1.5.3, build 40"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
