@@ -24,7 +24,7 @@ function render(config) {
     const result = spawnSync(process.env.HUGO_BIN || 'hugo', ['--source', fixture, '--logLevel', 'warn'], { encoding: 'utf8' });
     if (result.error) throw result.error;
     return { status: result.status, output: result.stdout + result.stderr,
-      html: result.status === 0 ? readFileSync(join(fixture, 'public/sidequests/nika/index.html'), 'utf8') : '' };
+      html: result.status === 0 ? readFileSync(join(fixture, 'public/apps/nika/index.html'), 'utf8') : '' };
   } finally { rmSync(fixture, { recursive: true, force: true }); }
 }
 function links(html, platform) {
@@ -49,7 +49,7 @@ test('launch gate prevents populated URLs leaking as active downloads', () => {
 });
 const beta = { launch_ready: false, macos_beta: true, macos_url: mac, windows_url: '',
   version: '1.5.0 beta', macos_sha256: 'a'.repeat(64), macos_release_notes_url: 'https://downloads.invalid/release' };
-test('explicit Mac beta is downloadable without opening accounts or claiming notarisation', () => {
+test('explicit Mac beta is downloadable with independent account-testing and notarisation warnings', () => {
   const { status, html, output } = render(beta);
   assert.equal(status, 0, output);
   assert.equal(links(html, 'macos').length, 7);
@@ -60,10 +60,10 @@ test('explicit Mac beta is downloadable without opening accounts or claiming not
   });
   links(html, 'windows').forEach(a => assert.match(a, /data-download-state="pending"/));
   assert.match(html, /Not notarised by Apple/);
-  assert.match(html, /public signup and purchases are not open yet/);
+  assert.match(html, /Full customer account and payment testing is still in progress/);
   assert.match(html, /macOS 14/);
   assert.match(html, /Do not replace a personal\/founder/);
-  assert.match(html, /Release notes and checksum/);
+  assert.match(html, /Release notes, upgrade instructions and checksum/);
   assert.match(html, /noindex,follow/);
   assert.doesNotMatch(html, /data-installer="windows"|Public installers are not available yet|Ready to download/);
 });
