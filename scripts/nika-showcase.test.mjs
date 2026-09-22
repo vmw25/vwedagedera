@@ -34,7 +34,7 @@ function environment({ reduced = false, saveData = false, observer = false } = {
   const doc = Object.assign(new Element(), { hidden: false });
   const timers = new Map(); let identity = 0;
   const win = { matchMedia: () => preference, navigator: { connection }, requestAnimationFrame: fn => fn(),
-    setTimeout: fn => { timers.set(++identity, fn); return identity; }, clearTimeout: id => timers.delete(id),
+    setTimeout: (fn, delay) => { win.lastDelay = delay; timers.set(++identity, fn); return identity; }, clearTimeout: id => timers.delete(id),
     location: { assign: url => { win.redirect = url; } } };
   const observers = [];
   if (observer) win.IntersectionObserver = class {
@@ -63,6 +63,7 @@ test('motion requires all safety conditions, and feature cycling wraps', () => {
 });
 test('automatic switching synchronises copy and exposes only one slide without announcements', () => {
   const f = showcase(); assert.equal(f.controls.hidden, false); assert.equal(f.timers.size, 1);
+  assert.equal(f.win.lastDelay, 2000);
   [...f.timers.values()][0]();
   assert.equal(f.controller.index, 1); assert.equal(f.phrase.textContent, 'Phrase 1');
   assert.equal(f.panels.filter(p => !p.hidden).length, 1);

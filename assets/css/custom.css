@@ -1313,6 +1313,17 @@ textarea:focus-visible {
   line-height: 1.5;
 }
 
+.simple-project-card--compact { max-width: 720px; }
+.simple-project-card--compact > a { display: grid !important; grid-template-columns: 160px minmax(0, 1fr); align-items: center; }
+.simple-project-card--compact .simple-project-card__media { aspect-ratio: 1 !important; border-radius: 18px; margin: 20px; width: 120px; }
+.simple-project-card--compact .simple-project-card__media img { width: 100% !important; height: auto !important; object-fit: contain; }
+.simple-project-card--compact .simple-project-card__content { padding: 24px 24px 24px 0; }
+.simple-project-card--compact .simple-project-card__tag { display: none; }
+@media (max-width: 520px) {
+  .simple-project-card--compact > a { grid-template-columns: 104px minmax(0, 1fr); }
+  .simple-project-card--compact .simple-project-card__media { margin: 12px; width: 80px; }
+  .simple-project-card--compact .simple-project-card__content { padding: 18px 16px 18px 0; }
+}
 .simple-project-list {
   display: grid;
   gap: 1.3rem;

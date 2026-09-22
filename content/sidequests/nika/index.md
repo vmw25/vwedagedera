@@ -1,7 +1,8 @@
 ---
-title: 'nika - Make room for learning.'
+title: 'nika'
 url: /apps/nika/
 card_icon: media/nika/icon.png
+compact_app_card: true
 image_alt: 'nika app icon'
 summary: 'Turn your study material into Anki cards. Review, refine and make them yours.'
 description: 'Meet nika for desktop. Create Anki cards from text, images and PDFs, with review and personalisation built in.'
