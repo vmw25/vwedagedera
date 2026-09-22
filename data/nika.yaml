@@ -3,11 +3,11 @@
 launch_ready: false
 account_url: "https://app.vidunwedagedera.com"
 macos_beta: true
-macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.9-beta.47/nika-customer-v1.5.9-build47-arm64.dmg"
-macos_sha256: "28c331d709a887fd17544689e5c7b6eb905f4849a1b68d8655682b1945241af1"
-macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.9-beta.47"
+macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.10-beta.48/nika-customer-v1.5.10-build48-arm64.dmg"
+macos_sha256: "1cdb9210e96e9b312f0b10896825676336df44e98586fc136ee52f6660943e03"
+macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.10-beta.48"
 windows_url: ""
-version: "1.5.9, build 47"
+version: "1.5.10, build 48"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
@@ -33,7 +33,7 @@ showcase:
   - label: "PassMedicine"
     phrase: "From your mistakes."
     title: "Less copying. More learning from mistakes."
-    description: "Use the floating session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
+    description: "Use the Mac menu-bar session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
     image: "media/nika/passmedicine.webp"
     alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
     width: 1320
