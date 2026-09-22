@@ -5,7 +5,7 @@
   {{ range $items }}
     {{ $cardImage := .Resources.GetMatch "featured.*" }}
     {{ if not $cardImage }}{{ $cardImage = .Resources.GetMatch "cover.*" }}{{ end }}
-    <article class="simple-project-card">
+    <article class="simple-project-card{{ if .Params.compact_app_card }} simple-project-card--compact{{ end }}">
       <a href="{{ .RelPermalink }}">
         {{ if .Params.card_icon }}
           <div class="simple-project-card__media" style="display:grid;place-items:center;background:#f5f5f7">

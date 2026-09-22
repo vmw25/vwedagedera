@@ -38,7 +38,7 @@ export function initialiseShowcase(root, win = window, doc = document) {
     timer = null;
     toggle.disabled = state.reduced || state.saveData;
     toggle.textContent = toggle.disabled ? 'Automatic motion off' : state.paused ? 'Play showcase' : 'Pause showcase';
-    if (motionAllowed(state)) timer = win.setTimeout(() => { show(nextFeature(index, panels.length)); sync(); }, 6500);
+    if (motionAllowed(state)) timer = win.setTimeout(() => { show(nextFeature(index, panels.length)); sync(); }, 2000);
   }
   interaction.hidden = false;
   choices.forEach((choice, i) => choice.addEventListener('click', () => { state.paused = true; show(i, true); sync(); }));
