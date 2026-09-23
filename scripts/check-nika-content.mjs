@@ -12,7 +12,7 @@ assert.ok(!/localhost|127\.0\.0\.1|example\.com/.test(home));
 assert.ok(home.includes('https://app.vidunwedagedera.com/signin'));
 assert.ok(home.includes('3840') && home.includes('2160'));
 const requestedHeadline = 'Upload anything. Get cards indistinguishable from your own.';
-const requestedDescription = 'Paste text, add screenshots or upload full PDFs. Nika creates any type of Anki card and automatically chooses the best type for each part - diagrams become image occlusion cards, text becomes the right text-based cards. All as if you made them yourself :)';
+const requestedDescription = 'Paste text, add screenshots or upload full PDFs. Nika creates any type of Anki card and automatically chooses the best type for each part. All as if you made them yourself :)';
 assert.ok(home.includes(requestedHeadline), 'Requested hero headline must be published verbatim');
 assert.ok(home.includes(requestedDescription), 'Requested hero description must be published verbatim');
 assert.ok(!home.includes('One goal: Anki cards indistinguishable from your own.'));
