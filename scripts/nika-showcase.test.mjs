@@ -12,6 +12,7 @@ class Element {
   setAttribute(name, value) { this.attrs[name] = value; }
   getAttribute(name) { return name === 'src' ? this.src : this.attrs[name]; }
   focus() { this.focused = true; }
+  get offsetWidth() { this.layoutReads = (this.layoutReads ?? 0) + 1; this.resetWasFlushed = !this.classes.has('is-entering'); return 300; }
 }
 test('compact navigation closes after selection, Escape, outside click and focus leaving', async () => {
   const menu = new Element(), summary = new Element(), link = new Element(), doc = new Element();
@@ -75,6 +76,24 @@ test('manual feature selection pauses persistently and announces its label', asy
   await f.controls.emit('pointerleave'); assert.equal(f.timers.size, 0);
   f.doc.hidden = true; await f.doc.emit('visibilitychange'); f.doc.hidden = false; await f.doc.emit('visibilitychange');
   assert.equal(f.timers.size, 0);
+});
+test('every automatic and manual headline change restarts its animation after flushing the reset', async () => {
+  const f = showcase();
+  for (let step = 1; step <= 12; step++) {
+    [...f.timers.values()][0]();
+    assert.equal(f.phrase.layoutReads, step);
+    assert.equal(f.phrase.resetWasFlushed, true);
+    assert.equal(f.phrase.classes.has('is-entering'), true);
+  }
+  await f.choices[2].emit('click');
+  assert.equal(f.phrase.layoutReads, 13);
+  assert.equal(f.phrase.classes.has('is-entering'), true);
+});
+test('reduced motion never starts a phrase animation, including manual selection', async () => {
+  const f = showcase({ reduced: true });
+  await f.choices[2].emit('click');
+  assert.equal(f.phrase.classes.has('is-entering'), false);
+  assert.equal(f.phrase.layoutReads, undefined);
 });
 test('focus pauses; pointer click on Pause must not inadvertently restart rotation', async () => {
   const f = showcase(); await f.toggle.emit('pointerdown'); await f.root.emit('focusin'); await f.toggle.emit('click');

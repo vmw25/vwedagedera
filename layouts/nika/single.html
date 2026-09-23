@@ -6,19 +6,18 @@
   <link rel="canonical" href="{{ .Permalink }}">
   <meta property="og:title" content="{{ .Title }}"><meta property="og:description" content="{{ .Description }}"><meta property="og:url" content="{{ .Permalink }}"><meta property="og:type" content="website">
   {{ if not hugo.Data.nika.launch_ready }}<meta name="robots" content="noindex,follow">{{ end }}
-  <link rel="icon" type="image/png" href="{{ "media/nika/icon.png" | relURL }}">
+  <link rel="icon" type="image/svg+xml" href="{{ "media/nika/mark.svg" | relURL }}">
   {{ $css := resources.Get "css/nika.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ $js := resources.Get "js/nika-showcase.mjs" | minify | fingerprint }}<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="product-nav"><div class="shell nav"><a class="brand" href="{{ .RelPermalink }}" aria-label="nika home"><img src="{{ "media/nika/icon.png" | relURL }}" width="30" height="30" alt="">nika</a><nav aria-label="nika navigation"><a class="nav-explore" href="#workflow">How it works</a><a class="nav-plans" href="#plans">Plans</a><details class="nav-menu"><summary>Explore</summary><div><a href="#workflow">How it works</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="#download">Downloads</a></div></details><a href="{{ hugo.Data.nika.account_url }}/signin">Sign in</a></nav>{{ partial "nika/download-links.html" (dict "compact" true) }}</div></header>
+<header class="product-nav"><div class="shell nav"><a class="brand" href="{{ .RelPermalink }}" aria-label="nika home"><img src="{{ "media/nika/wordmark.svg" | relURL }}" width="102" height="36" alt="nika"></a><nav aria-label="nika navigation"><a class="nav-explore" href="#workflow">How it works</a><a class="nav-plans" href="#plans">Plans</a><details class="nav-menu"><summary>Explore</summary><div><a href="#workflow">How it works</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="#download">Downloads</a></div></details><a href="{{ hugo.Data.nika.account_url }}/signin">Sign in</a></nav>{{ partial "nika/download-links.html" (dict "compact" true) }}</div></header>
 <main id="main">
 <section class="hero" aria-labelledby="hero-title" data-nika-showcase>
   <div class="shell hero-heading">
     <h1 id="hero-title"><span class="hero-fixed">Your cards. Your style.</span><span class="hero-phrase-stack" aria-hidden="true">{{ range hugo.Data.nika.showcase }}<span class="hero-phrase-sizer">{{ .phrase }}</span>{{ end }}<span class="hero-phrase" id="showcase-phrase">{{ (index hugo.Data.nika.showcase 0).phrase }}</span></span><span class="sr-only"> Create personalised Anki cards from text, full PDFs, images and PassMedicine mistakes, with review, Anki export and activity insights.</span></h1>
-    <p class="hero-intro">The goal: Anki cards indistinguishable from your own. Your wording, your level of detail, your favourite formats.</p>
-    <p class="hero-formats">Question &amp; answer <span aria-hidden="true">·</span> Cloze <span aria-hidden="true">·</span> Image occlusion</p>
+    <p class="hero-intro">Paste text. Add screenshots or full PDFs.<br>One goal: Anki cards indistinguishable from your own.</p>
     <div class="showcase-controls" data-showcase-controls hidden>
       <button class="motion-control" type="button" data-showcase-motion>Pause showcase</button>
       <div class="showcase-choices" role="group" aria-label="Choose a feature">{{ range $index, $item := hugo.Data.nika.showcase }}<button type="button" class="showcase-choice" data-showcase-choice="{{ $index }}" aria-controls="nika-feature-{{ $index }}" aria-pressed="{{ if eq $index 0 }}true{{ else }}false{{ end }}">{{ $item.label }}</button>{{ end }}</div>
@@ -153,11 +152,11 @@
   <details><summary>What do the screenshots show?</summary><p>The real nika desktop interface using example study material and example numbers. They show the workflow, not measured customer results.</p></details>
 </div></section>
 <section class="download-section final-download"><div class="shell">
-  <img class="download-icon" src="{{ "media/nika/icon.png" | relURL }}" width="88" height="88" loading="lazy" alt="nika app icon">
+  <img class="download-icon" src="{{ "media/nika/icon.svg" | relURL }}" width="88" height="88" loading="lazy" alt="nika app icon">
   <h2>Download nika</h2>
   {{ partial "nika/download-links.html" (dict) }}
   <p class="download-context">{{ if hugo.Data.nika.macos_beta }}Apple-silicon Mac beta. Not notarised. <a href="#download-macos">Read the beta requirements.</a>{{ else if hugo.Data.nika.launch_ready }}Install nika. Create your account. Start Free.{{ else }}Public installers are not available yet. View your platform’s release status above.{{ end }}</p>
 </div></section>
 </main>
-<footer class="shell footer"><span>nika</span><div><a href="{{ hugo.Data.nika.account_url }}/privacy">Privacy</a><a href="{{ hugo.Data.nika.account_url }}/terms">Terms</a><a href="mailto:nika@vidunwedagedera.com">Contact</a><a href="{{ "/" | relURL }}">Vidun’s website <span aria-hidden="true">↗</span></a><p>nika is an independent product, not affiliated with Anki, PassMedicine, Apple or Stripe.</p></div></footer>
+<footer class="shell footer"><a href="{{ .RelPermalink }}" aria-label="nika home"><img src="{{ "media/nika/wordmark.svg" | relURL }}" width="102" height="36" alt="nika"></a><div><a href="{{ hugo.Data.nika.account_url }}/privacy">Privacy</a><a href="{{ hugo.Data.nika.account_url }}/terms">Terms</a><a href="mailto:nika@vidunwedagedera.com">Contact</a><a href="{{ "/" | relURL }}">Vidun’s website <span aria-hidden="true">↗</span></a><p>nika is an independent product, not affiliated with Anki, PassMedicine, Apple or Stripe.</p></div></footer>
 </body></html>

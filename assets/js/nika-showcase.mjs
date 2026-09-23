@@ -29,8 +29,13 @@ export function initialiseShowcase(root, win = window, doc = document) {
     });
     phrase.textContent = panels[index].dataset.phrase;
     phrase.classList.remove('is-entering');
-    // The panel changes immediately; no content depends on animation finishing.
-    win.requestAnimationFrame(() => phrase.classList.add('is-entering'));
+    // Flush the reset before re-applying it. A single rAF can be coalesced with
+    // a timer's style changes, leaving autoplay text with no new animation.
+    // Both manual and automatic selection use this exact restart path.
+    if (!state.reduced) {
+      void phrase.offsetWidth;
+      phrase.classList.add('is-entering');
+    }
     if (manual && announcement) announcement.textContent = choices[index].textContent.trim() + ' selected';
   }
   function sync() {
