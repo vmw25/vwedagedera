@@ -18,7 +18,7 @@
   <div class="shell hero-heading">
     <h1 id="hero-title"><span class="hero-fixed">Your cards. Your style.</span><span class="hero-phrase-stack" aria-hidden="true">{{ range hugo.Data.nika.showcase }}<span class="hero-phrase-sizer">{{ .phrase }}</span>{{ end }}<span class="hero-phrase" id="showcase-phrase">{{ (index hugo.Data.nika.showcase 0).phrase }}</span></span><span class="sr-only"> Create personalised Anki cards from text, full PDFs, images and PassMedicine mistakes, with review, Anki export and activity insights.</span></h1>
     <p class="hero-intro">Upload anything. Get cards indistinguishable from your own.</p>
-    <p class="hero-description">Paste text, add screenshots or upload full PDFs. Nika creates any type of Anki card and automatically chooses the best type for each part - diagrams become image occlusion cards, text becomes the right text-based cards. All as if you made them yourself :)</p>
+    <p class="hero-description">Paste text, add screenshots or upload full PDFs. Nika creates any type of Anki card and automatically chooses the best type for each part. All as if you made them yourself :)</p>
     <div class="showcase-controls" data-showcase-controls hidden>
       <button class="motion-control" type="button" data-showcase-motion>Pause showcase</button>
       <div class="showcase-choices" role="group" aria-label="Choose a feature">{{ range $index, $item := hugo.Data.nika.showcase }}<button type="button" class="showcase-choice" data-showcase-choice="{{ $index }}" aria-controls="nika-feature-{{ $index }}" aria-pressed="{{ if eq $index 0 }}true{{ else }}false{{ end }}">{{ $item.label }}</button>{{ end }}</div>
