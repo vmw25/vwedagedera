@@ -1,7 +1,7 @@
 ---
 title: 'nika'
 url: /apps/nika/
-card_icon: media/nika/icon.png
+card_icon: media/nika/icon.svg
 compact_app_card: true
 image_alt: 'nika app icon'
 summary: 'Turn your study material into Anki cards. Review, refine and make them yours.'
