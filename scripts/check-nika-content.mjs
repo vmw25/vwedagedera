@@ -2,8 +2,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const home = readFileSync('public/apps/nika/index.html', 'utf8');
 const apps = readFileSync('public/apps/index.html', 'utf8');
-for (const phrase of ['A clearer way to create', 'See it. Hide it. Recall it.', 'New pricing', 'Your data, your choice', 'One app, your whole card-making workflow']) {
+for (const phrase of ['A clearer way to create', 'See it. Hide it. Recall it.', 'New pricing', 'Your data, your choice', 'One app, your whole card-making workflow', 'nika is an independent product, not affiliated with Anki, PassMedicine, Apple or Stripe.']) {
   assert.ok(!home.includes(phrase), `Removed decorative copy returned: ${phrase}`);
+}
+const footer = home.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/)?.[0] || '';
+for (const label of ['Privacy', 'Terms', 'Contact', 'Vidun’s website']) {
+  assert.ok(footer.includes(label), `Footer link must remain: ${label}`);
 }
 for (const amount of ['8.99', '79', '19.99']) assert.ok(home.includes(amount));
 assert.ok(apps.includes('simple-project-card--compact'));
