@@ -7,11 +7,11 @@ macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.16-
 macos_sha256: "ef6a64ba07b642f422c579e820ac1d0464e7e1261877ab0ee1de810455d00c7b"
 macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.16-beta.54"
 macos_version: "1.5.16, build 54"
-windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.15-windows-beta.53/nika-customer-v1.5.15-build53-amd64.exe"
+windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.16-windows-beta.54/nika-customer-v1.5.16-build54-amd64.exe"
 windows_beta: true
-windows_sha256: "9e19963ac505ea54cbde1e6ca818010b9004941a13dd8847246f0d67847e0112"
-windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.15-windows-beta.53"
-windows_version: "1.5.15, build 53"
+windows_sha256: "b7498593dfa3835d393ea52717c0fbd64db9975d006cfa7bd53e775fa8772dbb"
+windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.16-windows-beta.54"
+windows_version: "1.5.16, build 54"
 version: "1.5.16, build 54"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.

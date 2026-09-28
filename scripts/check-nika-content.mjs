@@ -14,6 +14,8 @@ assert.ok(apps.includes('simple-project-card--compact'));
 assert.ok(!home.includes('media/nika/onboarding.png'));
 assert.ok(!/localhost|127\.0\.0\.1|example\.com/.test(home));
 assert.ok(home.includes('https://app.vidunwedagedera.com/signin'));
+assert.ok(home.includes('Instant, Medium and Advanced generation'));
+assert.ok(!home.includes('Instant, Balanced and Advanced generation'));
 assert.ok(home.includes('7680') && home.includes('4320'));
 for (const name of ['create', 'passmedicine', 'insights', 'onboarding']) {
   assert.ok(home.includes(`media/nika/${name}-v1516.webp`), `Current UI capture missing: ${name}`);
