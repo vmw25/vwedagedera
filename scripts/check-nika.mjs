@@ -3,12 +3,12 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const output = resolve(process.argv[2] || 'public');
-const page = join(output, 'sidequests/nika/index.html');
+const page = join(output, 'apps/nika/index.html');
 const html = readFileSync(page, 'utf8');
 const ids = new Set([...html.matchAll(/\bid=(?:["']([^"']+)["']|([^\s>]+))/g)].map(m => m[1] || m[2]));
-assert.match(html, /https:\/\/vidunwedagedera\.com\/sidequests\/nika\//);
+assert.match(html, /https:\/\/vidunwedagedera\.com\/apps\/nika\//);
 assert.match(html, /Your cards\. Your style\./);
-assert.match(html, /The goal: Anki cards indistinguishable from your own/);
+assert.match(html, /Upload anything\. Get cards indistinguishable from your own\./);
 const heading = html.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/)?.[0];
 assert.match(heading, /id=(?:"showcase-phrase"|showcase-phrase)[ >]/, 'Rotating phrase must stay in the opening headline');
 assert.match(heading, /aria-hidden=(?:"true"|true)/);
@@ -19,30 +19,29 @@ assert.equal((html.match(/<details[ >]/g) || []).length, 8);
 assert.equal((html.match(/<button[^>]*disabled/g) || []).length, 0, 'Release status must not be an inert button');
 assert.match(html, /Early-access beta/);
 assert.match(html, /Not notarised by Apple/);
-assert.match(html, /public signup and purchases are not open yet/);
-assert.match(html, /nika-customer-v1\.5\.0-build37-arm64\.dmg/);
-assert.match(html, /Release notes and checksum/);
+assert.match(html, /Full customer account and payment testing is still in progress/);
+assert.match(html, /Release notes, upgrade instructions and checksum/);
 assert.ok(ids.has('download-macos') && ids.has('download-windows'), 'Each platform needs a real status destination');
 assert.equal(ids.size, [...html.matchAll(/\bid=(?:["']([^"']+)["']|([^\s>]+))/g)].length, 'IDs must be unique');
 assert.equal((html.match(/data-download-platform=(?:"macos"|macos)/g) || []).length, 7);
 assert.equal((html.match(/data-download-platform=(?:"windows"|windows)/g) || []).length, 7);
-assert.doesNotMatch(html, /data-download-state=(?:"ready"|ready)|data-installer=(?:"windows"|windows)/, 'Only the labelled Mac beta is published');
-assert.equal((html.match(/data-download-state=(?:"beta"|beta)/g) || []).length, 7);
-assert.match(html, /data-installer=(?:"macos"|macos)/);
+// Release availability and versions come from current configuration, not an
+// obsolete Mac-only release. This also checks all seven links per platform.
+await import('./check-nika-release.mjs');
 assert.match(html, /Only if you opt in/);
 assert.match(html, /not automatic retraining of the underlying language or vision models/);
 assert.match(html, /Exact style matching is not guaranteed/);
 assert.match(html, /convolutional neural network \(CNN\)/);
 assert.match(html, /large language model \(LLM\)/);
 assert.match(html, /machine-learning ranker/);
-assert.match(html, /class=(?:"feature-map"|feature-map)|shell feature-map/);
+assert.match(html, /class=(?:"intelligence-grid"|intelligence-grid)/);
 assert.doesNotMatch(html, /technical-detail/, 'The technical explanation must be visible, not hidden in disclosures');
 assert.ok(ids.has('technology'));
 assert.doesNotMatch(html, /\/signup/, 'Installation, not website signup, is the primary new-user path');
 assert.match(html, /\/signin/);
 assert.match(html, /<table[^>]*comparison/);
 assert.match(html, /Recommended/);
-assert.match(html, /12 times the monthly AI credits/);
+for (const price of ['8.99', '19.99', '79']) assert.ok(html.includes(price));
 assert.doesNotMatch(html, /<figcaption[ >]|[—–]|&#(?:8211|8212);|&(?:mdash|ndash);/);
 assert.doesNotMatch(html, /<video[ >]/, 'Demo must not appear until the owner supplies a real video');
 assert.match(html, /data-nika-showcase/);
@@ -64,12 +63,17 @@ for (const ref of localRefs) {
     assert.ok(existsSync(target), 'Missing internal link/asset: ' + ref);
   }
 }
-for (const file of ['index.html', 'sidequests/index.html', 'sidequests/cs50/index.html']) {
+for (const file of ['index.html', 'apps/index.html', 'projects/cs50/index.html']) {
   const other = readFileSync(join(output, file), 'utf8');
   assert.doesNotMatch(other, /css\/nika\./, 'Nika stylesheet leaked into ' + file);
   assert.doesNotMatch(other, /nika-showcase\./, 'Nika script leaked into ' + file);
 }
-assert.match(readFileSync(join(output, 'nika/index.html'), 'utf8'), /url=\/sidequests\/nika\//);
+for (const path of ['nika/index.html', 'sidequests/nika/index.html']) {
+  const redirect = readFileSync(join(output, path), 'utf8');
+  assert.match(redirect, /https:\/\/vidunwedagedera\.com\/apps\/nika\//);
+  assert.match(redirect, /url=\/apps\/nika\//);
+  assert.match(redirect, /location\.search\+location\.hash/);
+}
 const pages = [];
 function visit(dir) {
   for (const item of readdirSync(dir, { withFileTypes: true })) {
