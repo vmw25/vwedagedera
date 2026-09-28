@@ -3,14 +3,16 @@
 launch_ready: false
 account_url: "https://app.vidunwedagedera.com"
 macos_beta: true
-macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.15-beta.53/nika-customer-v1.5.15-build53-arm64.dmg"
-macos_sha256: "01705456c36817c4cef0ace7c85ca71972400d752afbc29c6fa9662f73643bdb"
-macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.15-beta.53"
+macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.16-beta.54/nika-customer-v1.5.16-build54-arm64.dmg"
+macos_sha256: "ef6a64ba07b642f422c579e820ac1d0464e7e1261877ab0ee1de810455d00c7b"
+macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.16-beta.54"
+macos_version: "1.5.16, build 54"
 windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.15-windows-beta.53/nika-customer-v1.5.15-build53-amd64.exe"
 windows_beta: true
 windows_sha256: "9e19963ac505ea54cbde1e6ca818010b9004941a13dd8847246f0d67847e0112"
 windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.15-windows-beta.53"
-version: "1.5.15, build 53"
+windows_version: "1.5.15, build 53"
+version: "1.5.16, build 54"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
@@ -20,8 +22,8 @@ showcase:
   - label: "PDFs & text"
     phrase: "From full PDFs."
     title: "Create cards from PDFs and text"
-    description: "Open a full PDF or paste your notes. Choose Instant, Balanced or Advanced generation, then review Q&A or cloze cards shaped by your preferences. Check coverage before you finish."
-    image: "media/nika/create-v1514.webp"
+    description: "Open a full PDF or paste your notes. Choose Instant, Medium or Advanced generation, then review Q&A or cloze cards shaped by your preferences. Check coverage before you finish."
+    image: "media/nika/create-v1516.webp"
     alt: "nika with source material beside editable cards in an example workspace."
     width: 7680
     height: 4320
@@ -29,7 +31,7 @@ showcase:
     phrase: "From diagrams."
     title: "Create image occlusion cards"
     description: "Bring screenshots and diagrams into your deck. Turn image text into cards or use image occlusion to hide labels, with masks you can review and adjust."
-    image: "media/nika/create-v1514.webp"
+    image: "media/nika/create-v1516.webp"
     alt: "nika’s card workspace, including image input and editable cards. Example workspace, not a separate occlusion demonstration."
     width: 7680
     height: 4320
@@ -37,7 +39,7 @@ showcase:
     phrase: "From your mistakes."
     title: "Turn question-bank mistakes into cards"
     description: "Use the Mac menu-bar session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
-    image: "media/nika/passmedicine-v1514.webp"
+    image: "media/nika/passmedicine-v1516.webp"
     alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
     width: 7680
     height: 4320
@@ -45,7 +47,7 @@ showcase:
     phrase: "Shaped by you."
     title: "Personalise format, wording and detail"
     description: "Set your study context, preferred formats and answer length. With personal learning enabled, reviewed edits and chosen Anki decks help guide future cards. Override one batch without changing your defaults."
-    image: "media/nika/onboarding-v1514.webp"
+    image: "media/nika/onboarding-v1516.webp"
     alt: "nika onboarding with labelled study-preference questions and controls to skip or save progress. Example workspace."
     width: 7680
     height: 4320
@@ -53,7 +55,7 @@ showcase:
     phrase: "Ready for Anki."
     title: "Review, edit and send to Anki"
     description: "Preview, edit or regenerate cards before you keep them. Choose your destination deck, send to Anki through AnkiConnect or export. Your existing study routine stays yours."
-    image: "media/nika/create-v1514.webp"
+    image: "media/nika/create-v1516.webp"
     alt: "nika showing editable question-and-answer cards beside the source material before adding to Anki. Example workspace."
     width: 7680
     height: 4320
@@ -61,7 +63,7 @@ showcase:
     phrase: "Progress in view."
     title: "Track your card-making activity"
     description: "See cards created and kept, source breakdowns and session activity. Spot patterns in how you make cards and choose your next focus. Activity is not a measure of memory or model accuracy."
-    image: "media/nika/insights-v1514.webp"
+    image: "media/nika/insights-v1516.webp"
     alt: "nika Insights with card totals, a session activity grid and source breakdowns. Synthetic example numbers, not customer results."
     width: 7680
     height: 4320

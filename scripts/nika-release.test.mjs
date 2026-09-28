@@ -81,6 +81,17 @@ test('Windows cannot inherit Mac beta availability', () => {
 });
 const windowsBeta = { launch_ready: false, windows_beta: true, windows_url: windows,
   version: '1.5.15 beta', windows_sha256: 'b'.repeat(64), windows_release_notes_url: 'https://downloads.invalid/windows-release' };
+test('different native release versions are labelled separately', () => {
+  const { status, html, output } = render({ ...beta, ...windowsBeta,
+    macos_version: '1.5.16, build 54', windows_version: '1.5.15, build 53' });
+  assert.equal(status, 0, output);
+  const macSection = html.split('id="download-macos"')[1].split('</article>')[0];
+  const windowsSection = html.split('id="download-windows"')[1].split('</article>')[0];
+  assert.match(macSection, /1\.5\.16, build 54/);
+  assert.doesNotMatch(macSection, /1\.5\.15, build 53/);
+  assert.match(windowsSection, /1\.5\.15, build 53/);
+  assert.doesNotMatch(windowsSection, /1\.5\.16, build 54/);
+});
 test('Windows beta is independent and all seven links use the verified installer', () => {
   const { status, html, output } = render(windowsBeta);
   assert.equal(status, 0, output);
