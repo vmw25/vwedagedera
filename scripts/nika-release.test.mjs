@@ -79,6 +79,39 @@ test('Windows cannot inherit Mac beta availability', () => {
   assert.equal(status, 0, output);
   assert.doesNotMatch(html, /href="https:\/\/downloads.invalid\/nika-x64.exe"/);
 });
+const windowsBeta = { launch_ready: false, windows_beta: true, windows_url: windows,
+  version: '1.5.15 beta', windows_sha256: 'b'.repeat(64), windows_release_notes_url: 'https://downloads.invalid/windows-release' };
+test('Windows beta is independent and all seven links use the verified installer', () => {
+  const { status, html, output } = render(windowsBeta);
+  assert.equal(status, 0, output);
+  assert.equal(links(html, 'windows').length, 7);
+  links(html, 'windows').forEach(a => {
+    assert.ok(a.includes(`href="${windows}"`));
+    assert.match(a, /data-download-state="beta"/);
+    assert.match(a, /aria-describedby="windows-beta-warning"/);
+  });
+  links(html, 'macos').forEach(a => assert.match(a, /data-download-state="pending"/));
+  assert.match(html, /Download Windows beta/);
+  assert.match(html, /publisher verification is not yet available/);
+  assert.match(html, /not Windows on ARM/);
+  assert.doesNotMatch(html, /macos-beta-warning|Public installers are not available yet/);
+});
+for (const field of ['windows_url', 'version', 'windows_sha256', 'windows_release_notes_url']) {
+  test(`Windows beta fails closed without ${field}`, () => {
+    const result = render({ ...windowsBeta, [field]: '' });
+    assert.notEqual(result.status, 0);
+    assert.match(result.output, /Windows beta requires/);
+  });
+}
+test('Mac and Windows betas retain distinct installation warnings', () => {
+  const { status, html, output } = render({ ...beta, ...windowsBeta });
+  assert.equal(status, 0, output);
+  for (const platform of ['macos', 'windows']) {
+    links(html, platform).forEach(a => assert.match(a, new RegExp(`aria-describedby="${platform}-beta-warning"`)));
+  }
+  assert.match(html, /Not notarised by Apple/);
+  assert.match(html, /publisher verification is not yet available/);
+});
 test('one verified platform can be available without making the other appear released', () => {
   const { status, html, output } = render({ launch_ready: true, macos_url: mac, windows_url: '' });
   assert.equal(status, 0, output);

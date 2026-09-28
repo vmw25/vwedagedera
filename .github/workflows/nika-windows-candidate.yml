@@ -1,0 +1,119 @@
+name: Build nika Windows download candidate
+
+# Public distribution build only. This does not deploy the website, publish a
+# release, or upload private source. The owner provisions a temporary read-only
+# deploy key, then revokes it after the release work is complete.
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: "Reviewed full commit SHA in the private nika source repository"
+        required: true
+        default: "1f67f23a9d5801721e3ec1b5c50756675ddc97db"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nika-windows-release-candidate
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    if: github.repository == 'vmw25/vwedagedera' && github.actor == 'vmw25'
+    name: Windows x64 installer and native acceptance
+    runs-on: windows-2025
+    timeout-minutes: 90
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      HF_HUB_DISABLE_IMPLICIT_TOKEN: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Require an immutable reviewed source commit
+        run: |
+          if ($env:SOURCE_SHA -cnotmatch '^[a-f0-9]{40}$') {
+            throw "A full lower-case source commit SHA is required"
+          }
+      - name: Fetch only release source with temporary read-only access
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: vmw25/anki-anywhere
+          ref: ${{ inputs.source_sha }}
+          ssh-key: ${{ secrets.NIKA_WINDOWS_SOURCE_READ_KEY }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /app/
+            /ml/
+            /scripts/
+            /prompts/
+            /starter_models/
+            /desktop/
+            /pyproject.toml
+            /README.md
+            /Anki Anywhere Windows.spec
+      - name: Verify checked-out source
+        run: |
+          $Actual = (git rev-parse HEAD).Trim()
+          if ($Actual -cne $env:SOURCE_SHA) { throw "Source commit mismatch" }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Install native runtime build dependencies
+        run: python -m pip install '.[build,windows]'
+      - name: Embed and validate public account endpoints
+        env:
+          ANKI_ANYWHERE_PUBLIC_API_URL: ${{ vars.ANKI_ANYWHERE_PUBLIC_API_URL }}
+          ANKI_ANYWHERE_PUBLIC_ACCOUNT_PORTAL_URL: ${{ vars.ANKI_ANYWHERE_PUBLIC_ACCOUNT_PORTAL_URL }}
+          ANKI_ANYWHERE_PUBLIC_SUPABASE_URL: ${{ vars.ANKI_ANYWHERE_PUBLIC_SUPABASE_URL }}
+          ANKI_ANYWHERE_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.ANKI_ANYWHERE_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: python -m scripts.configure_public_cloud
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Verify native Rust toolchain
+        run: |
+          rustc --version
+          if ($LASTEXITCODE -ne 0) { throw "Rust unavailable" }
+          cargo --version
+          if ($LASTEXITCODE -ne 0) { throw "Cargo unavailable" }
+      - name: Build private-data-safe frozen Windows runtime
+        run: scripts/build_windows_app.ps1 -RuntimeOnly
+      - name: Build Tauri installer without exporting any signing key
+        run: python scripts/package_tauri.py --sign-windows-update-locally
+      - name: Install, test PDF/OCR/learning, then uninstall
+        timeout-minutes: 25
+        env:
+          CI: "true"
+        run: |
+          $Installer = @(Get-ChildItem dist/tauri/*.exe)
+          if ($Installer.Count -ne 1) { throw "Expected exactly one installer" }
+          python scripts/accept_tauri_windows.py $Installer[0].FullName --report dist/tauri/windows-acceptance.json
+          if ($LASTEXITCODE -ne 0) { throw "Native acceptance failed" }
+          @{
+            source_commit = $env:SOURCE_SHA
+            workflow_run = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
+            installer_sha256 = (Get-FileHash $Installer[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            updater_signature_pending = $true
+            production_publication_pending = $true
+          } | ConvertTo-Json | Set-Content dist/tauri/windows-provenance.json -Encoding utf8
+      - name: Upload only the verified distribution candidate and reports
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: nika-Windows-x64-candidate-${{ github.run_id }}
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+          path: |
+            dist/tauri/*.exe
+            dist/tauri/*.exe.json
+            dist/tauri/*.exe.sha256
+            dist/tauri/windows-acceptance.json
+            dist/tauri/windows-provenance.json

@@ -26,5 +26,20 @@ assert.match(html, /8\.99/);
 assert.match(html, /19\.99/);
 assert.match(html, /79/);
 assert.ok(html.includes('notar'), 'Beta notarisation warning must remain');
-assert.equal(setting('windows_url'), '', 'This update must not enable an untested Windows installer');
-console.log(`Verified ${mac.length} Mac beta links, checksum, version, pricing and release limits.`);
+const windowsBeta = /^windows_beta: true$/m.test(config);
+const windows = [...html.matchAll(/<a\b[^>]*>/g)].map(([tag]) => attrs(tag))
+  .filter(a => a['data-download-platform'] === 'windows');
+assert.equal(windows.length, 7, 'All seven Windows entry points must be present');
+for (const a of windows) {
+  assert.equal(a.href, windowsBeta ? setting('windows_url') : '#download-windows');
+  assert.equal(a['data-download-state'], windowsBeta ? 'beta' : 'pending');
+}
+if (windowsBeta) {
+  assert.match(setting('windows_url'), /^https:\/\/github\.com\/vmw25\/vwedagedera\/releases\/download\/nika-v[^\s]+\.exe$/);
+  assert.match(setting('windows_sha256'), /^[a-f0-9]{64}$/);
+  assert.ok(html.includes(setting('windows_release_notes_url')));
+  assert.match(html, /windows-beta-warning/);
+} else {
+  assert.equal(setting('windows_url'), '', 'Do not pre-populate an untested Windows installer');
+}
+console.log(`Verified ${mac.length} Mac and ${windows.length} Windows links, checksums, pricing and release limits.`);
