@@ -59,6 +59,18 @@ sections:
     title: 'Professional experience'
     introduction: 'Teaching, biomedical research, healthcare consulting and medical education.'
     entries:
+      - title: 'Mechanisms of Drug Action (MODA) Supervisor'
+        organisation: 'Churchill College, University of Cambridge'
+        period: '2026–Present'
+        badge: 'Teaching'
+        summary: 'Small-group supervision in pharmacology through Cambridge’s Mechanisms of Drug Action course.'
+        points:
+          - 'Teach cardiovascular and renal pharmacology, peripheral neurotransmission and neuropharmacology.'
+          - 'Also cover atherosclerosis, antimicrobial pharmacology and anticancer pharmacology.'
+        tags:
+          - 'Teaching'
+          - 'Pharmacology'
+          - 'Medical education'
       - title: 'Part II Biochemistry Supervisor'
         organisation: 'Robinson College, University of Cambridge'
         period: 'Oct 2025–Present'
@@ -134,8 +146,22 @@ sections:
   - id: 'leadership'
     label: 'Leadership'
     title: 'Leadership and extracurriculars'
-    introduction: 'Leadership across medtech, university societies and high-performance sport.'
+    introduction: 'Leadership across medtech, entrepreneurship, university societies and high-performance sport.'
     entries:
+      - title: 'Founders Under 24 Fellow'
+        organisation: 'Kickstart Global'
+        period: '2026–Present'
+        badge: 'Entrepreneurship'
+        summary: 'Selected for the 20-week Founders Under 24 Fellowship at the UK’s largest cross-university incubator.'
+        points:
+          - 'Developing preventative-cardiology ideas towards a fundable MVP, supported by founder masterclasses, mentorship and access to potential pre-seed investors.'
+        tags:
+          - 'Preventative cardiology'
+          - 'Venture building'
+          - 'Medtech'
+        links:
+          - label: 'Visit Kickstart Global'
+            url: 'https://www.kickstartglobal.com/'
       - title: 'Vice President'
         organisation: 'Cambridge University MedTech Society'
         period: '2026–Present'
