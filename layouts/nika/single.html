@@ -47,7 +47,7 @@
     <article class="download-option" id="download-{{ $platform }}" tabindex="-1" aria-labelledby="download-{{ $platform }}-title">
       <h3 id="download-{{ $platform }}-title">nika for {{ $name }}</h3>
       {{ if $ready }}
-        <p class="release-status">{{ if $release.beta }}Early-access beta{{ else }}Ready to download{{ end }}{{ with hugo.Data.nika.version }} · {{ . }}{{ end }}</p>
+        <p class="release-status">{{ if $release.beta }}Early-access beta{{ else }}Ready to download{{ end }}{{ with $release.version }} · {{ . }}{{ end }}</p>
         <p>{{ if eq $platform "macos" }}Apple silicon (M1 or newer), macOS 14 or later.{{ else }}64-bit Windows PC (Intel or AMD).{{ end }}</p>
         <a class="button" data-installer="{{ $platform }}" href="{{ $url }}"{{ if $release.beta }} aria-describedby="{{ $platform }}-beta-warning"{{ end }}>{{ if $release.beta }}Download {{ $release.betaName }} beta{{ else }}Download for {{ $name }}{{ end }} <span aria-hidden="true">↓</span></a>
         <p>{{ if eq $platform "macos" }}Open the .dmg and drag nika into Applications.{{ else }}Open the .exe installer and follow the steps.{{ end }} Then open nika to create your account or sign in. Python is included, there is nothing else to install for nika.</p>
@@ -79,7 +79,7 @@
   <h2 id="technology-title">How it works</h2>
   <p class="section-intro">Pretrained AI gives nika a head start. Machine learning (ML) helps select cards that fit your style. Your source material stays the basis for the answers.</p>
   <div class="intelligence-grid">
-    <article><p class="step-number">01</p><h3>AI writes from your material.</h3><p>A large language model (LLM), a pretrained neural network for language, drafts cards from your source alongside your saved preferences and relevant examples. You choose Instant, Balanced or Advanced generation.</p></article>
+    <article><p class="step-number">01</p><h3>AI writes from your material.</h3><p>A large language model (LLM), a pretrained neural network for language, drafts cards from your source alongside your saved preferences and relevant examples. You choose Instant, Medium or Advanced generation.</p></article>
     <article><p class="step-number">02</p><h3>ML helps find your style.</h3><p>A machine-learning ranker scores candidate cards using patterns in wording and structure. Reviewed examples and your preference profile guide future requests, helping keep the length, format and tone closer to yours.</p></article>
     <article><p class="step-number">03</p><h3>Vision helps with what you see.</h3><p>Image tools turn screenshots and diagrams into card material, including hidden-label image occlusion. A separate CNN helps recognise PassMedicine results, so mistakes can become the next cards you review.</p></article>
   </div>
@@ -94,12 +94,12 @@
     {{ $preview := hugo.Data.nika.demo_preview_url | default $demo }}
     {{ if not (findRE `^(https://[^\s]+|/[^/][^\s]*)\.mp4(\?[^\s]*)?$` $preview) }}{{ errorf "nika demo_preview_url must be a trusted HTTPS or site-relative MP4 URL" }}{{ end }}
     <div class="demo-showcase" data-nika-demo>
-      <video class="demo-preview" data-demo-preview data-src="{{ $preview }}" poster="{{ "media/nika/create-v1514.webp" | relURL }}" muted loop playsinline preload="none" aria-label="Silent preview of nika in use"></video>
+      <video class="demo-preview" data-demo-preview data-src="{{ $preview }}" poster="{{ "media/nika/create-v1516.webp" | relURL }}" muted loop playsinline preload="none" aria-label="Silent preview of nika in use"></video>
       <div class="demo-controls" data-demo-controls hidden><button class="button" type="button" data-demo-watch>Watch the demo <span aria-hidden="true">↗</span></button><button class="demo-motion" type="button" data-demo-motion>Play preview</button></div>
       <p class="demo-status" data-demo-status role="status"></p>
       <noscript><p><a class="button" href="{{ $demo }}">Watch the nika demo</a></p></noscript>
       <dialog class="demo-dialog" data-demo-dialog aria-labelledby="demo-title"><div class="demo-dialog-heading"><h2 id="demo-title">See nika in action</h2><button class="demo-close" type="button" data-demo-close autofocus aria-label="Close demo video">Close ×</button></div>
-        <video class="demo-player" data-demo-player data-src="{{ $demo }}" controls playsinline preload="none" poster="{{ "media/nika/create-v1514.webp" | relURL }}" tabindex="0" aria-label="nika demo video">
+        <video class="demo-player" data-demo-player data-src="{{ $demo }}" controls playsinline preload="none" poster="{{ "media/nika/create-v1516.webp" | relURL }}" tabindex="0" aria-label="nika demo video">
           {{ with hugo.Data.nika.demo_captions_url }}<track kind="captions" src="{{ . }}" srclang="en" label="English" default>{{ end }}
         </video><p><a href="{{ $demo }}">Open the video directly</a></p>
       </dialog>
@@ -114,15 +114,15 @@
 </section>
 <section class="feature-section" id="features">
   <div class="shell feature-gallery">
-    <article class="feature-panel"><div class="feature-copy"><h3>Capture question-bank mistakes</h3><p>Start a PassMedicine session. nika helps detect incorrect results and capture the question, so you can turn mistakes into cards and review them before adding.</p><p class="feature-detail">A convolutional neural network (CNN), an image-recognition model, helps detect the result on screen. Start or pause capture from the Mac menu-bar controls. You choose when it runs and review the result before adding cards.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/passmedicine-v1514.webp" | relURL }}" aria-label="Open the full-size nika PassMedicine screenshot"><img src="{{ "media/nika/passmedicine-v1514.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="The real nika PassMedicine workspace showing its explicit start, pause and capture controls in a demo session."></a></figure></article>
-    <article class="feature-panel insights-panel"><div class="feature-copy"><h3>Track your activity</h3><p>See cards created and kept, sessions and source breakdowns. Explore your activity calendar to find patterns in your work.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/insights-v1514.webp" | relURL }}" aria-label="Open the full-size nika Insights screenshot"><img src="{{ "media/nika/insights-v1514.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="nika Insights with generated and accepted card totals, a session activity grid and source breakdowns, populated with synthetic example data."></a></figure></article>
+    <article class="feature-panel"><div class="feature-copy"><h3>Capture question-bank mistakes</h3><p>Start a PassMedicine session. nika helps detect incorrect results and capture the question, so you can turn mistakes into cards and review them before adding.</p><p class="feature-detail">A convolutional neural network (CNN), an image-recognition model, helps detect the result on screen. Start or pause capture from the Mac menu-bar controls. You choose when it runs and review the result before adding cards.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/passmedicine-v1516.webp" | relURL }}" aria-label="Open the full-size nika PassMedicine screenshot"><img src="{{ "media/nika/passmedicine-v1516.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="The real nika PassMedicine workspace showing its explicit start, pause and capture controls in a demo session."></a></figure></article>
+    <article class="feature-panel insights-panel"><div class="feature-copy"><h3>Track your activity</h3><p>See cards created and kept, sessions and source breakdowns. Explore your activity calendar to find patterns in your work.</p></div><figure><a class="screenshot-link" href="{{ "media/nika/insights-v1516.webp" | relURL }}" aria-label="Open the full-size nika Insights screenshot"><img src="{{ "media/nika/insights-v1516.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="nika Insights with generated and accepted card totals, a session activity grid and source breakdowns, populated with synthetic example data."></a></figure></article>
   </div>
   <div class="section-download shell">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
 <section class="section shell personal-section">
   <div><h2>Cards in your writing style.</h2></div>
   <div class="personal-copy"><p>The aim is to make nika’s cards indistinguishable from the ones you would write yourself. Tell it what you study, how much detail you want and how you like to test yourself. Short cloze cards for facts? Q&amp;A for explanations? Hidden labels for anatomy? Keep the combinations that work for you.</p><p>With personal learning enabled, your reviewed edits and chosen Anki decks supply examples of your style. Future batches can use that evidence, so you don’t have to explain the same preferences every time. Exact style matching is not guaranteed, and you always get the final edit.</p><p>Change your defaults any time, or give one batch a different instruction without changing the rest. Setup is optional: skip it, save progress or edit it later. Shared model training is a separate, optional choice.</p><a class="text-link" href="{{ hugo.Data.nika.account_url }}/privacy">Privacy &amp; learning <span aria-hidden="true">↗</span></a></div>
-  <figure class="onboarding-product"><img src="{{ "media/nika/onboarding-v1514.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="The real nika onboarding screen with labelled multiline study-preference questions, example placeholders and skip, save-progress and review controls. Synthetic demo workspace."></figure>
+  <figure class="onboarding-product"><img src="{{ "media/nika/onboarding-v1516.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="The real nika onboarding screen with labelled multiline study-preference questions, example placeholders and skip, save-progress and review controls. Synthetic demo workspace."></figure>
   <div class="section-download personal-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
 <section class="plans-section" id="plans"><div class="shell">

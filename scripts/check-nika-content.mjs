@@ -16,8 +16,8 @@ assert.ok(!/localhost|127\.0\.0\.1|example\.com/.test(home));
 assert.ok(home.includes('https://app.vidunwedagedera.com/signin'));
 assert.ok(home.includes('7680') && home.includes('4320'));
 for (const name of ['create', 'passmedicine', 'insights', 'onboarding']) {
-  assert.ok(home.includes(`media/nika/${name}-v1514.webp`), `Current UI capture missing: ${name}`);
-  const bytes = readFileSync(`public/media/nika/${name}-v1514.webp`);
+  assert.ok(home.includes(`media/nika/${name}-v1516.webp`), `Current UI capture missing: ${name}`);
+  const bytes = readFileSync(`public/media/nika/${name}-v1516.webp`);
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
   assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   // Qt's opaque lossy WebP contains a VP8 keyframe; verify the actual pixels,
