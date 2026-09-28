@@ -9,7 +9,7 @@ on:
       source_sha:
         description: "Reviewed full commit SHA in the private nika source repository"
         required: true
-        default: "1f67f23a9d5801721e3ec1b5c50756675ddc97db"
+        default: "cda633ec54dcea2502a78eca4fb8684fe1e2471d"
         type: string
 
 permissions:
