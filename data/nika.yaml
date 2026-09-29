@@ -3,16 +3,16 @@
 launch_ready: false
 account_url: "https://app.vidunwedagedera.com"
 macos_beta: true
-macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.16-beta.54/nika-customer-v1.5.16-build54-arm64.dmg"
-macos_sha256: "ef6a64ba07b642f422c579e820ac1d0464e7e1261877ab0ee1de810455d00c7b"
-macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.16-beta.54"
-macos_version: "1.5.16, build 54"
-windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.16-windows-beta.54/nika-customer-v1.5.16-build54-amd64.exe"
+macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.17-beta.55/nika-customer-v1.5.17-build55-arm64.dmg"
+macos_sha256: "94564878e423a9c52c101d6b88560a239638fd6005e3d3afd13d9caaff3d0f27"
+macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.17-beta.55"
+macos_version: "1.5.17, build 55"
+windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.17-windows-beta.55/nika-customer-v1.5.17-build55-amd64.exe"
 windows_beta: true
-windows_sha256: "b7498593dfa3835d393ea52717c0fbd64db9975d006cfa7bd53e775fa8772dbb"
-windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.16-windows-beta.54"
-windows_version: "1.5.16, build 54"
-version: "1.5.16, build 54"
+windows_sha256: "e0c2c18614cb32c708c7bba328bdff4ad8b9320c38d0bd7f2d0f2673f2573fc8"
+windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.17-windows-beta.55"
+windows_version: "1.5.17, build 55"
+version: "1.5.17, build 55"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""
