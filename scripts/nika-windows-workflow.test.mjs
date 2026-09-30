@@ -3,6 +3,24 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync(new URL('../.github/workflows/nika-windows-candidate.yml', import.meta.url), 'utf8');
+const storeSource = readFileSync(new URL('../.github/workflows/nika-store-acceptance.yml', import.meta.url), 'utf8');
+
+test('Store retests use immutable artifacts and upload only acceptance evidence', () => {
+  assert.match(storeSource, /workflow_dispatch:/);
+  assert.doesNotMatch(storeSource, /^  (push|pull_request|pull_request_target|schedule):/m);
+  assert.match(storeSource, /github\.actor == 'vmw25'/);
+  assert.match(storeSource, /contents: read/);
+  assert.match(storeSource, /actions: read/);
+  assert.match(storeSource, /persist-credentials: false/);
+  assert.match(storeSource, /Source commit mismatch/);
+  assert.match(storeSource, /Package digest mismatch/);
+  assert.match(storeSource, /runs-on: windows-2025/);
+  assert.doesNotMatch(storeSource, /TAURI_SIGNING_PRIVATE_KEY|\.pfx|\.p12|gh release/);
+  assert.match(storeSource, /path: candidate\/native-acceptance\.json/);
+  for (const action of storeSource.matchAll(/uses: ([^\n]+)/g)) {
+    assert.match(action[1], /^[^@]+@[a-f0-9]{40}(?:\s|$)/);
+  }
+});
 
 test('Windows candidate build requires owner dispatch and read-only source access', () => {
   assert.match(source, /workflow_dispatch:/);
