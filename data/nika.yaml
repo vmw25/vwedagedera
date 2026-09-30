@@ -26,7 +26,7 @@ showcase:
     phrase: "From full PDFs."
     title: "Create cards from PDFs and text"
     description: "Open a full PDF or paste your notes. Choose Instant, Medium or Advanced generation, then review Q&A or cloze cards shaped by your preferences. Check coverage before you finish."
-    image: "media/nika/create-v1516.webp"
+    image: "media/nika/create-v1518.webp"
     alt: "nika with source material beside editable cards in an example workspace."
     width: 7680
     height: 4320
@@ -34,7 +34,7 @@ showcase:
     phrase: "From diagrams."
     title: "Create image occlusion cards"
     description: "Bring screenshots and diagrams into your deck. Turn image text into cards or use image occlusion to hide labels, with masks you can review and adjust."
-    image: "media/nika/create-v1516.webp"
+    image: "media/nika/create-v1518.webp"
     alt: "nika’s card workspace, including image input and editable cards. Example workspace, not a separate occlusion demonstration."
     width: 7680
     height: 4320
@@ -42,7 +42,7 @@ showcase:
     phrase: "From your mistakes."
     title: "Turn question-bank mistakes into cards"
     description: "Use the Mac menu-bar session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
-    image: "media/nika/passmedicine-v1516.webp"
+    image: "media/nika/passmedicine-v1518.webp"
     alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
     width: 7680
     height: 4320
@@ -50,7 +50,7 @@ showcase:
     phrase: "Shaped by you."
     title: "Personalise format, wording and detail"
     description: "Set your study context, preferred formats and answer length. With personal learning enabled, reviewed edits and chosen Anki decks help guide future cards. Override one batch without changing your defaults."
-    image: "media/nika/onboarding-v1516.webp"
+    image: "media/nika/onboarding-v1518.webp"
     alt: "nika onboarding with labelled study-preference questions and controls to skip or save progress. Example workspace."
     width: 7680
     height: 4320
@@ -58,7 +58,7 @@ showcase:
     phrase: "Ready for Anki."
     title: "Review, edit and send to Anki"
     description: "Preview, edit or regenerate cards before you keep them. Choose your destination deck, send to Anki through AnkiConnect or export. Your existing study routine stays yours."
-    image: "media/nika/create-v1516.webp"
+    image: "media/nika/create-v1518.webp"
     alt: "nika showing editable question-and-answer cards beside the source material before adding to Anki. Example workspace."
     width: 7680
     height: 4320
@@ -66,7 +66,7 @@ showcase:
     phrase: "Progress in view."
     title: "Track your card-making activity"
     description: "See cards created and kept, source breakdowns and session activity. Spot patterns in how you make cards and choose your next focus. Activity is not a measure of memory or model accuracy."
-    image: "media/nika/insights-v1516.webp"
+    image: "media/nika/insights-v1518.webp"
     alt: "nika Insights with card totals, a session activity grid and source breakdowns. Synthetic example numbers, not customer results."
     width: 7680
     height: 4320

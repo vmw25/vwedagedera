@@ -19,15 +19,25 @@ test('Windows candidate build requires owner dispatch and read-only source acces
   }
 });
 
-test('Only native-accepted installer files are uploaded, never source, keys or logs', () => {
+test('Only native installer and unsigned Store candidates are uploaded, never source, keys or logs', () => {
   assert.match(source, /runs-on: windows-2025/);
   assert.match(source, /scripts\/accept_tauri_windows\.py/);
   assert.match(source, /--sign-windows-update-locally/);
   assert.doesNotMatch(source, /TAURI_SIGNING_PRIVATE_KEY/);
   assert.match(source, /retention-days: 3/);
-  const paths = source.split('          path: |\n')[1].trim().split('\n').map(s => s.trim());
-  assert.deepEqual(paths, ['dist/tauri/*.exe', 'dist/tauri/*.exe.json', 'dist/tauri/*.exe.sha256',
-    'dist/tauri/windows-acceptance.json', 'dist/tauri/windows-provenance.json']);
+  // End each allow-list at its indentation boundary, not at end-of-file.
+  const paths = [...source.matchAll(/^          path: \|\n((?:            [^\n]+\n)+)/gm)]
+    .map(match => match[1].trim().split('\n').map(s => s.trim()));
+  assert.deepEqual(paths, [
+    ['dist/tauri/*.exe', 'dist/tauri/*.exe.json', 'dist/tauri/*.exe.sha256',
+      'dist/tauri/windows-acceptance.json', 'dist/tauri/windows-provenance.json'],
+    ['dist/store/*.msix', 'dist/store/verification.json', 'dist/store/AppxManifest.xml'],
+  ]);
+  const singlePaths = [...source.matchAll(/^          path: (?!\|)([^\n]+)$/gm)].map(match => match[1]);
+  assert.deepEqual(singlePaths, ['dist/store/native-acceptance.json']);
+  assert.match(source, /scripts\.package_windows_store/);
+  assert.match(source, /scripts\.accept_windows_store/);
+  assert.match(source, /desktop\/store-identity\.json/);
   assert.doesNotMatch(source, /if: (?:always|failure)\(\)/);
   assert.doesNotMatch(source, /gh release|deploy-pages|upload-pages-artifact/);
 });
