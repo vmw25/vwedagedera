@@ -9,7 +9,8 @@ const footer = home.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/)?.[0] || '';
 for (const label of ['Privacy', 'Terms', 'Contact', 'Vidun’s website']) {
   assert.ok(footer.includes(label), `Footer link must remain: ${label}`);
 }
-for (const amount of ['8.99', '79', '19.99']) assert.ok(home.includes(amount));
+const { checkPricing } = await import('./check-nika-pricing.mjs');
+checkPricing(home);
 assert.ok(apps.includes('simple-project-card--compact'));
 assert.ok(!home.includes('media/nika/onboarding.png'));
 assert.ok(!/localhost|127\.0\.0\.1|example\.com/.test(home));
@@ -18,8 +19,8 @@ assert.ok(home.includes('Instant, Medium and Advanced generation'));
 assert.ok(!home.includes('Instant, Balanced and Advanced generation'));
 assert.ok(home.includes('7680') && home.includes('4320'));
 for (const name of ['create', 'passmedicine', 'insights', 'onboarding']) {
-  assert.ok(home.includes(`media/nika/${name}-v1516.webp`), `Current UI capture missing: ${name}`);
-  const bytes = readFileSync(`public/media/nika/${name}-v1516.webp`);
+  assert.ok(home.includes(`media/nika/${name}-v1518.webp`), `Current UI capture missing: ${name}`);
+  const bytes = readFileSync(`public/media/nika/${name}-v1518.webp`);
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
   assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   // Qt's opaque lossy WebP contains a VP8 keyframe; verify the actual pixels,

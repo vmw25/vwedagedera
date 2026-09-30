@@ -1,0 +1,74 @@
+name: Verify existing nika Store package
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Reviewed immutable acceptance-tooling source commit
+        required: true
+        type: string
+      candidate_run:
+        description: Successful Store packaging run in this repository
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  store:
+    if: github.repository == 'vmw25/vwedagedera' && github.actor == 'vmw25'
+    runs-on: windows-2025
+    timeout-minutes: 25
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      CANDIDATE_RUN: ${{ inputs.candidate_run }}
+      HF_HUB_DISABLE_IMPLICIT_TOKEN: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Validate immutable inputs
+        run: |
+          if ($env:SOURCE_SHA -cnotmatch '^[a-f0-9]{40}$') { throw 'Invalid source commit' }
+          if ($env:CANDIDATE_RUN -cnotmatch '^[0-9]+$') { throw 'Invalid candidate run' }
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: vmw25/anki-anywhere
+          ref: ${{ inputs.source_sha }}
+          ssh-key: ${{ secrets.NIKA_WINDOWS_SOURCE_READ_KEY }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/
+            /desktop/store-identity.json
+      - name: Verify exact acceptance tooling
+        run: |
+          if ((git rev-parse HEAD).Trim() -cne $env:SOURCE_SHA) { throw 'Source commit mismatch' }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Install synthetic PDF fixture dependency
+        run: python -m pip install PyMuPDF
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: nika-Store-x64-candidate-${{ inputs.candidate_run }}
+          run-id: ${{ inputs.candidate_run }}
+          github-token: ${{ github.token }}
+          path: candidate
+      - name: Check package digest, install, verify identity and features, uninstall
+        run: |
+          $Package = @(Get-ChildItem candidate/*.msix)
+          if ($Package.Count -ne 1) { throw 'Expected one unsigned Store package' }
+          $Verification = Get-Content candidate/verification.json | ConvertFrom-Json
+          if ((Get-FileHash $Package[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant() -cne $Verification.sha256) { throw 'Package digest mismatch' }
+          $Sdk = @(Get-ChildItem "${env:ProgramFiles(x86)}/Windows Kits/10/bin" -Directory | Where-Object { Test-Path (Join-Path $_.FullName 'x64/signtool.exe') } | Sort-Object Name -Descending)
+          if ($Sdk.Count -eq 0) { throw 'Windows SDK unavailable' }
+          python -m scripts.accept_windows_store $Package[0].FullName --identity desktop/store-identity.json --sdk-bin (Join-Path $Sdk[0].FullName 'x64') --report candidate/native-acceptance.json
+          if ($LASTEXITCODE -ne 0) { throw 'Store acceptance failed' }
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: nika-Store-acceptance-${{ github.run_id }}
+          retention-days: 3
+          if-no-files-found: error
+          path: candidate/native-acceptance.json
