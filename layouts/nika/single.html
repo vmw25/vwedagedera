@@ -125,7 +125,10 @@
   <figure class="onboarding-product"><img src="{{ "media/nika/onboarding-v1516.webp" | relURL }}" width="7680" height="4320" loading="lazy" alt="The real nika onboarding screen with labelled multiline study-preference questions, example placeholders and skip, save-progress and review controls. Synthetic demo workspace."></figure>
   <div class="section-download personal-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
-<section class="plans-section" id="plans"><div class="shell">
+{{ if hugo.Data.nika.pricing_v2_ready }}
+{{ partial "nika/pricing-v2.html" . }}
+{{ else }}
+<section class="plans-section" id="plans" data-pricing-version="legacy"><div class="shell">
   <div class="section-heading"><h2>Plans</h2><p class="section-intro">Start with Free. Choose Student for everyday study, or Pro for higher-volume work.</p></div>
   <div class="plan-overview" aria-label="Plan prices"><article><h3>Free</h3><p class="overview-price">£0</p><p><strong>Try nika.</strong></p><p>A small generation allowance to try your study workflow.</p></article><article class="recommended"><p class="plan-badge">Recommended</p><h3>Student</h3><p class="overview-price">£79 / year</p><p><strong>£6.58 / month equivalent</strong>, billed yearly.</p><p>Or £8.99 / month. Save £28.88 a year with annual billing.</p><p>Your everyday study plan.</p></article><article><h3>Pro</h3><p class="overview-price">£19.99 / month</p><p><strong>For high-volume users.</strong></p><p>More room for intensive generation and larger workloads.</p></article></div>
   <p class="comparison-hint">Scroll to compare plans on smaller screens.</p>
@@ -150,13 +153,14 @@
   <p class="plan-explanation">Free never becomes paid automatically. Choose a plan inside nika and review the price in secure checkout before confirming. Annual Student billing is £79 upfront each year. Paid plans renew until cancelled. Existing subscriptions keep their agreed price unless you change plan.</p>
   <div class="section-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </div></section>
+{{ end }}
 <section class="section shell questions"><h2>Questions</h2><div class="answers">
   <details><summary>How will I get started?</summary><p>Install nika for your computer. Create your account in the app, confirm your email and sign in. Answer a few short questions, or skip them, then create and review your first cards. Free is your starting plan.</p></details>
   <details><summary>Do purchases stay inside the app?</summary><p>You choose your plan in nika. Secure Stripe Checkout or the billing portal may briefly open in your browser to complete payment or manage the subscription. Your plan updates in the app after payment is confirmed.</p></details>
   <details><summary>Do I need Anki?</summary><p>nika creates cards for Anki; it does not replace Anki’s study scheduler. Direct sync needs Anki desktop and AnkiConnect configured. You can also use the app’s export tools.</p></details>
   <details><summary>Will AI always get the answer right?</summary><p>No. AI can make mistakes or miss important context. Read each card, check it against your source and edit it before adding it to your deck.</p></details>
   <details><summary>Are my notes used to train a shared model?</summary><p>Only if you opt in and choose individual, reviewed examples to share. It is never required for a plan. You can withdraw permission and remove your shared examples. Your normal account preferences and private learning examples are separate.</p></details>
-  <details><summary>How do usage limits work?</summary><p>Your plan includes a generation allowance, not a guaranteed number of cards. Longer PDFs and deeper processing use more of it. The monthly allowance resets at the start of each UTC calendar month without rollover, including on annual plans. Any existing welcome or purchased balance remains available under its original rules. Changing the website wording does not remove an existing balance.</p></details>
+  <details><summary>How do usage limits work?</summary>{{ if hugo.Data.nika.pricing_v2_ready }}<p>Free includes 100 credits for 7 days, up to 3 completed source jobs and 20 completed PassMedicine AI requests, all sharing that balance. Student includes 250 credits a month and Pro 700. Larger sources, image analysis and deeper modes use more credits. Monthly credits reset on your billing date without rollover; purchased credits carry forward. Check the table above for each plan’s source limits. Local review and editing remain available without generation credits.</p>{{ else }}<p>Your plan includes a generation allowance, not a guaranteed number of cards. Longer PDFs and deeper processing use more of it. The monthly allowance resets at the start of each UTC calendar month without rollover, including on annual plans. Any existing welcome or purchased balance remains available under its original rules. Changing the website wording does not remove an existing balance.</p>{{ end }}</details>
   <details><summary>What do the screenshots show?</summary><p>The real nika desktop interface using example study material and example numbers. They show the workflow, not measured customer results.</p></details>
 </div></section>
 <section class="download-section final-download"><div class="shell">

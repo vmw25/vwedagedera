@@ -1,0 +1,39 @@
+{{ $pricing := hugo.Data.nika_pricing }}
+<section class="plans-section" id="plans" data-pricing-version="{{ $pricing.version }}"><div class="shell">
+  <div class="section-heading"><h2>Plans</h2><p class="section-intro">Try nika free. Choose more credits and larger sources when you need them.</p></div>
+  <div class="plan-overview" aria-label="Plan prices">
+    {{ range $pricing.plans }}
+    <article{{ if .recommended }} class="recommended"{{ end }}>
+      {{ if .recommended }}<p class="plan-badge">Recommended</p>{{ end }}
+      <h3>{{ .name }}</h3><p class="overview-price">{{ .price }} {{ .period }}</p>
+      <p><strong>AI credits: {{ .credits }}</strong></p><p>{{ .summary }}</p><p>{{ .duration }}</p>
+    </article>
+    {{ end }}
+  </div>
+  <p class="comparison-hint">Scroll to compare plans on smaller screens. Source limits below are per job.</p>
+  <div class="comparison-scroll" tabindex="0" role="region" aria-label="Compare nika plans">
+    <table class="comparison"><caption>Credits and source limits</caption><thead><tr><th scope="col">What you get</th>
+      {{ range $pricing.plans }}<th scope="col"{{ if .recommended }} class="recommended"{{ end }}><span>{{ .name }}</span><strong>{{ .price }}<span> {{ .period }}</span></strong></th>{{ end }}
+    </tr></thead><tbody>
+      {{ $rows := slice
+        (dict "label" "AI credits" "field" "credits")
+        (dict "label" "Source generation jobs" "field" "source_jobs")
+        (dict "label" "PassMedicine AI requests" "field" "passmedicine_jobs")
+        (dict "label" "Selected PDF pages per job" "field" "pdf_pages")
+        (dict "label" "Original PDF file size" "field" "pdf_mb" "suffix" " MB")
+        (dict "label" "Text characters per job" "field" "text_characters")
+        (dict "label" "Images or diagrams per job" "field" "images")
+        (dict "label" "Jobs running at once" "field" "concurrent_jobs")
+      }}
+      {{ range $rows }}{{ $row := . }}<tr><th scope="row">{{ .label }}</th>{{ range $pricing.plans }}<td{{ if .recommended }} class="recommended"{{ end }}>{{ index . $row.field }}{{ $row.suffix }}</td>{{ end }}</tr>{{ end }}
+      {{ range slice "Instant, Medium and Advanced generation" "Q&A, cloze and image occlusion cards" "Personal learning from edits and selected decks" "Review, edit, add cards manually and export to Anki" "Activity insights" }}
+      <tr><th scope="row">{{ . }}</th>{{ range $pricing.plans }}<td{{ if .recommended }} class="recommended"{{ end }}>Included</td>{{ end }}</tr>
+      {{ end }}
+    </tbody></table>
+  </div>
+  <p class="plan-explanation">One credit balance covers PDFs, text, images, PassMedicine and AI rewrites. Larger sources, image analysis and deeper modes use more credits; there is no fixed number of cards per credit. All plans use the same quality for the mode you choose. The trial’s job caps and 100-credit balance apply together, not as separate allowances.</p>
+  <p class="plan-explanation">Reviewing, editing text or image masks, deleting cards, adding cards manually, personal learning and Anki export do not spend generation credits. Asking AI to rewrite or generate cards does.</p>
+  <p class="plan-explanation">Need more? {{ range $index, $topup := $pricing.topups }}{{ if $index }} or {{ end }}{{ .credits }} extra credits for {{ .price }}{{ end }}. Purchased credits carry forward and never top up automatically. You can buy them without a subscription; on Free, the smaller source limits still apply. Top-up-funded jobs are not limited by the trial’s expiry or job caps.</p>
+  <p class="plan-explanation">Monthly plan credits reset on your billing date and do not roll over. Your trial never becomes paid automatically. Paid plans renew monthly until cancelled. Existing subscribers keep their agreed price and access unless they change plan.</p>
+  <div class="section-download">{{ partial "nika/download-links.html" (dict) }}</div>
+</div></section>

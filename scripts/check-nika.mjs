@@ -41,7 +41,8 @@ assert.doesNotMatch(html, /\/signup/, 'Installation, not website signup, is the 
 assert.match(html, /\/signin/);
 assert.match(html, /<table[^>]*comparison/);
 assert.match(html, /Recommended/);
-for (const price of ['8.99', '19.99', '79']) assert.ok(html.includes(price));
+const { checkPricing } = await import('./check-nika-pricing.mjs');
+checkPricing(html);
 assert.doesNotMatch(html, /<figcaption[ >]|[—–]|&#(?:8211|8212);|&(?:mdash|ndash);/);
 assert.doesNotMatch(html, /<video[ >]/, 'Demo must not appear until the owner supplies a real video');
 assert.match(html, /data-nika-showcase/);

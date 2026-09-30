@@ -1,0 +1,9 @@
+{
+  "version": "2026-09-29",
+  "plans": [
+    {"name": "Free trial", "price": "£0", "period": "", "credits": "100 once", "summary": "Try all three generation modes. No card required.", "duration": "7 days from activation", "source_jobs": "3 completed jobs", "passmedicine_jobs": "20 completed AI requests", "pdf_pages": 10, "pdf_mb": 10, "text_characters": "5,000", "images": 1, "concurrent_jobs": 1},
+    {"name": "Student", "price": "£9.99", "period": "/ month", "credits": "250 / month", "summary": "For regular study.", "recommended": true, "duration": "Monthly subscription", "source_jobs": "Within your credits", "passmedicine_jobs": "Within your credits", "pdf_pages": 100, "pdf_mb": 50, "text_characters": "50,000", "images": 5, "concurrent_jobs": 1},
+    {"name": "Pro", "price": "£24.99", "period": "/ month", "credits": "700 / month", "summary": "For larger sources and more generation.", "duration": "Monthly subscription", "source_jobs": "Within your credits", "passmedicine_jobs": "Within your credits", "pdf_pages": 300, "pdf_mb": 100, "text_characters": "150,000", "images": 20, "concurrent_jobs": 2}
+  ],
+  "topups": [{"credits": 100, "price": "£4.99"}, {"credits": 500, "price": "£19.99"}]
+}

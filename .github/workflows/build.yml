@@ -103,6 +103,12 @@ jobs:
     - name: Generate Pagefind search index
       run: pnpm run pagefind
 
+    - name: Verify Nika pricing and release content
+      run: |
+        node scripts/check-nika.mjs
+        node scripts/check-nika-content.mjs
+        node --test scripts/nika-pricing.test.mjs
+
     - name: Upload artifact
       id: upload
       uses: actions/upload-pages-artifact@v4

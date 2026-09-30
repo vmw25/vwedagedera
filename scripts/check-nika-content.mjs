@@ -9,7 +9,8 @@ const footer = home.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/)?.[0] || '';
 for (const label of ['Privacy', 'Terms', 'Contact', 'Vidun’s website']) {
   assert.ok(footer.includes(label), `Footer link must remain: ${label}`);
 }
-for (const amount of ['8.99', '79', '19.99']) assert.ok(home.includes(amount));
+const { checkPricing } = await import('./check-nika-pricing.mjs');
+checkPricing(home);
 assert.ok(apps.includes('simple-project-card--compact'));
 assert.ok(!home.includes('media/nika/onboarding.png'));
 assert.ok(!/localhost|127\.0\.0\.1|example\.com/.test(home));
