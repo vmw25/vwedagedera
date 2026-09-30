@@ -117,3 +117,44 @@ jobs:
             dist/tauri/*.exe.sha256
             dist/tauri/windows-acceptance.json
             dist/tauri/windows-provenance.json
+      - name: Assemble and validate the reserved Microsoft Store package
+        run: |
+          $Sdk = @(Get-ChildItem "${env:ProgramFiles(x86)}/Windows Kits/10/bin" -Directory | Where-Object {
+            (Test-Path (Join-Path $_.FullName 'x64/makeappx.exe')) -and
+            (Test-Path (Join-Path $_.FullName 'x64/makepri.exe')) -and
+            (Test-Path (Join-Path $_.FullName 'x64/signtool.exe'))
+          } | Sort-Object Name -Descending)
+          if ($Sdk.Count -eq 0) { throw 'Windows packaging SDK unavailable' }
+          $SdkBin = Join-Path $Sdk[0].FullName 'x64'
+          $Version = (python -c "import pathlib,tomllib; print(tomllib.loads(pathlib.Path('pyproject.toml').read_text())['project']['version'])").Trim()
+          $Runtime = Join-Path $env:RUNNER_TEMP 'nika-store-runtime'
+          python -m zipfile -e "dist/nika-v$Version-windows-x64.zip" $Runtime
+          if ($LASTEXITCODE -ne 0) { throw 'Store runtime extraction failed' }
+          python -m scripts.package_windows_store --engine-dir "$Runtime/nika" --identity desktop/store-identity.json --sdk-bin $SdkBin --output-dir dist/store
+          if ($LASTEXITCODE -ne 0) { throw 'Store SDK validation failed' }
+          "NIKA_STORE_SDK=$SdkBin" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Upload unsigned Store candidate for certification only
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: nika-Store-x64-candidate-${{ github.run_id }}
+          retention-days: 3
+          compression-level: 0
+          if-no-files-found: error
+          path: |
+            dist/store/*.msix
+            dist/store/verification.json
+            dist/store/AppxManifest.xml
+      - name: Install and smoke test a separate test-signed MSIX copy
+        timeout-minutes: 20
+        run: |
+          $Packages = @(Get-ChildItem dist/store/*.msix)
+          if ($Packages.Count -ne 1) { throw 'Expected one Store package' }
+          python -m scripts.accept_windows_store $Packages[0].FullName --identity desktop/store-identity.json --sdk-bin $env:NIKA_STORE_SDK --report dist/store/native-acceptance.json
+          if ($LASTEXITCODE -ne 0) { throw 'Store installation acceptance failed' }
+      - name: Upload Store acceptance evidence without the test signing key
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: nika-Store-acceptance-${{ github.run_id }}
+          retention-days: 3
+          if-no-files-found: error
+          path: dist/store/native-acceptance.json
