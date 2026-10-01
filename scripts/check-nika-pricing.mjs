@@ -32,6 +32,8 @@ export function checkPricing(html, v2 = /^pricing_v2_ready: true$/m.test(readFil
   for (const term of ['7 days from activation', 'No card required', 'AI rewrites', 'same quality', 'not as separate allowances', 'do not spend generation credits', '£19.99', 'never top up automatically', 'billing date', 'do not roll over', 'Existing subscribers keep their agreed price and access']) assert.ok(plain.includes(term), `Missing limit or billing explanation: ${term}`);
   assert.ok(!/unlimited|priority queue/i.test(plain));
   assert.match(html, /purchased credits carry forward/i);
+  for (const term of ['UK residents only', 'no UK VAT is charged', 'Full refund within 14 days', 'even if you start using it']) assert.ok(plain.includes(term), `Missing UK purchase policy: ${term}`);
+  assert.match(section, /\/terms\/2026-09-30/);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

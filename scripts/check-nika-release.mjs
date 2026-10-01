@@ -22,9 +22,10 @@ assert.match(setting('macos_url'), /^https:\/\/github\.com\/vmw25\/vwedagedera\/
 assert.match(setting('macos_sha256'), /^[a-f0-9]{64}$/, 'Release config must include a package checksum');
 assert.ok(html.includes(setting('macos_release_notes_url')), 'Page must link to release notes and checksums');
 assert.ok(html.includes(setting('version')), 'Page must identify the released version');
-assert.match(html, /8\.99/);
-assert.match(html, /19\.99/);
-assert.match(html, /79/);
+// Billing assertions live in the version-aware pricing checker. A release
+// must not pin this page to retired prices when the approved rollout is live.
+const { checkPricing } = await import('./check-nika-pricing.mjs');
+checkPricing(html);
 assert.ok(html.includes('notar'), 'Beta notarisation warning must remain');
 const windowsBeta = /^windows_beta: true$/m.test(config);
 const windows = [...html.matchAll(/<a\b[^>]*>/g)].map(([tag]) => attrs(tag))
