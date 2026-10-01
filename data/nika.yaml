@@ -1,21 +1,21 @@
 # Beta distribution is separate from account/payment launch readiness.
 # A Mac beta must carry its checksum, platform limits and notarisation warning.
-launch_ready: false
+launch_ready: true
 # Activate only in the same verified rollout as Stripe, account entitlements
 # and desktop credit enforcement. Until then, show the current checkout prices.
-pricing_v2_ready: false
+pricing_v2_ready: true
 account_url: "https://app.vidunwedagedera.com"
 macos_beta: true
-macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.18-beta.56/nika-customer-v1.5.18-build56-arm64.dmg"
-macos_sha256: "b5a3e23be9d07732170b5cef2ac96b254b646921076155fafe8f5f11bc6b6d9b"
-macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.18-beta.56"
-macos_version: "1.5.18, build 56"
-windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.18-windows-beta.56/nika-customer-v1.5.18-build56-amd64.exe"
+macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.19-beta.57/nika-customer-v1.5.19-build57-arm64.dmg"
+macos_sha256: "01a75dcd0f4b934d60b6612f6fe9e7f2e48df1347e291d9f4af591c5ea98965d"
+macos_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.19-beta.57"
+macos_version: "1.5.19, build 57"
+windows_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.19-windows-beta.57/nika-customer-v1.5.19-build57-amd64.exe"
 windows_beta: true
-windows_sha256: "bfe8387ad98aafcb20db8de7bf8a4fae2058577d3a99ad65f9ad064029ad4577"
-windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.18-windows-beta.56"
-windows_version: "1.5.18, build 56"
-version: "1.5.18, build 56"
+windows_sha256: "7ae261b95cd03f7ae77109fa4728b5bedda1642c45a923edb5b1f82913f5f308"
+windows_release_notes_url: "https://github.com/vmw25/vwedagedera/releases/tag/nika-v1.5.19-windows-beta.57"
+windows_version: "1.5.19, build 57"
+version: "1.5.19, build 57"
 # Owner will supply the real MP4. No simulated footage or dead play button.
 # Optional short silent cut for the looping hero; otherwise the full clip is used.
 demo_video_url: ""

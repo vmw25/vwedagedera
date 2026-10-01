@@ -1,6 +1,7 @@
 {{ $pricing := hugo.Data.nika_pricing }}
 <section class="plans-section" id="plans" data-pricing-version="{{ $pricing.version }}"><div class="shell">
   <div class="section-heading"><h2>Plans</h2><p class="section-intro">Try nika free. Choose more credits and larger sources when you need them.</p></div>
+  <p class="plan-explanation">Paid plans and credit packs are available to UK residents only. Downloads remain available worldwide. Prices are in pounds sterling. nika is not VAT-registered; no UK VAT is charged.</p>
   <div class="plan-overview" aria-label="Plan prices">
     {{ range $pricing.plans }}
     <article{{ if .recommended }} class="recommended"{{ end }}>
@@ -35,5 +36,7 @@
   <p class="plan-explanation">Reviewing, editing text or image masks, deleting cards, adding cards manually, personal learning and Anki export do not spend generation credits. Asking AI to rewrite or generate cards does.</p>
   <p class="plan-explanation">Need more? {{ range $index, $topup := $pricing.topups }}{{ if $index }} or {{ end }}{{ .credits }} extra credits for {{ .price }}{{ end }}. Purchased credits carry forward and never top up automatically. You can buy them without a subscription; on Free, the smaller source limits still apply. Top-up-funded jobs are not limited by the trial’s expiry or job caps.</p>
   <p class="plan-explanation">Monthly plan credits reset on your billing date and do not roll over. Your trial never becomes paid automatically. Paid plans renew monthly until cancelled. Existing subscribers keep their agreed price and access unless they change plan.</p>
+  <p class="plan-explanation">Full refund within 14 days of your first subscription or any credit-pack purchase, even if you start using it. <a href="{{ hugo.Data.nika.account_url }}/terms/2026-09-30">Terms and cancellation information</a>. Questions? <a href="mailto:nika@vidunwedagedera.com">nika@vidunwedagedera.com</a>.</p>
+  <p class="plan-explanation"><a class="text-link" href="{{ hugo.Data.nika.account_url }}/account">Choose a plan in your account <span aria-hidden="true">↗</span></a></p>
   <div class="section-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </div></section>
