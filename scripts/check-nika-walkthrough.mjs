@@ -7,12 +7,15 @@ const source = readFileSync('assets/js/nika-walkthrough.mjs', 'utf8');
 const data = readFileSync('data/nika_walkthrough.yaml', 'utf8');
 assert.equal((html.match(/data-guide-panel=/g) ?? []).length, 3);
 assert.equal((html.match(/data-path-panel=/g) ?? []).length, 4);
-assert.equal((html.match(/data-step[ >]/g) ?? []).length, 13);
-assert.equal((html.match(/data-enlarge[ >]/g) ?? []).length, 13);
+assert.equal((html.match(/data-step[ >]/g) ?? []).length, 14);
+assert.equal((html.match(/data-enlarge[ >]/g) ?? []).length, 14);
 assert(!/setInterval|setTimeout|requestAnimationFrame/.test(source), 'Walkthrough must never autoplay');
 assert(!/<img[^>]+src=[^>]*-full\.webp/.test(html), '8K assets must not be initial image sources');
 assert(html.includes('Windows screenshots will follow Windows testing.'));
 assert(data.includes('2055492159'));
+for (const text of ['Open the Mac menu-bar controls', 'File → Open Question Bank panel', 'The × only closes the panel.', 'Cancel session discards that session’s queued mistakes.']) {
+  assert(data.includes(text), `Missing Mac menu-bar instruction: ${text}`);
+}
 
 function dimensions(file) {
   const b = readFileSync(file);
@@ -39,5 +42,5 @@ for (const [name, item] of Object.entries(metadata)) {
   regularBytes += statSync(`${prefix}-1440.webp`).size;
   assert(html.includes(`/${prefix.replace('static/', '')}-1440.webp`), `Unused or missing image ${name}`);
 }
-assert.equal(Object.keys(metadata).length, 12);
-console.log(`Walkthrough: 3 guides, 4 paths, 13 steps, 12 native images. All 48 assets verified. Normal 1440px set: ${Math.round(regularBytes / 1024)} KiB; on-demand originals: ${Math.round(fullBytes / 1024)} KiB.`);
+assert.equal(Object.keys(metadata).length, 14);
+console.log(`Walkthrough: 3 guides, 4 paths, 14 steps, 14 native images. All 56 assets verified. Normal 1440px set: ${Math.round(regularBytes / 1024)} KiB; on-demand originals: ${Math.round(fullBytes / 1024)} KiB.`);

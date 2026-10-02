@@ -12,7 +12,7 @@
 .walk-step-list{list-style:none;margin:0;padding:0}
 .walk-step{display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,2fr);gap:30px;align-items:center;margin:0 0 30px}
 .walk-copy{padding:18px 0}
-.walk-counter{font-size:13px;letter-spacing:.045em;text-transform:uppercase;color:#006bda;margin:0 0 16px;font-weight:600}
+.walk-counter{font-family:inherit;font-size:14px;line-height:1.5;letter-spacing:normal;text-transform:none;color:#006bda;margin:0 0 16px;font-weight:500}
 .walk-copy h3{font-size:clamp(24px,2.5vw,32px);line-height:1.15;letter-spacing:-.035em;margin:0 0 16px}
 .walk-copy>p:not(.walk-counter){font-size:17px;line-height:1.6;margin:0 0 16px;color:var(--ink)}
 .walk-copy>p.walk-note{font-size:13px;line-height:1.5;color:var(--muted)}

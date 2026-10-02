@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { initialiseWalkthrough } from '../assets/js/nika-walkthrough.mjs';
+
+test('step labels inherit the site font without all-caps or expanded tracking', () => {
+  const css = readFileSync(new URL('../assets/css/nika-walkthrough.css', import.meta.url), 'utf8');
+  const counter = css.match(/\.walk-counter\{([^}]+)\}/)?.[1];
+  assert(counter);
+  assert.match(counter, /font-family:inherit/);
+  assert.match(counter, /text-transform:none/);
+  assert.match(counter, /letter-spacing:normal/);
+});
 
 class Element {
   constructor() {
