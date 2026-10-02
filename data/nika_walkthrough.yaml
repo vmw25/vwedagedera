@@ -49,15 +49,21 @@ guides:
       - id: passmed
         title: From PassMed
         steps:
-          - title: Start your session
-            text: Open PassMedicine in your browser. In Nika, choose Question Bank and press Start Question Bank Session. Allow screen recording if prompted.
-            image: passmed-start
-            alt: Nika’s PassMedicine page with the Start Question Bank session button.
-          - title: Study, then stop
-            text: Nika queues detected wrong answers while you study. Switching tabs does not end your session. When finished, press Stop & Review Question Bank.
-            image: passmed-running
-            alt: Nika’s session screen with Stop and Review Question Bank and an example queued-mistake count.
-            note: Example session state only. No private activity or PassMedicine question-bank content is shown here.
+          - title: Open the Mac menu-bar controls
+            text: Click Nika’s small dot and number at the top of your Mac screen. The Question Bank panel opens. Nothing is captured until you press Start.
+            image: menubar-ready
+            alt: Nika’s actual Mac menu-bar button above the Question Bank panel, with Start available and zero mistakes queued.
+            note: On a crowded menu bar, you may see only the dot. If you cannot find it, open Nika and choose File → Open Question Bank panel.
+          - title: Start, then study
+            text: Open PassMedicine in your browser and press Start in the panel. Allow screen recording if asked. The green dot means monitoring is on; detected wrong answers are queued while you study.
+            image: menubar-active
+            alt: Nika’s green menu-bar status dot and Question Bank panel showing Monitoring on, zero queued and Stop & review.
+            note: The × only closes the panel. Switching tabs does not end the session. Return to PassMedicine to continue capturing questions.
+          - title: Stop and review your mistakes
+            text: Click the menu-bar dot to reopen the panel. The number shows queued mistakes. When you finish, press Stop & review to stop monitoring and begin reviewing them.
+            image: menubar-queued
+            alt: Nika’s menu-bar button showing three example queued mistakes, with Stop & review and Cancel session in the open panel.
+            note: Cancel session discards that session’s queued mistakes. Use Stop & review to keep them. The count shown here is an example, not real user activity.
           - title: Turn mistakes into cards
             text: Confirm that you want a preview from your queued mistakes. Review and edit the resulting cards before sending them to Anki.
             image: passmed-review

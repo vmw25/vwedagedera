@@ -26,15 +26,6 @@
     "w1440": 1440,
     "w2304": 2304
   },
-  "passmed-running": {
-    "width": 7680,
-    "height": 4320,
-    "kind": "native-app-render",
-    "sourceVersion": "1.5.19",
-    "w768": 768,
-    "w1440": 1440,
-    "w2304": 2304
-  },
   "deck": {
     "width": 7680,
     "height": 4320,
@@ -106,5 +97,35 @@
     "w768": 768,
     "w1440": 1440,
     "w2304": 1840
+  },
+  "menubar-ready": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "capture": "Real Mac menu-bar controls in a neutral surround; synthetic state",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "menubar-active": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "capture": "Real Mac menu-bar controls in a neutral surround; synthetic state",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "menubar-queued": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "capture": "Real Mac menu-bar controls in a neutral surround; synthetic state",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
   }
 }
