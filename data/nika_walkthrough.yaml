@@ -1,0 +1,85 @@
+version: "1.5.19"
+guides:
+  - id: install
+    title: Install Nika
+    paths:
+      - id: mac
+        title: Mac
+        steps:
+          - title: Download and install
+            text: Download the Mac beta above. Open the .dmg, drag Nika into Applications, then open Nika from there.
+            image: install
+            alt: The Nika Mac disk image in Finder, with Nika and the Applications folder.
+            note: Apple silicon · macOS 14 or later. This beta is not yet notarised. If macOS blocks it, follow Apple’s per-app approval instructions. Do not turn off system security.
+            link: https://support.apple.com/en-gb/102445
+            link_text: Apple’s opening instructions
+          - title: Sign in
+            text: Choose Create free account if you are new, confirm your email, then sign in to Nika with that account.
+            image: sign-in
+            alt: Nika’s welcome screen with email and password fields, Sign in and Create free account.
+          - title: Make it yours
+            text: Tell Nika how you like your cards. Add examples if you have them, or use the in-app tutorial to practise first.
+            image: preferences
+            alt: Nika’s first-run card preference questions, with optional example cards.
+          - title: Allow capture when you need it
+            text: For screenshots or PassMed sessions, allow Nika in System Settings → Privacy & Security → Screen & System Audio Recording when prompted. Reopen Nika if macOS asks.
+            image: passmed-start
+            alt: Nika’s PassMedicine session screen, explaining opt-in capture and local processing.
+            note: Pasting text and opening PDFs do not require screen recording. Only start monitoring when you want to use it.
+  - id: create
+    title: Create cards / PassMed
+    paths:
+      - id: source
+        title: From a source
+        steps:
+          - title: Add your material
+            text: Paste text, drop in a PDF, or choose Image… or Paste image. Use the × on an attached image to remove it.
+            image: source
+            alt: Nika’s Create cards screen with example study text in the source box.
+          - title: Choose your depth
+            text: Choose Instant for key ideas, Medium for a coverage check, or Advanced for more thorough checks. Then press Generate cards.
+            image: depth
+            alt: Nika’s generation-depth control below the source, set to Instant.
+            note: Larger PDFs take longer and use more credits. Review the cost shown in the app before confirming.
+          - title: Review and edit
+            text: Check every answer against your source. Edit the wording, remove unwanted cards and check image masks. Choose Full-screen review for more space.
+            image: review
+            alt: Nika’s full-screen card review, showing editable example questions and answers.
+            note: These are practice cards, not medical advice. AI-generated cards still need your review.
+      - id: passmed
+        title: From PassMed
+        steps:
+          - title: Start your session
+            text: Open PassMedicine in your browser. In Nika, choose Question Bank and press Start Question Bank Session. Allow screen recording if prompted.
+            image: passmed-start
+            alt: Nika’s PassMedicine page with the Start Question Bank session button.
+          - title: Study, then stop
+            text: Nika queues detected wrong answers while you study. Switching tabs does not end your session. When finished, press Stop & Review Question Bank.
+            image: passmed-running
+            alt: Nika’s session screen with Stop and Review Question Bank and an example queued-mistake count.
+            note: Example session state only. No private activity or PassMedicine question-bank content is shown here.
+          - title: Turn mistakes into cards
+            text: Confirm that you want a preview from your queued mistakes. Review and edit the resulting cards before sending them to Anki.
+            image: passmed-review
+            alt: Nika’s card review with an original practice question and its correct answer, not PassMedicine question-bank content.
+  - id: anki
+    title: Add to Anki
+    paths:
+      - id: connect
+        title: Connect and send
+        steps:
+          - title: Connect Anki once
+            text: In Anki, open Tools → Add-ons → Get Add-ons. Enter 2055492159 to install AnkiConnect, then restart Anki and keep it open.
+            image: anki-setup
+            alt: Nika’s Connect Anki dialog with the AnkiConnect installation steps and add-on number.
+            link: https://ankiweb.net/shared/info/2055492159
+            link_text: Open the AnkiConnect add-on
+          - title: Choose a destination
+            text: Return to Create cards in Nika. Refresh the deck list with ↻, then choose the Anki deck you want to use.
+            image: deck
+            alt: Nika’s reviewed practice cards and destination deck selector set to Practice Geometry.
+          - title: Send and check
+            text: After checking your cards, press Add to Anki. Wait for confirmation, then open that deck in Anki’s Browse window to check the new cards.
+            image: send
+            alt: The Add to Anki control beneath the selected destination deck in Nika.
+            note: If Anki is disconnected, use Set up Anki and retry. Text cards can also be exported; image cards need Anki connected to transfer their media.

@@ -1,0 +1,61 @@
+{{ $data := hugo.Data.nika_walkthrough }}
+<div class="walkthrough" data-walkthrough>
+  <div class="walk-tabs" aria-label="Walkthrough guides">
+    {{ range $index, $guide := $data.guides }}
+    <a class="walk-tab" id="walk-tab-{{ .id }}" href="#walk-{{ .id }}" data-guide="{{ .id }}"><span>{{ printf "%02d" (add $index 1) }}</span> {{ .title }}</a>
+    {{ end }}
+  </div>
+  <p class="walk-edition">Mac guide · Nika {{ $data.version }} · Example data</p>
+  {{ range $guide := $data.guides }}
+  <section class="walk-guide" id="walk-{{ .id }}" aria-labelledby="walk-tab-{{ .id }}" data-guide-panel="{{ .id }}">
+    <h3 class="walk-fallback-title">{{ .title }}</h3>
+    {{ if gt (len .paths) 1 }}
+    <div class="walk-paths" aria-label="Choose your source">
+      {{ range .paths }}<a href="#walk-path-{{ .id }}" data-path="{{ .id }}">{{ .title }}</a>{{ end }}
+    </div>
+    {{ end }}
+    {{ range .paths }}
+    {{ $stepCount := len .steps }}
+    <div class="walk-path" id="walk-path-{{ .id }}" data-path-panel="{{ .id }}">
+      <ol class="walk-step-list">
+        {{ range $index, $step := .steps }}
+        {{ $base := printf "media/nika/walkthrough/%s" .image }}
+        {{ $meta := index hugo.Data.nika_walkthrough_images .image }}
+        <li class="walk-step" data-step>
+          <div class="walk-copy">
+            <p class="walk-counter">Step {{ add $index 1 }} of {{ $stepCount }}<span class="sr-only"> in this guide</span></p>
+            <h3>{{ .title }}</h3>
+            <p>{{ .text }}</p>
+            {{ with .note }}<p class="walk-note">{{ . }}</p>{{ end }}
+            {{ with .link }}<a class="walk-help" href="{{ . }}" target="_blank" rel="noopener">{{ $step.link_text }} ↗</a>{{ end }}
+          </div>
+          <figure class="walk-figure">
+            <a class="walk-image" href="{{ printf "%s-full.webp" $base | relURL }}" data-enlarge aria-label="Enlarge: {{ .title }}" data-caption="{{ .title }}" data-resolution="{{ $meta.width }} × {{ $meta.height }}">
+              <img src="{{ printf "%s-1440.webp" $base | relURL }}" srcset="{{ printf "%s-768.webp" $base | relURL }} {{ $meta.w768 }}w, {{ printf "%s-1440.webp" $base | relURL }} {{ $meta.w1440 }}w, {{ printf "%s-2304.webp" $base | relURL }} {{ $meta.w2304 }}w" sizes="(max-width: 720px) calc(100vw - 60px), (max-width: 1100px) 90vw, 760px" width="{{ $meta.width }}" height="{{ $meta.height }}" loading="lazy" decoding="async" alt="{{ .alt }}">
+              <span class="walk-enlarge" aria-hidden="true">⤢ Enlarge</span>
+            </a>
+            <figcaption class="walk-caption">{{ if eq $meta.kind "native-app-render" }}Native 8K app render{{ else }}Native Mac screenshot{{ end }} · Click to zoom</figcaption>
+          </figure>
+        </li>
+        {{ end }}
+      </ol>
+      <div class="walk-controls" hidden>
+        <button type="button" data-back aria-label="Previous step">← Back</button>
+        <div class="walk-dots" aria-label="Choose a step"></div>
+        <button type="button" data-next aria-label="Next step">Next →</button>
+      </div>
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+  <p class="sr-only" data-walk-announcement role="status" aria-live="polite" aria-atomic="true"></p>
+  <p class="walk-footnote">Follow at your own pace. App screens use an isolated practice workspace, not a live account. Windows screenshots will follow Windows testing.</p>
+  <dialog class="walk-dialog" aria-labelledby="walk-dialog-title">
+    <div class="walk-dialog-bar">
+      <div><h2 id="walk-dialog-title">Screenshot</h2><p data-image-resolution></p></div>
+      <div><button type="button" data-zoom>Zoom in</button><button type="button" data-close aria-label="Close screenshot">Close ×</button></div>
+    </div>
+    <p class="walk-image-status" role="status" data-image-status></p>
+    <div class="walk-zoom-canvas" tabindex="0" aria-label="Screenshot. When zoomed, scroll to explore."><img data-full-image alt=""></div>
+  </dialog>
+</div>
