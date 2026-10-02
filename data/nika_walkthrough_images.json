@@ -1,0 +1,110 @@
+{
+  "source": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "depth": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "passmed-start": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "passmed-running": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "deck": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "send": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "review": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "passmed-review": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "anki-setup": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "sign-in": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "preferences": {
+    "width": 7680,
+    "height": 4320,
+    "kind": "native-app-render",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 2304
+  },
+  "install": {
+    "width": 1840,
+    "height": 872,
+    "kind": "native-mac-screenshot",
+    "sourceVersion": "1.5.19",
+    "w768": 768,
+    "w1440": 1440,
+    "w2304": 1840
+  }
+}

@@ -108,6 +108,8 @@ jobs:
         node scripts/check-nika.mjs
         node scripts/check-nika-content.mjs
         node --test scripts/nika-pricing.test.mjs
+        node --test scripts/nika-showcase.test.mjs scripts/nika-walkthrough.test.mjs scripts/nika-release.test.mjs scripts/nika-windows-workflow.test.mjs
+        node scripts/check-nika-walkthrough.mjs
 
     - name: Upload artifact
       id: upload

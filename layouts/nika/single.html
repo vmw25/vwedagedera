@@ -9,6 +9,8 @@
   <link rel="icon" type="image/svg+xml" href="{{ "media/nika/mark.svg" | relURL }}">
   {{ $css := resources.Get "css/nika.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ $js := resources.Get "js/nika-showcase.mjs" | minify | fingerprint }}<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+  {{ $walkCSS := resources.Get "css/nika-walkthrough.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $walkCSS.RelPermalink }}" integrity="{{ $walkCSS.Data.Integrity }}">
+  {{ $walkJS := resources.Get "js/nika-walkthrough.mjs" | minify | fingerprint }}<script type="module" src="{{ $walkJS.RelPermalink }}" integrity="{{ $walkJS.Data.Integrity }}"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -87,7 +89,7 @@
 </div></section>
 <section class="section shell" id="workflow">
   <h2>Create, review, add to Anki.</h2>
-  <p class="section-intro">Import a PDF, text or image. Generate cards in your style, check each answer, then send them to your deck. The app’s interactive tutorial lets you practise first.</p>
+  <p class="section-intro">Follow the screenshots, one step at a time. You can also practise with the interactive tutorial inside Nika.</p>
   {{ $demo := hugo.Data.nika.demo_video_url | default "" }}
   {{ if $demo }}
     {{ if not (findRE `^(https://[^\s]+|/[^/][^\s]*)\.mp4(\?[^\s]*)?$` $demo) }}{{ errorf "nika demo_video_url must be a trusted HTTPS or site-relative MP4 URL" }}{{ end }}
@@ -105,11 +107,7 @@
       </dialog>
     </div>
   {{ end }}
-  <div class="workflow-steps">
-    <article><p class="step-number">01</p><h3>Add your source</h3><p>Drag in a PDF, open a file or paste text or an image. Choose your generation depth.</p></article>
-    <article><p class="step-number">02</p><h3>Review your cards</h3><p>Check the source, edit the wording and correct image masks before keeping each card.</p></article>
-    <article><p class="step-number">03</p><h3>Add to Anki</h3><p>Choose a destination deck and send through AnkiConnect, or export your cards.</p></article>
-  </div>
+  {{ partial "nika/walkthrough.html" . }}
   <div class="section-download">{{ partial "nika/download-links.html" (dict) }}</div>
 </section>
 <section class="feature-section" id="features">

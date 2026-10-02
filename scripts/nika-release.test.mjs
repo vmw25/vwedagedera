@@ -14,7 +14,9 @@ function render(config) {
   const fixture = mkdtempSync(join(tmpdir(), 'nika-download-test-'));
   try {
     for (const dir of ['layouts/nika', 'layouts/partials/nika', 'assets/css', 'assets/js', 'content/sidequests/nika', 'data']) mkdirSync(join(fixture, dir), { recursive: true });
-    for (const file of ['layouts/nika/single.html', 'assets/css/nika.css', 'assets/js/nika-showcase.mjs']) cpSync(join(source, file), join(fixture, file));
+    for (const file of ['layouts/nika/single.html', 'assets/css/nika.css', 'assets/js/nika-showcase.mjs',
+      'assets/css/nika-walkthrough.css', 'assets/js/nika-walkthrough.mjs',
+      'data/nika_walkthrough.yaml', 'data/nika_walkthrough_images.json']) cpSync(join(source, file), join(fixture, file));
     cpSync(join(source, 'layouts/partials/nika'), join(fixture, 'layouts/partials/nika'), { recursive: true });
     cpSync(join(source, 'content/sidequests/nika/index.md'), join(fixture, 'content/sidequests/nika/index.md'));
     writeFileSync(join(fixture, 'hugo.toml'), 'baseURL = "https://site.invalid/"\n');
@@ -49,7 +51,7 @@ test('launch gate prevents populated URLs leaking as active downloads', () => {
 });
 const beta = { launch_ready: false, macos_beta: true, macos_url: mac, windows_url: '',
   version: '1.5.0 beta', macos_sha256: 'a'.repeat(64), macos_release_notes_url: 'https://downloads.invalid/release' };
-test('explicit Mac beta is downloadable with independent account-testing and notarisation warnings', () => {
+test('explicit Mac beta is downloadable with current account availability and notarisation warnings', () => {
   const { status, html, output } = render(beta);
   assert.equal(status, 0, output);
   assert.equal(links(html, 'macos').length, 7);
@@ -60,7 +62,7 @@ test('explicit Mac beta is downloadable with independent account-testing and not
   });
   links(html, 'windows').forEach(a => assert.match(a, /data-download-state="pending"/));
   assert.match(html, /Not notarised by Apple/);
-  assert.match(html, /Full customer account and payment testing is still in progress/);
+  assert.match(html, /Account-linked plans and UK paid checkout are available/);
   assert.match(html, /macOS 14/);
   assert.match(html, /Do not replace a personal\/founder/);
   assert.match(html, /Release notes, upgrade instructions and checksum/);

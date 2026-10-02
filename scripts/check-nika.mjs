@@ -44,7 +44,10 @@ assert.match(html, /<table[^>]*comparison/);
 assert.match(html, /Recommended/);
 const { checkPricing } = await import('./check-nika-pricing.mjs');
 checkPricing(html);
-assert.doesNotMatch(html, /<figcaption[ >]|[—–]|&#(?:8211|8212);|&(?:mdash|ndash);/);
+// The step guides deliberately label native captures and offer zoom. Keep the
+// old ban on decorative marketing captions outside that requested component.
+const withoutGuideCaptions = html.replace(/<figcaption class=(?:"walk-caption"|walk-caption)>[^<]*<\/figcaption>/g, '');
+assert.doesNotMatch(withoutGuideCaptions, /<figcaption[ >]|[—–]|&#(?:8211|8212);|&(?:mdash|ndash);/);
 assert.doesNotMatch(html, /<video[ >]/, 'Demo must not appear until the owner supplies a real video');
 assert.match(html, /data-nika-showcase/);
 assert.equal((html.match(/data-showcase-panel[\s>]/g) || []).length, 6);
