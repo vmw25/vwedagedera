@@ -5,7 +5,6 @@
     <a class="walk-tab" id="walk-tab-{{ .id }}" href="#walk-{{ .id }}" data-guide="{{ .id }}"><span>{{ printf "%02d" (add $index 1) }}</span> {{ .title }}</a>
     {{ end }}
   </div>
-  <p class="walk-edition">Mac guide · Nika {{ $data.version }} · Example data</p>
   {{ range $guide := $data.guides }}
   <section class="walk-guide" id="walk-{{ .id }}" aria-labelledby="walk-tab-{{ .id }}" data-guide-panel="{{ .id }}">
     <h3 class="walk-fallback-title">{{ .title }}</h3>
@@ -34,7 +33,6 @@
               <img src="{{ printf "%s-1440.webp" $base | relURL }}" srcset="{{ printf "%s-768.webp" $base | relURL }} {{ $meta.w768 }}w, {{ printf "%s-1440.webp" $base | relURL }} {{ $meta.w1440 }}w, {{ printf "%s-2304.webp" $base | relURL }} {{ $meta.w2304 }}w" sizes="(max-width: 720px) calc(100vw - 60px), (max-width: 1100px) 90vw, 760px" width="{{ $meta.width }}" height="{{ $meta.height }}" loading="lazy" decoding="async" alt="{{ .alt }}">
               <span class="walk-enlarge" aria-hidden="true">⤢ Enlarge</span>
             </a>
-            <figcaption class="walk-caption">{{ if eq $meta.kind "native-app-render" }}Native 8K app render{{ else }}Native Mac screenshot{{ end }} · Click to zoom</figcaption>
           </figure>
         </li>
         {{ end }}
