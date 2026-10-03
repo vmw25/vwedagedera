@@ -12,6 +12,10 @@ assert.equal((html.match(/data-enlarge[ >]/g) ?? []).length, 14);
 assert(!/setInterval|setTimeout|requestAnimationFrame/.test(source), 'Walkthrough must never autoplay');
 assert(!/<img[^>]+src=[^>]*-full\.webp/.test(html), '8K assets must not be initial image sources');
 assert(html.includes('Windows screenshots will follow Windows testing.'));
+assert(!html.includes('Mac guide · Nika'), 'Do not restore the removed guide-edition label');
+assert(!html.includes('Native 8K app render'), 'Do not restore the removed image-render label');
+assert(!html.includes('walk-caption'), 'Keep walkthrough images free of redundant captions');
+assert(html.includes('⤢ Enlarge'), 'Keep the useful image-enlargement control');
 assert(data.includes('2055492159'));
 for (const text of ['Open the Mac menu-bar controls', 'File → Open Question Bank panel', 'The × only closes the panel.', 'Cancel session discards that session’s queued mistakes.']) {
   assert(data.includes(text), `Missing Mac menu-bar instruction: ${text}`);
