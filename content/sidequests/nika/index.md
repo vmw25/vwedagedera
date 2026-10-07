@@ -1,11 +1,11 @@
 ---
-title: 'nika'
+title: 'nena'
 url: /apps/nika/
-card_icon: media/nika/icon.svg
+card_icon: media/nena/icon.svg
 compact_app_card: true
-image_alt: 'nika app icon'
-summary: 'Turn your study material into Anki cards. Review, refine and make them yours.'
-description: 'Meet nika for desktop. Create Anki cards from text, images and PDFs, with review and personalisation built in.'
+image_alt: 'nena app icon'
+summary: 'Personalised learning that grows with you through medical school. Starting with Anki cards shaped by you.'
+description: 'Meet nena, formerly Nika. Personalised learning for your medical-school journey, starting with Anki cards from text, images, PDFs and question-bank mistakes.'
 type: nika
 layout: single
 weight: 20

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { cpSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -11,8 +11,9 @@ test('Production matches the activated UK plans and limits', () => {
   checkPricing(readFileSync('public/apps/nika/index.html', 'utf8'), true);
 });
 
-test('A deliberate rollback renders only the legacy table', () => {
+test('A deliberate rollback renders only the legacy table', (t) => {
   const fixture = mkdtempSync(join(tmpdir(), 'nika-pricing-fixture-'));
+  t.after(() => rmSync(fixture, { recursive: true, force: true }));
   cpSync('data', join(fixture, 'data'), { recursive: true });
   const dataFile = join(fixture, 'data/nika.yaml');
   writeFileSync(dataFile, readFileSync(dataFile, 'utf8').replace(/^pricing_v2_ready: true$/m, 'pricing_v2_ready: false'));

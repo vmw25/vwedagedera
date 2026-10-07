@@ -39,16 +39,22 @@ for (const name of ['create', 'passmedicine', 'insights', 'onboarding']) {
   }
   assert.ok(found, `Expected rendered WebP frame missing: ${name}`);
 }
-const requestedHeadline = 'Upload anything. Get cards indistinguishable from your own.';
-const requestedDescription = 'Paste text, add screenshots or upload full PDFs. Nika creates any type of Anki card and automatically chooses the best type for each part. All as if you made them yourself :)';
-assert.ok(home.includes(requestedHeadline), 'Requested hero headline must be published verbatim');
-assert.ok(home.includes(requestedDescription), 'Requested hero description must be published verbatim');
+assert.ok(home.includes('Learning that grows with you.'), 'The nena direction must be clear in the hero');
+assert.ok(home.includes('The goal: cards indistinguishable from your own.'), 'Keep the personal-card goal');
+assert.ok(home.includes('Our vision is to learn who you are, what you know, how you think and who you’re becoming, and help you become the doctor you want to be.'));
+assert.ok(home.includes('Available in the desktop beta') && home.includes('Our longer-term direction'), 'Separate current capabilities from the roadmap');
+assert.ok(home.includes('media/nena/wordmark.svg'));
+assert.ok(apps.includes('nena') && apps.includes('media/nena/icon.svg'));
+const webBetaReady = /^web_beta_ready: true$/m.test(readFileSync('data/nika.yaml', 'utf8'));
+assert.ok(home.includes(webBetaReady ? 'Web beta' : 'Being built'), 'Describe web availability accurately');
+assert.equal(home.includes('data-web-beta'), webBetaReady, 'Web access must follow the actual release gate');
+assert.equal(home.includes('https://app.vidunwedagedera.com/workspace'), webBetaReady, 'No incomplete workspace link should leak');
 assert.ok(!home.includes('One goal: Anki cards indistinguishable from your own.'));
 assert.ok(!home.includes('See how it works'));
-assert.match(home, /<a[^>]+href=(?:"#technology"|#technology)[^>]*>See the tech behind Nika/);
+assert.match(home, /<a[^>]+href=(?:"#technology"|#technology)[^>]*>See the tech behind nena/);
 const sectionIds = [...home.matchAll(/<section\b[^>]*\bid=(?:"([^"]+)"|([^\s>]+))/g)].map(m => m[1] || m[2]);
 assert.equal(sectionIds.filter(id => id === 'technology').length, 1, 'Technology section must not be duplicated');
 assert.equal(sectionIds[sectionIds.indexOf('technology') + 1], 'workflow', 'How it works must immediately precede Create, review, add to Anki');
 assert.match(home, /<h2\b[^>]*\bid=(?:"technology-title"|technology-title)>How it works<\/h2>/);
 assert.equal([...home.matchAll(/<a[^>]+href=(?:"#technology"|#technology)[^>]*>How it works<\/a>/g)].length, 2, 'Both desktop and mobile navigation must point to the technology section');
-console.log('Verified hero copy, section order, canonical sign-in, compact listing and actual 8K screenshots.');
+console.log('Verified nena copy, web release gate, section order, canonical sign-in, compact listing and actual 8K desktop screenshots.');

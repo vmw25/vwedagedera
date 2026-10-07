@@ -1,7 +1,7 @@
 {{ $pricing := hugo.Data.nika_pricing }}
 <section class="plans-section" id="plans" data-pricing-version="{{ $pricing.version }}"><div class="shell">
-  <div class="section-heading"><h2>Plans</h2><p class="section-intro">Try nika free. Choose more credits and larger sources when you need them.</p></div>
-  <p class="plan-explanation">Paid plans and credit packs are available to UK residents only. Downloads remain available worldwide. Prices are in pounds sterling. nika is not VAT-registered; no UK VAT is charged.</p>
+  <div class="section-heading"><h2>Plans</h2><p class="section-intro">Try nena free. Choose more credits and larger sources when you need them.</p></div>
+  <p class="plan-explanation">Paid plans and credit packs are available to UK residents only. Downloads remain available worldwide. Prices are in pounds sterling. nena is not VAT-registered; no UK VAT is charged.</p>
   <div class="plan-overview" aria-label="Plan prices">
     {{ range $pricing.plans }}
     <article{{ if .recommended }} class="recommended"{{ end }}>
@@ -12,7 +12,7 @@
     {{ end }}
   </div>
   <p class="comparison-hint">Scroll to compare plans on smaller screens. Source limits below are per job.</p>
-  <div class="comparison-scroll" tabindex="0" role="region" aria-label="Compare nika plans">
+  <div class="comparison-scroll" tabindex="0" role="region" aria-label="Compare nena plans">
     <table class="comparison"><caption>Credits and source limits</caption><thead><tr><th scope="col">What you get</th>
       {{ range $pricing.plans }}<th scope="col"{{ if .recommended }} class="recommended"{{ end }}><span>{{ .name }}</span><strong>{{ .price }}<span> {{ .period }}</span></strong></th>{{ end }}
     </tr></thead><tbody>

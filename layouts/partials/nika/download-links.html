@@ -1,6 +1,6 @@
 {{/* One source of truth for every download entry point. Never fabricate an artifact URL. */}}
 {{ $compact := .compact | default false }}
-<div class="download-links{{ if $compact }} download-links-compact{{ end }}" role="group" aria-label="nika desktop downloads">
+<div class="download-links{{ if $compact }} download-links-compact{{ end }}" role="group" aria-label="Desktop beta downloads">
   {{ range $platform := slice "macos" "windows" }}
     {{ $release := partial "nika/release.html" $platform }}
     {{ $name := $release.name }}{{ $url := $release.url }}{{ $ready := $release.ready }}
