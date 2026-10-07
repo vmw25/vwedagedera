@@ -27,6 +27,15 @@ This file is internal repository documentation. Hugo does not publish it.
 
 ## Nika release gates
 
+### nena web migration
+
+- [x] Rebrand the existing `/apps/nika/` landing page and app listing as nena, preserving desktop installer links and account identifiers.
+- [x] Add `/apps/nena/` and `/nena/` redirects while the original landing URL remains canonical.
+- [ ] Enable `web_beta_ready` only after the actual account workspace at `web_beta_url` is deployed and passes its release checks. It is hidden until then.
+- [ ] Replace desktop walkthrough screenshots with verified web captures as the web workflows ship. Current images and installation steps deliberately retain the installed Nika name.
+- [ ] Verify any new support address before changing the working `nika@vidunwedagedera.com` contact.
+- [ ] Broader learner-profile, knowledge-estimation and clinical-practice features remain a roadmap until individually implemented and evaluated.
+
 - [x] Page-only premium visual redesign and real desktop screenshots with synthetic example data.
 - [x] Floating glass navigation, readable product copy, plan comparison table and persistent Sign in access.
 - [x] Page-only rotating feature headline and screenshot showcase, with manual selection, pause and reduced-motion support.

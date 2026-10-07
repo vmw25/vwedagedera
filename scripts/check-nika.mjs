@@ -7,13 +7,14 @@ const page = join(output, 'apps/nika/index.html');
 const html = readFileSync(page, 'utf8');
 const ids = new Set([...html.matchAll(/\bid=(?:["']([^"']+)["']|([^\s>]+))/g)].map(m => m[1] || m[2]));
 assert.match(html, /https:\/\/vidunwedagedera\.com\/apps\/nika\//);
-assert.match(html, /Your cards\. Your style\./);
-assert.match(html, /Upload anything\. Get cards indistinguishable from your own\./);
+assert.match(html, /Learning that grows with you\./);
+assert.match(html, /The goal: cards indistinguishable from your own\./);
 const heading = html.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/)?.[0];
-assert.match(heading, /id=(?:"showcase-phrase"|showcase-phrase)[ >]/, 'Rotating phrase must stay in the opening headline');
-assert.match(heading, /aria-hidden=(?:"true"|true)/);
-assert.match(heading, /sr-only/);
-assert.equal((heading.match(/class=(?:"hero-phrase-sizer"|hero-phrase-sizer)/g) || []).length, 6, 'Reserve space for every phrase without layout jumps');
+assert.match(heading, /Learning that grows with you/);
+assert.match(html, /id=(?:"showcase-phrase"|showcase-phrase)[ >]/, 'Keep the current-capability showcase');
+assert.match(html, /aria-hidden=(?:"true"|true)/);
+assert.match(html, /sr-only/);
+assert.equal((html.match(/class=(?:"hero-phrase-sizer"|hero-phrase-sizer)/g) || []).length, 6, 'Reserve space for every phrase without layout jumps');
 assert.match(html, /example numbers/);
 assert.equal((html.match(/<details[ >]/g) || []).length, 8);
 assert.equal((html.match(/<button[^>]*disabled/g) || []).length, 0, 'Release status must not be an inert button');
@@ -73,7 +74,7 @@ for (const file of ['index.html', 'apps/index.html', 'projects/cs50/index.html']
   assert.doesNotMatch(other, /css\/nika\./, 'Nika stylesheet leaked into ' + file);
   assert.doesNotMatch(other, /nika-showcase\./, 'Nika script leaked into ' + file);
 }
-for (const path of ['nika/index.html', 'sidequests/nika/index.html']) {
+for (const path of ['nika/index.html', 'sidequests/nika/index.html', 'nena/index.html', 'apps/nena/index.html']) {
   const redirect = readFileSync(join(output, path), 'utf8');
   assert.match(redirect, /https:\/\/vidunwedagedera\.com\/apps\/nika\//);
   assert.match(redirect, /url=\/apps\/nika\//);

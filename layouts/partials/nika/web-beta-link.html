@@ -1,0 +1,6 @@
+{{/* Fail closed: enable only after account and workspace release verification. */}}
+{{ if hugo.Data.nika.web_beta_ready }}
+  {{ $url := hugo.Data.nika.web_beta_url | default "" }}
+  {{ if ne $url "https://app.vidunwedagedera.com/workspace" }}{{ errorf "nena web beta requires the verified account workspace URL" }}{{ end }}
+  <div class="web-beta-entry"><a class="button" data-web-beta href="{{ $url }}">Open nena web beta <span aria-hidden="true">↗</span></a><p>Your existing account works here.</p></div>
+{{ end }}

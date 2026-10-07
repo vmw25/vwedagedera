@@ -32,6 +32,24 @@ function render(config) {
 function links(html, platform) {
   return [...html.matchAll(new RegExp(`<a[^>]+data-download-platform="${platform}"[^>]*>`, 'g'))].map(m => m[0]);
 }
+test('web workspace stays hidden until explicitly released', () => {
+  const { status, html, output } = render({ web_beta_ready: false, web_beta_url: 'https://app.vidunwedagedera.com/workspace' });
+  assert.equal(status, 0, output);
+  assert.doesNotMatch(html, /data-web-beta|https:\/\/app\.vidunwedagedera\.com\/workspace/);
+});
+test('released web workspace has two direct account entry points', () => {
+  const { status, html, output } = render({ web_beta_ready: true, web_beta_url: 'https://app.vidunwedagedera.com/workspace' });
+  assert.equal(status, 0, output);
+  assert.equal((html.match(/data-web-beta/g) || []).length, 2);
+  assert.equal((html.match(/href="https:\/\/app\.vidunwedagedera\.com\/workspace"/g) || []).length, 2);
+});
+test('web release fails closed if its destination is missing or unverified', () => {
+  for (const url of ['', 'https://unverified.invalid/workspace', 'javascript:alert(1)']) {
+    const { status, output } = render({ web_beta_ready: true, web_beta_url: url });
+    assert.notEqual(status, 0);
+    assert.match(output, /verified account workspace URL/);
+  }
+});
 test('pending release gives seven real status links per platform, with no dead buttons', () => {
   const { status, html, output } = render({ launch_ready: false, macos_url: '', windows_url: '' });
   assert.equal(status, 0, output);

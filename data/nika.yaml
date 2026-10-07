@@ -5,6 +5,9 @@ launch_ready: true
 # and desktop credit enforcement. Until then, show the current checkout prices.
 pricing_v2_ready: true
 account_url: "https://app.vidunwedagedera.com"
+# Keep the entry hidden until the actual web workspace passes release checks.
+web_beta_ready: false
+web_beta_url: "https://app.vidunwedagedera.com/workspace"
 macos_beta: true
 macos_url: "https://github.com/vmw25/vwedagedera/releases/download/nika-v1.5.19-beta.57/nika-customer-v1.5.19-build57-arm64.dmg"
 macos_sha256: "01a75dcd0f4b934d60b6612f6fe9e7f2e48df1347e291d9f4af591c5ea98965d"
@@ -41,7 +44,7 @@ showcase:
   - label: "PassMedicine"
     phrase: "From your mistakes."
     title: "Turn question-bank mistakes into cards"
-    description: "Use the Mac menu-bar session controls while you work through PassMedicine. Let nika help capture incorrect results, then turn the material into cards in your style. Review before adding."
+    description: "Use the desktop app’s Mac menu-bar session controls while you work through PassMedicine. Let nena help capture incorrect results, then turn the material into cards in your style. Review before adding."
     image: "media/nika/passmedicine-v1518.webp"
     alt: "The nika PassMedicine workspace with explicit session and capture controls. Example workspace."
     width: 7680
