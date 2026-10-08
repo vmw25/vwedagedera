@@ -60,7 +60,9 @@ test('pending release gives seven real status links per platform, with no dead b
     assert.ok(html.includes(`id="download-${platform}"`));
   }
   assert.doesNotMatch(html, /<button[^>]*disabled|data-installer=/);
-  assert.doesNotMatch(html, /href="[^"#]*\/signup"/);
+  // Account registration is independent of installer and hosted-workspace release gates.
+  assert.match(html, /href="https:\/\/app\.vidunwedagedera\.com\/signup"/);
+  assert.doesNotMatch(html, /data-web-beta/);
 });
 test('launch gate prevents populated URLs leaking as active downloads', () => {
   const { status, html, output } = render({ launch_ready: false, macos_url: mac, windows_url: windows });
