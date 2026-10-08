@@ -30,7 +30,7 @@
           </div>
           <figure class="walk-figure">
             <a class="walk-image" href="{{ printf "%s-full.webp" $base | relURL }}" data-enlarge aria-label="Enlarge: {{ .title }}" data-caption="{{ .title }}" data-resolution="{{ $meta.width }} × {{ $meta.height }}">
-              <img src="{{ printf "%s-1440.webp" $base | relURL }}" srcset="{{ printf "%s-768.webp" $base | relURL }} {{ $meta.w768 }}w, {{ printf "%s-1440.webp" $base | relURL }} {{ $meta.w1440 }}w, {{ printf "%s-2304.webp" $base | relURL }} {{ $meta.w2304 }}w" sizes="(max-width: 720px) calc(100vw - 60px), (max-width: 1100px) 90vw, 760px" width="{{ $meta.width }}" height="{{ $meta.height }}" loading="lazy" decoding="async" alt="{{ .alt }}">
+              <img src="{{ printf "%s-1440.webp" $base | relURL }}" srcset="{{ printf "%s-768.webp" $base | relURL }} {{ $meta.w768 }}w{{ if gt $meta.w1440 $meta.w768 }}, {{ printf "%s-1440.webp" $base | relURL }} {{ $meta.w1440 }}w{{ end }}{{ if gt $meta.w2304 $meta.w1440 }}, {{ printf "%s-2304.webp" $base | relURL }} {{ $meta.w2304 }}w{{ end }}" sizes="(max-width: 720px) calc(100vw - 60px), (max-width: 1100px) 90vw, 760px" width="{{ $meta.width }}" height="{{ $meta.height }}" loading="lazy" decoding="async" alt="{{ .alt }}">
               <span class="walk-enlarge" aria-hidden="true">⤢ Enlarge</span>
             </a>
           </figure>
@@ -47,7 +47,7 @@
   </section>
   {{ end }}
   <p class="sr-only" data-walk-announcement role="status" aria-live="polite" aria-atomic="true"></p>
-  <p class="walk-footnote">Follow at your own pace. App screens use an isolated practice workspace, not a live account. Windows screenshots will follow Windows testing.</p>
+  <p class="walk-footnote">Account screens preview the new web interface using synthetic examples. The card and Anki guides show the existing desktop beta; they are not instructions for the unreleased web workspace. Windows screenshots will follow Windows testing.</p>
   <dialog class="walk-dialog" aria-labelledby="walk-dialog-title">
     <div class="walk-dialog-bar">
       <div><h2 id="walk-dialog-title">Screenshot</h2><p data-image-resolution></p></div>

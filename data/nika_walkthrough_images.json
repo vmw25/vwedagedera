@@ -17,15 +17,6 @@
     "w1440": 1440,
     "w2304": 2304
   },
-  "passmed-start": {
-    "width": 7680,
-    "height": 4320,
-    "kind": "native-app-render",
-    "sourceVersion": "1.5.19",
-    "w768": 768,
-    "w1440": 1440,
-    "w2304": 2304
-  },
   "deck": {
     "width": 7680,
     "height": 4320,
@@ -71,33 +62,6 @@
     "w1440": 1440,
     "w2304": 2304
   },
-  "sign-in": {
-    "width": 7680,
-    "height": 4320,
-    "kind": "native-app-render",
-    "sourceVersion": "1.5.19",
-    "w768": 768,
-    "w1440": 1440,
-    "w2304": 2304
-  },
-  "preferences": {
-    "width": 7680,
-    "height": 4320,
-    "kind": "native-app-render",
-    "sourceVersion": "1.5.19",
-    "w768": 768,
-    "w1440": 1440,
-    "w2304": 2304
-  },
-  "install": {
-    "width": 1840,
-    "height": 872,
-    "kind": "native-mac-screenshot",
-    "sourceVersion": "1.5.19",
-    "w768": 768,
-    "w1440": 1440,
-    "w2304": 1840
-  },
   "menubar-ready": {
     "width": 7680,
     "height": 4320,
@@ -127,5 +91,41 @@
     "w768": 768,
     "w1440": 1440,
     "w2304": 2304
+  },
+  "account-signup": {
+    "width": 1280,
+    "height": 1033,
+    "kind": "browser-capture",
+    "sourceVersion": "nena-web-20261008",
+    "w768": 768,
+    "w1440": 1280,
+    "w2304": 1280
+  },
+  "account-studies": {
+    "width": 1280,
+    "height": 1389,
+    "kind": "browser-capture",
+    "sourceVersion": "nena-web-20261008",
+    "w768": 768,
+    "w1440": 1280,
+    "w2304": 1280
+  },
+  "account-cards": {
+    "width": 1280,
+    "height": 1389,
+    "kind": "browser-capture",
+    "sourceVersion": "nena-web-20261008",
+    "w768": 768,
+    "w1440": 1280,
+    "w2304": 1280
+  },
+  "account-style": {
+    "width": 1280,
+    "height": 1389,
+    "kind": "browser-capture",
+    "sourceVersion": "nena-web-20261008",
+    "w768": 768,
+    "w1440": 1280,
+    "w2304": 1280
   }
 }
