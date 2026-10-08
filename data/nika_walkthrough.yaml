@@ -1,33 +1,34 @@
 version: "1.5.19"
 guides:
-  - id: install
-    title: Install Nika
+  - id: account
+    title: Set up your account
     paths:
-      - id: mac
-        title: Mac
+      - id: onboarding
+        title: Account and preferences
         steps:
-          - title: Download and install
-            text: Download the Mac beta above. Open the .dmg, drag Nika into Applications, then open Nika from there.
-            image: install
-            alt: The Nika Mac disk image in Finder, with Nika and the Applications folder.
-            note: Apple silicon · macOS 14 or later. This beta is not yet notarised. If macOS blocks it, follow Apple’s per-app approval instructions. Do not turn off system security.
-            link: https://support.apple.com/en-gb/102445
-            link_text: Apple’s opening instructions
-          - title: Sign in
-            text: Choose Create free account if you are new, confirm your email, then sign in to Nika with that account.
-            image: sign-in
-            alt: Nika’s welcome screen with email and password fields, Sign in and Create free account.
-          - title: Make it yours
-            text: Tell Nika how you like your cards. Add examples if you have them, or use the in-app tutorial to practise first.
-            image: preferences
-            alt: Nika’s first-run card preference questions, with optional example cards.
-          - title: Allow capture when you need it
-            text: For screenshots or PassMed sessions, allow Nika in System Settings → Privacy & Security → Screen & System Audio Recording when prompted. Reopen Nika if macOS asks.
-            image: passmed-start
-            alt: Nika’s PassMedicine session screen, explaining opt-in capture and local processing.
-            note: Pasting text and opening PDFs do not require screen recording. Only start monitoring when you want to use it.
+          - title: Create your account
+            text: Enter your email and review the terms and privacy information. Follow the email link to confirm your address and choose a password. Already registered? Sign in with the same account.
+            image: account-signup
+            alt: nena’s account creation screen, with an email field, terms and optional-training information.
+            note: Account registration is available. The hosted card workspace is not yet available; these screenshots preview its new onboarding interface.
+            link: https://app.vidunwedagedera.com/signup
+            link_text: Create your account
+          - title: Tell nena about your studies
+            text: Open Card preferences from Account. Tell nena what you study and which card types you like. Short answers are fine, and you can skip any question.
+            image: account-studies
+            alt: nena’s study and card-type preferences, filled with synthetic example answers.
+            note: Save progress to return later. Your preferences belong to your signed-in account.
+          - title: Choose how your cards work
+            text: Say how to split information and how much detail to include. For example, one idea per card with short answers and no repeated facts.
+            image: account-cards
+            alt: nena’s card structure and coverage questions with example preferences.
+          - title: Review your style, then save
+            text: Describe your preferred wording and add a few example cards if you want. Choose Review without AI to edit the summary yourself, or approve the shown credit cost to interpret your answers. Check the summary, then save your preferences.
+            image: account-style
+            alt: nena’s answer-formatting and optional example-card fields, with Review without AI and Save progress controls.
+            note: Editing preferences yourself is free. Private cloud learning needs separate consent in the workspace; optional shared training starts off. Preferences guide style, not the factual answers.
   - id: create
-    title: Create cards / PassMed
+    title: Desktop cards / PassMed
     paths:
       - id: source
         title: From a source
@@ -69,7 +70,7 @@ guides:
             image: passmed-review
             alt: Nika’s card review with an original practice question and its correct answer, not PassMedicine question-bank content.
   - id: anki
-    title: Add to Anki
+    title: Desktop → Anki
     paths:
       - id: connect
         title: Connect and send

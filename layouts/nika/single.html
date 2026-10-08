@@ -107,7 +107,7 @@
 </div></section>
 <section class="section shell" id="workflow">
   <h2>Create, review, add to Anki.</h2>
-  <p class="section-intro">Follow the current desktop screenshots, one step at a time. The installed app is still called Nika. You can also practise with its interactive tutorial.</p>
+  <p class="section-intro">Preview account setup and make your card preferences yours. The web workspace is not open yet; the card and Anki guides below still show the existing Nika desktop beta.</p>
   {{ $demo := hugo.Data.nika.demo_video_url | default "" }}
   {{ if $demo }}
     {{ if not (findRE `^(https://[^\s]+|/[^/][^\s]*)\.mp4(\?[^\s]*)?$` $demo) }}{{ errorf "nika demo_video_url must be a trusted HTTPS or site-relative MP4 URL" }}{{ end }}
@@ -177,7 +177,7 @@
   <details><summary>Will AI always get the answer right?</summary><p>No. AI can make mistakes or miss important context. Read each card, check it against your source and edit it before adding it to your deck.</p></details>
   <details><summary>Are my notes used to train a shared model?</summary><p>Only if you opt in and choose individual, reviewed examples to share. It is never required for a plan. You can withdraw permission and remove your shared examples. Your normal account preferences and private learning examples are separate.</p></details>
   <details><summary>How do usage limits work?</summary>{{ if hugo.Data.nika.pricing_v2_ready }}<p>Free includes 100 credits for 7 days, up to 3 completed source jobs and 20 completed PassMedicine AI requests, all sharing that balance. Student includes 250 credits a month and Pro 700. Larger sources, image analysis and deeper modes use more credits. Monthly credits reset on your billing date without rollover; purchased credits carry forward. Check the table above for each plan’s source limits. Local review and editing remain available without generation credits.</p>{{ else }}<p>Your plan includes a generation allowance, not a guaranteed number of cards. Longer PDFs and deeper processing use more of it. The monthly allowance resets at the start of each UTC calendar month without rollover, including on annual plans. Any existing welcome or purchased balance remains available under its original rules. Changing the website wording does not remove an existing balance.</p>{{ end }}</details>
-  <details><summary>What do the screenshots show?</summary><p>The existing Nika desktop interface using example study material and example numbers. Nika is becoming nena; these screenshots show the current desktop workflow, not the web workspace or measured customer results.</p></details>
+  <details><summary>What do the screenshots show?</summary><p>The account guide previews nena’s web onboarding. Other screenshots show the existing Nika desktop interface. All use example material, not customer data or measured results. The hosted web workspace is not yet available.</p></details>
 </div></section>
 <section class="download-section final-download"><div class="shell">
   <img class="download-icon" src="{{ "media/nena/icon.svg" | relURL }}" width="88" height="88" loading="lazy" alt="nena app icon">
