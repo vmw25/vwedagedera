@@ -7,7 +7,6 @@ sections:
   - block: simple-category-hub
     content:
       title: 'All articles'
-      text: 'Choose a category to explore.'
       categories:
         - label: 'School'
           title: 'School'

@@ -105,6 +105,7 @@ jobs:
 
     - name: Verify Nika pricing and release content
       run: |
+        node scripts/check-site-typography.mjs
         node scripts/check-nika.mjs
         node scripts/check-nika-content.mjs
         node --test scripts/nika-pricing.test.mjs

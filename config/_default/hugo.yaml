@@ -35,6 +35,9 @@ disableAliases: true
 outputs:
   home: [HTML, RSS]
   section: [HTML, RSS]
+mediaTypes:
+  font/woff2:
+    suffixes: [woff2]
 imaging:
   resampleFilter: lanczos
   quality: 90

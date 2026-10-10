@@ -7,6 +7,7 @@
   <meta property="og:title" content="{{ .Title }}"><meta property="og:description" content="{{ .Description }}"><meta property="og:url" content="{{ .Permalink }}"><meta property="og:type" content="website">
   {{ if not hugo.Data.nika.launch_ready }}<meta name="robots" content="noindex,follow">{{ end }}
   <link rel="icon" type="image/svg+xml" href="{{ "media/nena/mark.svg" | relURL }}">
+  {{ partialCached "site-fonts.html" . }}
   {{ $css := resources.Get "css/nika.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ $js := resources.Get "js/nika-showcase.mjs" | minify | fingerprint }}<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
   {{ $walkCSS := resources.Get "css/nika-walkthrough.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $walkCSS.RelPermalink }}" integrity="{{ $walkCSS.Data.Integrity }}">
@@ -18,7 +19,6 @@
 <main id="main">
 <section class="hero" aria-labelledby="hero-title" data-nika-showcase>
   <div class="shell hero-heading">
-    <p class="eyebrow">Meet nena</p>
     <h1 id="hero-title">Learning that grows with you.</h1>
     <p class="hero-intro">A personalised intelligence for your journey through medical school.</p>
     <p class="hero-description">Our vision is to learn who you are, what you know, how you think and who you’re becoming, and help you become the doctor you want to be.</p>
@@ -86,7 +86,6 @@
   <ol class="setup-steps" aria-label="Getting started"><li><strong>Install nika</strong><span>Choose the download for your computer.</span></li><li><strong>Create your account</strong><span>Confirm your email, then sign in. Already registered? Sign in to your existing account.</span></li><li><strong>Make your first cards</strong><span>Set your preferences or skip them. Add material, review your cards and send them to Anki.</span></li></ol>
 </div></section>
 <section class="section shell vision-section" id="vision" aria-labelledby="vision-title">
-  <p class="kicker">Where we’re going</p>
   <h2 id="vision-title">One companion.<br>Your whole medical-school journey.</h2>
   <p class="section-intro">The desktop beta starts with your study material, card style and question-bank mistakes. We’re building towards a learner profile that connects your preferences, knowledge and goals, with you in control.</p>
   <div class="vision-grid">

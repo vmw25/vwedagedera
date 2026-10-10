@@ -19,10 +19,8 @@
       <div class="portfolio-explorer__content" data-portfolio-explorer-content>
         <div class="portfolio-explorer__heading">
           <div>
-            <span class="portfolio-eyebrow">Portfolio explorer</span>
             <h1 id="portfolio-explorer-title">Explore the full picture</h1>
           </div>
-          <p>Filter the portfolio, search for a topic, or expand every entry.</p>
         </div>
 
         <div class="portfolio-toolbar">
@@ -55,7 +53,6 @@
           <span class="portfolio-section__index" aria-hidden="true">{{ printf "%02d" (add $sectionIndex 1) }}</span>
           <div>
             <h2 id="portfolio-section-{{ $section.id }}">{{ $section.title }}</h2>
-            <p>{{ $section.introduction }}</p>
           </div>
         </header>
 
@@ -65,10 +62,9 @@
               <summary>
                 <span class="portfolio-entry__marker" aria-hidden="true"></span>
                 <span class="portfolio-entry__summary">
-                  <span class="portfolio-entry__topline">
-                    {{ with .badge }}<span class="portfolio-entry__badge">{{ . }}</span>{{ end }}
-                    {{ with .period }}<span class="portfolio-entry__period">{{ . }}</span>{{ end }}
-                  </span>
+                  {{ with .period }}
+                    <span class="portfolio-entry__topline"><span class="portfolio-entry__period">{{ . }}</span></span>
+                  {{ end }}
                   <strong>{{ .title }}</strong>
                   {{ with .organisation }}<span class="portfolio-entry__organisation">{{ . }}</span>{{ end }}
                   {{ with .summary }}<span class="portfolio-entry__description">{{ . }}</span>{{ end }}
@@ -89,7 +85,6 @@
                       <details class="portfolio-subentry" data-portfolio-subentry>
                         <summary>
                           <span>
-                            {{ with .badge }}<span class="portfolio-entry__badge">{{ . }}</span>{{ end }}
                             <strong>{{ .title }}</strong>
                             {{ with .summary }}<small>{{ . }}</small>{{ end }}
                           </span>
