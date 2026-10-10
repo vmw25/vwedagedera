@@ -18,6 +18,9 @@ function render(config) {
       'assets/css/nika-walkthrough.css', 'assets/js/nika-walkthrough.mjs',
       'data/nika_walkthrough.yaml', 'data/nika_walkthrough_images.json']) cpSync(join(source, file), join(fixture, file));
     cpSync(join(source, 'layouts/partials/nika'), join(fixture, 'layouts/partials/nika'), { recursive: true });
+    // Release-gate unit tests do not need the build-time font download. The
+    // production font partial is checked by check-site-typography.mjs instead.
+    writeFileSync(join(fixture, 'layouts/partials/site-fonts.html'), '{{/* Font loading is outside this fixture. */}}');
     cpSync(join(source, 'content/sidequests/nika/index.md'), join(fixture, 'content/sidequests/nika/index.md'));
     writeFileSync(join(fixture, 'hugo.toml'), 'baseURL = "https://site.invalid/"\n');
     writeFileSync(join(fixture, 'data/nika.json'), JSON.stringify({

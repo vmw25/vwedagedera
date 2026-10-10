@@ -7,7 +7,6 @@ sections:
   - block: simple-category-hub
     content:
       title: 'Resources'
-      text: 'Choose the stage of your learning journey.'
       categories:
         - label: 'School'
           title: 'School'

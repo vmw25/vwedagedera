@@ -45,14 +45,12 @@
 
   <section class="simple-featured" id="work" aria-labelledby="featured-title">
     <h2 id="featured-title">{{ index $content "featured_title" }}</h2>
-    {{ with index $content "featured_introduction" }}<p class="simple-featured__introduction">{{ . }}</p>{{ end }}
 
     <div class="simple-category-grid">
       {{ range index $content "categories" }}
         {{ $category := . }}
         {{ $categoryURL := (index $category "url") | relLangURL }}
         <a class="simple-category-card" href="{{ $categoryURL }}">
-          <span class="simple-category-card__label">{{ index $category "label" }}</span>
           <h3>{{ index $category "title" }}</h3>
           <p>{{ index $category "description" }}</p>
           <span class="simple-category-card__link">{{ index $category "link_text" }} <span aria-hidden="true">→</span></span>
