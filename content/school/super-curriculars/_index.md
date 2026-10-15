@@ -2,6 +2,7 @@
 title: 'Super-curriculars'
 summary: 'Reading, projects and academic exploration that develop genuine subject interest.'
 type: landing
+draft: true
 
 sections:
   - block: simple-collection

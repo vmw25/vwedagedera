@@ -2,6 +2,7 @@
 title: 'All School Articles'
 summary: 'Browse every article about school, grades and building a successful medicine application.'
 type: landing
+draft: true
 
 sections:
   - block: simple-collection

@@ -5,8 +5,7 @@ import { join, resolve } from 'node:path';
 const output = resolve(process.argv[2] || 'public');
 const pages = [
   'index.html', 'portfolio/index.html', 'articles/index.html',
-  'school/index.html', 'medical-school/index.html', 'research/index.html',
-  'productivity/index.html', 'resources/index.html',
+  'school/index.html', 'medical-school/index.html', 'resources/index.html',
   'resources/school/index.html', 'resources/medical-school/index.html',
   'apps/index.html', 'apps/nika/index.html', '404.html',
   'articles/how-to-learn-and-memorise-as-fast-as-possible-at-medical-school/index.html',

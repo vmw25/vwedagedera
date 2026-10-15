@@ -3,7 +3,7 @@ main:
   - name: Portfolio
     url: /portfolio/
     weight: 10
-  - name: All Articles
+  - name: Articles
     identifier: articles
     weight: 20
   - name: Browse All
@@ -21,16 +21,6 @@ main:
     parent: articles
     url: /medical-school/
     weight: 30
-  - name: Research
-    identifier: articles-research
-    parent: articles
-    url: /research/
-    weight: 40
-  - name: Productivity
-    identifier: articles-productivity
-    parent: articles
-    url: /productivity/
-    weight: 50
   - name: Resources
     url: /resources/
     weight: 30

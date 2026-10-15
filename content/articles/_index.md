@@ -7,6 +7,7 @@ sections:
   - block: simple-category-hub
     content:
       title: 'All articles'
+      show_articles: true
       categories:
         - label: 'School'
           title: 'School'

@@ -15,7 +15,7 @@ function render(config) {
   try {
     for (const dir of ['layouts/nika', 'layouts/partials/nika', 'assets/css', 'assets/js', 'content/sidequests/nika', 'data']) mkdirSync(join(fixture, dir), { recursive: true });
     for (const file of ['layouts/nika/single.html', 'assets/css/nika.css', 'assets/js/nika-showcase.mjs',
-      'assets/css/nika-walkthrough.css', 'assets/js/nika-walkthrough.mjs',
+      'assets/css/nika-walkthrough.css', 'assets/css/product-dark.css', 'assets/js/nika-walkthrough.mjs',
       'data/nika_walkthrough.yaml', 'data/nika_walkthrough_images.json']) cpSync(join(source, file), join(fixture, file));
     cpSync(join(source, 'layouts/partials/nika'), join(fixture, 'layouts/partials/nika'), { recursive: true });
     // Release-gate unit tests do not need the build-time font download. The

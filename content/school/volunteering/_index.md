@@ -2,6 +2,7 @@
 title: 'Volunteering'
 summary: 'Choosing worthwhile opportunities, contributing consistently and learning from volunteering.'
 type: landing
+draft: true
 
 sections:
   - block: simple-collection

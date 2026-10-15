@@ -13,7 +13,7 @@
   const searchStatus = document.getElementById('site-search-status');
   const searchResults = document.getElementById('site-search-results');
   const contactDialog = document.getElementById('contact-dialog');
-  const contactOpen = document.getElementById('contact-dialog-open');
+  const contactOpeners = document.querySelectorAll('[data-contact-open]');
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-form-status');
   const newsletterDialog = document.getElementById('newsletter-dialog');
@@ -304,9 +304,9 @@
     }
   });
 
-  contactOpen?.addEventListener('click', () => {
+  contactOpeners.forEach(button => button.addEventListener('click', () => {
     openDialog(contactDialog, contactDialog?.querySelector('input[name="name"]'));
-  });
+  }));
 
   newsletterAccept?.addEventListener('click', () => {
     hideNewsletterNudge(7);

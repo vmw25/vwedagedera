@@ -54,11 +54,6 @@
       </ul>
 
       <div class="simple-nav__actions">
-        {{ if $newsletterEnabled }}
-          <button class="simple-nav__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">
-            Newsletter
-          </button>
-        {{ end }}
         <button class="simple-nav__action" id="site-search-open" type="button" aria-label="Search website" aria-haspopup="dialog" aria-controls="site-search-dialog">
           <span class="simple-nav__action-icon" aria-hidden="true">⌕</span>
           <span class="simple-nav__action-label">Search</span>
@@ -67,6 +62,7 @@
           <span class="simple-nav__action-icon" data-theme-icon aria-hidden="true">☀</span>
           <span class="simple-nav__action-label" data-theme-label>Light</span>
         </button>
+        <button class="simple-nav__contact" id="contact-dialog-open" type="button" data-contact-open aria-haspopup="dialog" aria-controls="contact-dialog">Contact <span aria-hidden="true">↗</span></button>
         <button class="simple-nav__toggle" type="button" aria-expanded="false" aria-controls="simple-nav-menu" aria-label="Toggle navigation">
           <span class="simple-nav__toggle-icon" aria-hidden="true"></span>
         </button>
@@ -198,26 +194,6 @@
     <p class="newsletter-form__privacy">By subscribing, you agree to receive Vidun’s new-article emails. Confirm through the email Kit sends you, then unsubscribe whenever you like. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
   </form>
   </dialog>
-{{ end }}
-
-{{ with $mascot }}
-  {{ if $newsletterEnabled }}
-    <aside class="assistant-nudge" id="newsletter-nudge" aria-labelledby="newsletter-nudge-title" hidden>
-      <button class="assistant-nudge__close" type="button" data-newsletter-dismiss aria-label="Dismiss newsletter suggestion">×</button>
-      <p class="assistant-nudge__message" id="newsletter-nudge-title"><strong>Hey — you’ve been here a while.</strong> I write useful articles on studying smarter, getting into and thriving at med school, productivity, medicine and healthtech.</p>
-      <p class="assistant-nudge__question">Want each new one in your inbox? Just the useful bit.</p>
-      <div class="assistant-nudge__actions">
-        <button class="site-button site-button--primary" type="button" data-newsletter-accept>Yes, send it</button>
-        <button class="assistant-nudge__later" type="button" data-newsletter-dismiss>Not now</button>
-      </div>
-    </aside>
-  {{ end }}
-
-  <button class="assistant-launcher" id="contact-dialog-open" type="button" aria-haspopup="dialog" aria-controls="contact-dialog">
-    <span class="assistant-launcher__label">Ask Vidun</span>
-    <img src="{{ .RelPermalink }}" alt="" width="99" height="128" loading="lazy" decoding="async" fetchpriority="low" aria-hidden="true">
-    <span class="sr-only">Open the contact form</span>
-  </button>
 {{ end }}
 
 {{ $siteControls := resources.Get "js/site-controls.js" | minify | fingerprint }}

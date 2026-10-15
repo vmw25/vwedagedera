@@ -2,6 +2,7 @@
 title: 'Work Experience'
 summary: 'Finding useful experience and reflecting on it meaningfully for a medicine application.'
 type: landing
+draft: true
 
 sections:
   - block: simple-collection

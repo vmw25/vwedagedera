@@ -6,6 +6,18 @@
     {{ with index $content "text" }}<p>{{ . }}</p>{{ end }}
   </header>
 
+  {{ if index $content "show_articles" }}
+    {{ $articles := (where site.RegularPages "Section" "articles").ByDate.Reverse }}
+    <nav class="article-filters" aria-label="Article categories">
+      <a class="active" aria-current="page" href="{{ "articles/" | relURL }}">All <span>{{ len $articles }}</span></a>
+      {{ range index $content "categories" }}
+        {{ $topic := strings.TrimSuffix "/" (index . "url") }}
+        {{ $count := len (where $articles "Params.help_topic" $topic) }}
+        {{ if gt $count 0 }}<a href="{{ (index . "url") | relLangURL }}">{{ index . "title" }} <span>{{ $count }}</span></a>{{ end }}
+      {{ end }}
+    </nav>
+    {{ partial "simple-project-cards.html" (dict "items" $articles "link_label" "Read article") }}
+  {{ else }}
   <div class="simple-category-grid">
     {{ range index $content "categories" }}
       {{ $categoryURL := (index . "url") | relLangURL }}
@@ -16,4 +28,5 @@
       </a>
     {{ end }}
   </div>
+  {{ end }}
 </div>

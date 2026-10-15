@@ -1,0 +1,12 @@
+<div class="redesign-footer">
+  <div class="redesign-footer__top">
+    <h2>Good things start<br>with a conversation.</h2>
+    <button class="redesign-footer__contact" type="button" data-contact-open aria-haspopup="dialog" aria-controls="contact-dialog">Get in touch <span aria-hidden="true">↗</span></button>
+  </div>
+  <nav class="redesign-footer__links" aria-label="Footer navigation">
+    <a href="{{ "portfolio/" | relURL }}">Portfolio</a><a href="{{ "articles/" | relURL }}">Articles</a><a href="{{ "resources/" | relURL }}">Resources</a><a href="{{ "apps/" | relURL }}">Apps</a>
+    <a href="https://github.com/vmw25" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/vidun-wedagedera-6aa65025a/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    {{ if site.Params.newsletter.enabled }}<button type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">Newsletter ↗</button>{{ end }}
+  </nav>
+  <div class="redesign-footer__bottom"><p>© {{ now.Year }} Vidun Wedagedera</p><a href="{{ "privacy/" | relURL }}">Privacy notice</a></div>
+</div>

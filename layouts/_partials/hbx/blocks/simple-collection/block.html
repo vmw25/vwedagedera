@@ -5,6 +5,7 @@
   {{ $filterPath := printf "Params.%s" (index $content "filter_param") }}
   {{ $items = where $items $filterPath "eq" . }}
 {{ end }}
+{{ if eq $section "articles" }}{{ $items = $items.ByDate.Reverse }}{{ end }}
 
 <div class="simple-index" data-pagefind-body>
   <header class="simple-index__header">
@@ -13,11 +14,13 @@
   </header>
 
   {{ if $items }}
+    {{ if eq $section "articles" }}
+      <nav class="article-filters" aria-label="Article categories">
+        <a href="{{ "articles/" | relURL }}">All articles</a>
+        <a href="{{ "school/" | relURL }}"{{ if eq (index $content "filter_value") "school" }} class="active" aria-current="page"{{ end }}>School</a>
+        <a href="{{ "medical-school/" | relURL }}"{{ if eq (index $content "filter_value") "medical-school" }} class="active" aria-current="page"{{ end }}>Med school</a>
+      </nav>
+    {{ end }}
     {{ partial "simple-project-cards.html" (dict "items" $items "link_label" (index $content "item_label")) }}
-  {{ else }}
-    <div class="simple-empty-state">
-      <span aria-hidden="true">+</span>
-      <p>{{ index $content "empty_text" }}</p>
-    </div>
   {{ end }}
 </div>

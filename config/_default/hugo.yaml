@@ -38,6 +38,9 @@ outputs:
 mediaTypes:
   font/woff2:
     suffixes: [woff2]
+  application/octet-stream:
+    suffixes: [bin]
+disableKinds: [taxonomy, term]
 imaging:
   resampleFilter: lanczos
   quality: 90

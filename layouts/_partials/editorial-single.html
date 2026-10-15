@@ -1,0 +1,154 @@
+{{ $page := . }}
+{{ $newsletter := site.Params.newsletter | default dict }}
+{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
+{{ $avatar := resources.GetMatch "media/authors/me.*" }}
+{{ if and $avatar (reflect.IsImageResourceProcessable $avatar) }}
+  {{ $avatar = $avatar.Fill "96x96 webp q82 TopLeft" }}
+{{ end }}
+{{ $featured := partial "functions/get_featured_image.html" . }}
+{{ $imageParams := partial "functions/get_page_image_params.html" . }}
+{{ $topic := .Params.help_topic | default "articles" }}
+{{ $topicLabel := "Articles" }}
+{{ $hubLabel := "All articles" }}
+{{ $hubURL := "articles/" | relURL }}
+{{ $topicURL := "articles/" | relURL }}
+{{ if eq .Section "resources" }}
+  {{ $topicLabel = "School resources" }}
+  {{ $topicURL = "resources/school/" | relURL }}
+  {{ $hubLabel = "Resources" }}
+  {{ $hubURL = "resources/" | relURL }}
+{{ else if eq $topic "school" }}
+  {{ $topicLabel = "School" }}
+  {{ $topicURL = "school/" | relURL }}
+{{ else if eq $topic "medical-school" }}
+  {{ $topicLabel = "Med School" }}
+  {{ $topicURL = "medical-school/" | relURL }}
+{{ else if eq $topic "research" }}
+  {{ $topicLabel = "Research" }}
+  {{ $topicURL = "research/" | relURL }}
+{{ else if eq $topic "productivity" }}
+  {{ $topicLabel = "Productivity" }}
+  {{ $topicURL = "productivity/" | relURL }}
+{{ end }}
+
+<div class="editorial-article-shell">
+  <article class="editorial-article">
+    <header class="editorial-article__header">
+      <nav class="editorial-article__breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ $hubURL }}">{{ $hubLabel }}</a>
+        <span aria-hidden="true">/</span>
+        <a href="{{ $topicURL }}">{{ $topicLabel }}</a>
+      </nav>
+
+      <h1 data-pagefind-meta="title" data-pagefind-body>{{ .Title }}</h1>
+      {{ with .Params.summary }}<p class="editorial-article__summary">{{ . }}</p>{{ end }}
+
+      <div class="editorial-article__meta">
+        <div class="editorial-article__author">
+          {{ with $avatar }}<img src="{{ .RelPermalink }}" width="48" height="48" alt="Vidun Wedagedera">{{ end }}
+          <div>
+            <span>Vidun Wedagedera</span>
+            <small>{{ .Date | time.Format (site.Params.hugoblox.locale.date_format | default ":date_long") }} · {{ .ReadingTime }} min read</small>
+          </div>
+        </div>
+        {{ if $newsletterEnabled }}
+          <button class="editorial-article__subscribe" type="button" data-newsletter-open aria-haspopup="dialog" aria-controls="newsletter-dialog">Get new articles</button>
+        {{ end }}
+      </div>
+    </header>
+
+    {{ with $featured }}
+      {{ if reflect.IsImageResourceProcessable . }}
+        {{ $responsive := partial "functions/process_responsive_image.html" (dict "image" . "mode" "responsive" "sizes" (slice 480 768 1024 1280)) }}
+        <figure class="editorial-article__featured">
+          <img
+            srcset="{{ $responsive.srcset }}"
+            sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1180px) calc(100vw - 64px), 1120px"
+            src="{{ $responsive.fallback.RelPermalink }}"
+            width="{{ .Width }}"
+            height="{{ .Height }}"
+            alt="{{ $imageParams.alt_text | default $page.Title }}"
+            fetchpriority="high"
+            data-pagefind-meta="image[src]"
+          >
+          {{ with $imageParams.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+        </figure>
+      {{ else }}
+        <figure class="editorial-article__featured">
+          <img src="{{ .RelPermalink }}" alt="{{ $imageParams.alt_text | default $.Title }}" fetchpriority="high" data-pagefind-meta="image[src]">
+          {{ with $imageParams.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+        </figure>
+      {{ end }}
+    {{ end }}
+
+    <div class="editorial-article__layout{{ if le (len .TableOfContents) 80 }} editorial-article__layout--no-toc{{ end }}">
+      {{ if gt (len .TableOfContents) 80 }}
+        <aside class="editorial-article__toc" aria-label="Article contents">
+          <span>In this article:</span>
+          {{ .TableOfContents }}
+        </aside>
+      {{ end }}
+
+      <main class="editorial-article__main">
+        <div class="editorial-article__prose prose prose-slate lg:prose-xl dark:prose-invert" data-pagefind-body>
+          <span data-pagefind-filter="type" style="display:none;">articles</span>
+          <span data-pagefind-filter="category" style="display:none;">{{ $topicLabel }}</span>
+          {{ $body := .Content }}
+          {{ range findRE `(?s)^\s*<h1\b[^>]*>.*?</h1>` $body 1 }}
+            {{ if eq (strings.TrimSpace (. | plainify | htmlUnescape)) (strings.TrimSpace $page.Title) }}
+              {{ $body = strings.TrimPrefix . $body }}
+            {{ end }}
+          {{ end }}
+          {{ $body | safeHTML }}
+        </div>
+
+        {{ if $newsletterEnabled }}
+          <div class="editorial-article__newsletter">
+            {{ partial "newsletter-panel.html" (dict "context" "article") }}
+          </div>
+        {{ end }}
+
+        <footer class="editorial-article__footer">
+          <p>Last updated {{ .Lastmod | time.Format (site.Params.hugoblox.locale.date_format | default ":date_long") }}</p>
+          {{ partial "components/page_sharer" . }}
+          <div class="editorial-article__author-card">
+            {{ with $avatar }}<img src="{{ .RelPermalink }}" width="72" height="72" alt="Vidun Wedagedera" loading="lazy">{{ end }}
+            <div>
+              <h2>Vidun Wedagedera</h2>
+              <p>Y5 medic at Cambridge, writing about school, medicine, research and healthtech.</p>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </article>
+
+  {{ $articles := where site.RegularPages "Section" .Section }}
+  {{ $articles = where $articles "RelPermalink" "ne" .RelPermalink }}
+  {{ $related := first 3 $articles.ByDate.Reverse }}
+  {{ with $related }}
+    <section class="editorial-related" aria-labelledby="related-reading-title">
+      <div class="editorial-related__heading">
+        <h2 id="related-reading-title">More {{ cond (eq $page.Section "resources") "resources" "articles" }}</h2>
+      </div>
+      <div class="editorial-related__grid">
+        {{ range . }}
+          {{ $cardImage := .Resources.GetMatch "featured.*" }}
+          <a class="editorial-related__card" href="{{ .RelPermalink }}">
+            {{ with $cardImage }}
+              {{ $thumb := . }}
+              {{ if reflect.IsImageResourceProcessable . }}{{ $thumb = .Fill "640x360 webp q76 Center" }}{{ end }}
+              <img src="{{ $thumb.RelPermalink }}" alt="" width="640" height="360" loading="lazy" decoding="async">
+            {{ else }}
+              <span class="editorial-related__placeholder" aria-hidden="true">{{ substr .Title 0 1 }}</span>
+            {{ end }}
+            <span class="editorial-related__content">
+              <strong>{{ .Title }}</strong>
+              {{ with .Params.summary }}<span>{{ . }}</span>{{ end }}
+            </span>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+</div>

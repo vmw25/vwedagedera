@@ -1,65 +1,56 @@
-{{/* A deliberately quiet homepage inspired by a compact personal blog layout. */}}
-{{ $content := .wcBlock.content }}
-{{ $avatar := resources.GetMatch "media/authors/me.*" }}
-{{ $newsletter := site.Params.newsletter | default dict }}
-{{ $newsletterEnabled := index $newsletter "enabled" | default false }}
+{{ $mesh := resources.Get "models/heart.bin" | fingerprint }}
+{{ $fallback := resources.Get "models/heart-fallback.svg" | minify | fingerprint }}
+{{ $heartScript := resources.Get "js/heart-hero.mjs" | minify | fingerprint }}
+{{ $articles := (where site.RegularPages "Section" "articles").ByDate.Reverse }}
 
-<div class="simple-home" data-pagefind-body>
-  <section class="simple-profile" aria-labelledby="profile-name">
-    {{ if $avatar }}
-      {{ $avatar_one_x := $avatar }}
-      {{ $avatar_two_x := $avatar }}
-      {{ if reflect.IsImageResourceProcessable $avatar }}
-        {{ $avatar_one_x = $avatar.Fill "220x220 webp q82 TopLeft" }}
-        {{ $avatar_two_x = $avatar.Fill "440x440 webp q82 TopLeft" }}
-      {{ end }}
-      <img
-        class="simple-profile__image"
-        src="{{ $avatar_one_x.RelPermalink }}"
-        srcset="{{ $avatar_one_x.RelPermalink }} 1x, {{ $avatar_two_x.RelPermalink }} 2x"
-        alt="Portrait of {{ index $content "name" }}"
-        width="220"
-        height="220"
-        fetchpriority="high"
-      >
-    {{ else }}
-      <div class="simple-profile__monogram" role="img" aria-label="Temporary VW monogram">
-        <span aria-hidden="true">VW</span>
-      </div>
-    {{ end }}
-
-    <h1 id="profile-name">{{ index $content "name" }}</h1>
-    <p class="simple-profile__role">{{ index $content "role" }}</p>
-    <p class="simple-profile__introduction">{{ index $content "introduction" }}</p>
-
-    {{ with index $content "social" }}
-      <div class="simple-profile__links">
-        {{ range . }}
-          <a href="{{ index . "url" | safeURL }}" target="_blank" rel="noopener noreferrer">
-            {{ index . "label" }} <span aria-hidden="true">↗</span>
-          </a>
-        {{ end }}
-      </div>
-    {{ end }}
-  </section>
-
-  <section class="simple-featured" id="work" aria-labelledby="featured-title">
-    <h2 id="featured-title">{{ index $content "featured_title" }}</h2>
-
-    <div class="simple-category-grid">
-      {{ range index $content "categories" }}
-        {{ $category := . }}
-        {{ $categoryURL := (index $category "url") | relLangURL }}
-        <a class="simple-category-card" href="{{ $categoryURL }}">
-          <h3>{{ index $category "title" }}</h3>
-          <p>{{ index $category "description" }}</p>
-          <span class="simple-category-card__link">{{ index $category "link_text" }} <span aria-hidden="true">→</span></span>
-        </a>
-      {{ end }}
+<div class="heart-home" data-pagefind-body>
+  <section class="heart-hero" aria-labelledby="profile-name">
+    <div class="heart-scene" data-heart-scene data-mesh-url="{{ $mesh.RelPermalink }}" data-heart-state="loading">
+      <img class="heart-scene__fallback" src="{{ $fallback.RelPermalink }}" width="600" height="700" alt="A fine, three-dimensional wireframe of an anatomical heart." fetchpriority="high">
+      <canvas class="heart-scene__canvas" aria-hidden="true"></canvas>
+      <button class="heart-motion" type="button" data-heart-motion aria-pressed="false" aria-label="Pause heart animation"><span data-motion-icon aria-hidden="true">Ⅱ</span><span data-motion-label>Pause motion</span></button>
+    </div>
+    <div class="heart-hero__identity"><h1 id="profile-name">Vidun <span>Wedagedera.</span></h1></div>
+    <div class="heart-hero__baseline">
+      <p>Medical student at Cambridge.<br><span>Exploring medicine, research and technology.</span></p>
+      <a href="#explore" class="heart-scroll">Explore <span aria-hidden="true">↓</span></a>
+      <a href="{{ "portfolio/" | relURL }}" class="quiet-link">My portfolio <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 
-  {{ if $newsletterEnabled }}
-    {{ partial "newsletter-panel.html" (dict "context" "home") }}
+  <section class="home-introduction content-shell" id="explore" aria-labelledby="introduction-title">
+    <h2 id="introduction-title">Curiosity, with<br>a human purpose.</h2>
+    <div class="home-introduction__copy">
+      <p>I’m a fifth-year medical student at Cambridge, interested in cardiovascular medicine and the space where research meets technology.</p>
+      <p>Here, I share what I’m learning, the things I’m building, and the resources that have helped along the way.</p>
+      <a class="text-link" href="{{ "portfolio/" | relURL }}">Explore my work <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  {{ with $articles }}
+    <section class="home-writing content-shell" aria-labelledby="latest-writing-title">
+      <div class="section-heading-row"><h2 id="latest-writing-title">Latest writing.</h2><a class="quiet-link" href="{{ "articles/" | relURL }}">All articles <span aria-hidden="true">↗</span></a></div>
+      <div class="home-writing__list">
+        {{ range first 3 . }}
+          {{ $image := .Resources.GetMatch "featured.*" }}
+          <a class="writing-row" href="{{ .RelPermalink }}">
+            {{ with $image }}
+              {{ if reflect.IsImageResourceProcessable . }}{{ $image = .Fill "520x340 webp q78 Center" }}{{ end }}
+              <img src="{{ $image.RelPermalink }}" alt="" width="260" height="170" loading="lazy" decoding="async">
+            {{ end }}
+            <div><h3>{{ .Title }}</h3><p>{{ .ReadingTime }} min read <span aria-hidden="true">·</span> {{ .Date | time.Format "02/01/2006" }}</p></div>
+            <span class="writing-row__arrow" aria-hidden="true">↗</span>
+          </a>
+        {{ end }}
+      </div>
+    </section>
   {{ end }}
+
+  <section class="home-destinations content-shell" aria-label="Explore the website">
+    <a class="destination" href="{{ "apps/" | relURL }}"><h2>Things<br>I’m building.</h2><div><p>nena: personalised learning for the medical-school journey.</p><span class="text-link">Explore apps <span aria-hidden="true">↗</span></span></div></a>
+    <a class="destination" href="{{ "resources/" | relURL }}"><h2>A little<br>head start.</h2><div><p>Textbooks, clinical-learning tools and useful resources for school and medical school.</p><span class="text-link">Browse resources <span aria-hidden="true">↗</span></span></div></a>
+  </section>
+
+  {{ if site.Params.newsletter.enabled }}<div class="home-newsletter content-shell">{{ partial "newsletter-panel.html" (dict "context" "home") }}</div>{{ end }}
 </div>
+<script type="module" src="{{ $heartScript.RelPermalink }}" integrity="{{ $heartScript.Data.Integrity }}" crossorigin="anonymous"></script>

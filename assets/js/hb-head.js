@@ -3,8 +3,7 @@
 
   try {
     const savedTheme = localStorage.getItem('vidun-theme');
-    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    const initialTheme = savedTheme || systemTheme;
+    const initialTheme = savedTheme || 'dark';
     root.dataset.theme = initialTheme;
     root.classList.toggle('dark', initialTheme === 'dark');
     root.style.colorScheme = initialTheme;

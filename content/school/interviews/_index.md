@@ -2,6 +2,7 @@
 title: 'Medicine Interviews'
 summary: 'Preparation for medicine interviews, including communication, reflection and clear thinking.'
 type: landing
+draft: true
 
 sections:
   - block: simple-collection

@@ -11,9 +11,11 @@
   {{ $css := resources.Get "css/nika.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ $js := resources.Get "js/nika-showcase.mjs" | minify | fingerprint }}<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
   {{ $walkCSS := resources.Get "css/nika-walkthrough.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $walkCSS.RelPermalink }}" integrity="{{ $walkCSS.Data.Integrity }}">
+  {{ $darkCSS := resources.Get "css/product-dark.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $darkCSS.RelPermalink }}" integrity="{{ $darkCSS.Data.Integrity }}">
   {{ $walkJS := resources.Get "js/nika-walkthrough.mjs" | minify | fingerprint }}<script type="module" src="{{ $walkJS.RelPermalink }}" integrity="{{ $walkJS.Data.Integrity }}"></script>
 </head>
 <body>
+<div class="site-return"><a href="{{ "/" | relURL }}">← Vidun Wedagedera</a><span>nena</span></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="product-nav"><div class="shell nav"><a class="brand" href="{{ .RelPermalink }}" aria-label="nena home"><img src="{{ "media/nena/wordmark.svg" | relURL }}" width="102" height="36" alt="nena"></a><nav aria-label="nena navigation"><a class="nav-explore" href="#technology">How it works</a><a class="nav-plans" href="#plans">Plans</a><details class="nav-menu"><summary>Explore</summary><div><a href="#technology">How it works</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="#download">Downloads</a></div></details><a href="{{ hugo.Data.nika.account_url }}/signin">Sign in</a></nav>{{ partial "nika/download-links.html" (dict "compact" true) }}</div></header>
 <main id="main">

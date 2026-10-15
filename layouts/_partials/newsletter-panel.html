@@ -15,19 +15,6 @@
 
 {{ if $newsletterEnabled }}
 <section class="newsletter-panel newsletter-panel--{{ $context }}" aria-labelledby="{{ $titleID }}">
-  <div class="newsletter-panel__visual" aria-hidden="true">
-    <span class="newsletter-panel__orb newsletter-panel__orb--one"></span>
-    <span class="newsletter-panel__orb newsletter-panel__orb--two"></span>
-    {{ with $mascot }}
-      <img src="{{ .RelPermalink }}" alt="" width="132" height="170" loading="lazy" decoding="async">
-    {{ end }}
-    <div class="newsletter-panel__notes">
-      <span>School</span>
-      <span>Med school</span>
-      <span>Research</span>
-    </div>
-  </div>
-
   <div class="newsletter-panel__content">
     <h2 id="{{ $titleID }}">New articles, straight to your inbox.</h2>
     <p class="newsletter-panel__description">Short, practical writing on school, medical school, productivity, research, medicine and healthtech. Whenever I publish, you’ll get the opening idea and a link to read the rest.</p>
