@@ -36,10 +36,19 @@ node scripts/prepare-heart.mjs /absolute/path/to/heart.glb
 
 Download the source through the model page's official download link first.
 
-The renderer uses native WebGL with no new runtime dependencies. Idle motion and
-proximity-based deformation are deliberately small. Pause/play, reduced motion,
-off-screen pausing, background-tab pausing, capped pixel density and a static
-fallback are included. No wheel interception or smooth-scroll library is used.
+The renderer uses native WebGL with no new runtime dependencies. The heart turns
+horizontally once every 150 seconds with pointer rotation and local deformation.
+There is no pause button. Reduced motion slows the turn and removes floating;
+off-screen/background suspension, capped pixel density and a static fallback
+avoid unnecessary work. Pointer interaction remains available.
+
+On desktop, the homepage moves within a fixed viewport, eased towards the native
+document scroll position. Wheel, touch and keyboard events are not intercepted.
+Mobile and reduced-motion visitors use direct scrolling. Centre-weighted text
+emphasis, one-time section reveals, line draws and portrait parallax provide the
+additional motion. Anchor navigation, keyboard focus and resize are handled by
+the small first-party `home-motion.mjs` module. A fixed contact button opens the
+existing enquiry dialog on every page.
 
 ## Empty content
 
@@ -68,6 +77,6 @@ node scripts/check-nika-content.mjs
 node scripts/check-nika-walkthrough.mjs
 ```
 
-Browser checks cover the hero, motion control, navigation, portfolio interaction,
+Browser checks cover the hero, scrolling stage, navigation, portfolio interaction,
 article contents/captions, search, form dialogs and responsive layouts. Do not
 submit real enquiries or newsletter subscriptions just for a visual test.

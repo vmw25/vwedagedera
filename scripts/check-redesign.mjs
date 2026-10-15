@@ -26,7 +26,10 @@ for(const file of htmlPages){
   if(file!==join(output,'index.html')) assert.doesNotMatch(html,/src=[^>]*heart-hero/,'Home scene leaked to '+file);
 }
 const home=readFileSync(join(output,'index.html'),'utf8');
-for(const hook of ['data-heart-scene','data-heart-motion','data-mesh-url','data-contact-open','data-newsletter-open'])assert.ok(home.includes(hook),'Missing '+hook);
+for(const hook of ['data-heart-scene','data-mesh-url','data-contact-open','data-newsletter-open','data-scroll-focus','home-motion','floating-contact'])assert.ok(home.includes(hook),'Missing '+hook);
+assert.doesNotMatch(home,/data-heart-motion|Curiosity, with|nena: personalised learning|A little/);
+assert.match(home,/Y5 Medic at Cambridge/);
+assert.match(home,/Building at the Intersection of Medicine and Technology/);
 assert.doesNotMatch(home,/assistant-launcher|id=["']?newsletter-nudge/);
 const hub=readFileSync(join(output,'articles/index.html'),'utf8');
 assert.equal((hub.match(/class=["']?simple-project-card(?:[\s"'>])/g)||[]).length,5,'All five published articles remain listed');

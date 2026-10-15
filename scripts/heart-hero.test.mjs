@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { damp, proximityFalloff } from '../assets/js/heart-hero.mjs';
+import { damp, proximityFalloff, rotationAt } from '../assets/js/heart-hero.mjs';
+import { easeScroll, readingStrength } from '../assets/js/home-motion.mjs';
 test('proximity deformation stays local and smooth', () => {
   assert.equal(proximityFalloff(0, 0), 1);
   assert.ok(proximityFalloff(.2, .2) > proximityFalloff(.8, .8));
@@ -26,7 +27,24 @@ test('mesh has a small, valid, texture-free binary payload', () => {
 });
 test('animation has accessibility and resource-use gates', () => {
   const code=readFileSync(new URL('../assets/js/heart-hero.mjs', import.meta.url),'utf8');
-  for(const gate of ['prefers-reduced-motion','IntersectionObserver','document.hidden','cancelAnimationFrame','webglcontextlost','data-heart-motion']) assert.ok(code.includes(gate),gate);
+  for(const gate of ['prefers-reduced-motion','IntersectionObserver','document.hidden','cancelAnimationFrame','webglcontextlost']) assert.ok(code.includes(gate),gate);
   assert.ok(code.includes('Math.min(devicePixelRatio || 1, 1.75)'));
   assert.doesNotMatch(code,/preventDefault\(\).*scroll|addEventListener\(['"]wheel/);
+});
+test('heart turns continuously once every 150 seconds', () => {
+  assert.equal(rotationAt(0),0);
+  assert.ok(Math.abs(rotationAt(75)-Math.PI)<1e-12);
+  assert.ok(Math.abs(rotationAt(150))<1e-12);
+});
+test('stage easing is frame-rate independent and never overshoots', () => {
+  const simulate = hz => {let y=0;for(let i=0;i<hz;i++)y=easeScroll(y,1000,1/hz);return y;};
+  assert.ok(Math.abs(simulate(60)-simulate(120))<1e-9);
+  assert.ok(simulate(60)<=1000);
+  assert.ok(easeScroll(1000,0,.05)>=0);
+});
+test('reading emphasis peaks at the viewport centre and fades smoothly', () => {
+  assert.equal(readingStrength(520,0,1000),1);
+  assert.equal(readingStrength(2520,2000,1000),1);
+  assert.ok(readingStrength(700,0,1000)>readingStrength(1000,0,1000));
+  assert.equal(readingStrength(2000,0,1000),0);
 });

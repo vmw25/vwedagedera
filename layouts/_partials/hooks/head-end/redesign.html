@@ -1,2 +1,4 @@
 {{ $style := resources.Get "css/redesign.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+{{ $homeMotionStyles := resources.Get "css/home-motion.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $homeMotionStyles.RelPermalink }}" integrity="{{ $homeMotionStyles.Data.Integrity }}" crossorigin="anonymous">

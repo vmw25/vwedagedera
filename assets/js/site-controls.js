@@ -1,4 +1,7 @@
 (function initialiseSiteControls() {
+  // Keep the persistent contact control outside blurred/transformed containers.
+  const floatingContact = document.querySelector('.floating-contact');
+  if (floatingContact) document.body.append(floatingContact);
   const navToggle = document.querySelector('.simple-nav__toggle');
   const navMenu = document.getElementById('simple-nav-menu');
   const moreToggle = document.querySelector('[data-more-toggle]');

@@ -4,10 +4,11 @@ if (host) initialiseHeart(host).catch(() => { host.dataset.heartState = 'fallbac
 
 export function proximityFalloff(dx, dy) { return Math.exp(-(dx * dx + dy * dy) / 0.22); }
 export function damp(current, target, dt) { return current + (target - current) * (1 - Math.exp(-dt * 5)); }
+export function rotationAt(seconds) { return (seconds * Math.PI * 2 / 150) % (Math.PI * 2); }
 
 async function initialiseHeart(host) {
   const canvas = host.querySelector('canvas');
-  // Keep the last frame when paused or when the browser recomposites a background
+  // Keep the last frame off-screen or when the browser recomposites a background
   // tab. This avoids a cleared canvas without running extra animation frames.
   const gl = canvas.getContext('webgl', { alpha: true, antialias: true, powerPreference: 'low-power', depth: true, preserveDrawingBuffer: true });
   if (!gl) throw new Error('Static fallback');
@@ -62,8 +63,7 @@ async function initialiseHeart(host) {
   const uniforms = Object.fromEntries(['uRotation','uPointer','uScale','uHover','uTime','uPass','uBackground','uInk'].map(n => [n, gl.getUniformLocation(program, n)]));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
-  const toggle = host.querySelector('[data-heart-motion]');
-  let paused = reduced.matches, visible = true, modalOpen = false, lost = false, frame = 0, last = 0, elapsed = 0;
+  let visible = true, modalOpen = false, lost = false, frame = 0, last = 0, elapsed = 0;
   let pointer = [0, 0], targetPointer = [0, 0], rotation = [0, 0], targetRotation = [0, 0], hover = 0, targetHover = 0;
   let scale = [1, 1], rect = host.getBoundingClientRect();
   function resize() {
@@ -86,18 +86,18 @@ async function initialiseHeart(host) {
     frame = 0;
     if (lost || !visible || modalOpen || document.hidden) { last = 0; return; }
     const dt = Math.min((now - (last || now)) / 1000, 0.05); last = now;
-    if (!paused) elapsed += dt;
-    const interactive = !paused && finePointer.matches;
+    elapsed += dt * (reduced.matches ? 0.4 : 1);
+    const interactive = finePointer.matches;
     hover = damp(hover, interactive ? targetHover : 0, dt);
     for (let i = 0; i < 2; i++) {
       rotation[i] = damp(rotation[i], interactive ? targetRotation[i] : 0, dt);
       pointer[i] = damp(pointer[i], targetPointer[i], dt);
     }
-    const idle = paused ? 0 : Math.sin(elapsed * 0.26) * 0.055;
+    const turn = rotationAt(elapsed);
     gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.uniform3f(uniforms.uRotation, -0.06 + rotation[1] * 0.08, -0.24 + idle + rotation[0] * 0.12, -0.12);
+    gl.uniform3f(uniforms.uRotation, -0.06 + rotation[1] * 0.08, -0.24 + turn + rotation[0] * 0.12, -0.12);
     gl.uniform2f(uniforms.uPointer, pointer[0], pointer[1]); gl.uniform2f(uniforms.uScale, scale[0], scale[1]);
-    gl.uniform1f(uniforms.uHover, hover); gl.uniform1f(uniforms.uTime, elapsed);
+    gl.uniform1f(uniforms.uHover, hover); gl.uniform1f(uniforms.uTime, reduced.matches ? 0 : elapsed);
     gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.depthFunc(gl.LESS);
     gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(1, 1);
     gl.uniform1f(uniforms.uPass, 0); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, faceBuffer); gl.drawElements(gl.TRIANGLES, faceCount, gl.UNSIGNED_SHORT, 0);
@@ -105,20 +105,14 @@ async function initialiseHeart(host) {
     gl.depthFunc(gl.LEQUAL); gl.depthMask(false); gl.uniform1f(uniforms.uPass, 1);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, lineBuffer); gl.drawElements(gl.LINES, lineCount, gl.UNSIGNED_SHORT, 0);
     gl.depthMask(true); gl.disable(gl.BLEND);
-    const nextState = paused ? 'paused' : 'ready';
-    if (host.dataset.heartState !== nextState) host.dataset.heartState = nextState;
-    if (!paused) requestFrame();
+    if (host.dataset.heartState !== 'ready') host.dataset.heartState = 'ready';
+    requestFrame();
   }
   function requestFrame() { if (!frame && visible && !modalOpen && !document.hidden && !lost) frame = requestAnimationFrame(draw); }
-  function updateToggle() {
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.setAttribute('aria-label', paused ? 'Play heart animation' : 'Pause heart animation');
-    toggle.querySelector('[data-motion-label]').textContent = paused ? 'Play motion' : 'Pause motion';
-    toggle.querySelector('[data-motion-icon]').textContent = paused ? '▷' : 'Ⅱ';
-  }
-  toggle.addEventListener('click', () => { paused = !paused; last = 0; updateToggle(); requestFrame(); });
   host.addEventListener('pointermove', e => {
-    if (!finePointer.matches || paused) return;
+    if (!finePointer.matches) return;
+    rect = host.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
     const x = (e.clientX - rect.left) / rect.width * 2 - 1, y = 1 - (e.clientY - rect.top) / rect.height * 2;
     targetPointer = [x / scale[0], y / scale[1]];
     targetRotation = [Math.max(-1,Math.min(1,x)), Math.max(-1,Math.min(1,y))]; targetHover = 1;
@@ -131,7 +125,7 @@ async function initialiseHeart(host) {
     else if (frame) { cancelAnimationFrame(frame); frame = 0; }
   }); observer.observe(host);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) { last=0; requestFrame(); } else if(frame){cancelAnimationFrame(frame);frame=0;} });
-  reduced.addEventListener('change', () => { paused = reduced.matches; updateToggle(); requestFrame(); });
+  reduced.addEventListener('change', requestFrame);
   const resizeObserver = new ResizeObserver(resize); resizeObserver.observe(host);
   new MutationObserver(updateColours).observe(document.documentElement, { attributes:true,attributeFilter:['data-theme'] });
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost=true; if(frame)cancelAnimationFrame(frame);frame=0;host.dataset.heartState='fallback'; });
@@ -142,5 +136,5 @@ async function initialiseHeart(host) {
     else if (!modalOpen) { last=0; requestFrame(); }
   });
   dialogs.forEach(dialog => modalObserver.observe(dialog, { attributes:true, attributeFilter:['open'] }));
-  updateColours(); updateToggle(); resize();
+  updateColours(); resize();
 }
