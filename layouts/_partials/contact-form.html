@@ -1,0 +1,36 @@
+{{ $id := .id | default "contact-form" }}
+{{ $contactEmail := hugo.Data.authors.me.email }}
+{{ $contactForm := site.Params.contact_form | default dict }}
+{{ $endpoint := index $contactForm "endpoint" | default "" }}
+<form class="contact-form" id="{{ $id }}" action="{{ $endpoint }}" method="post" data-contact-form data-contact-configured="{{ ne $endpoint "" }}" aria-label="Send an enquiry">
+  <input type="hidden" name="_subject" value="New website enquiry for Vidun">
+  <input type="hidden" name="source_page" value="">
+  <div class="site-honeypot" aria-hidden="true">
+    <label for="{{ $id }}-botcheck">Leave this field empty</label>
+    <input id="{{ $id }}-botcheck" type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off">
+  </div>
+  <div class="contact-form__row">
+    <label class="site-field"><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
+    <label class="site-field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+  </div>
+  <label class="site-field">
+    <span>Reason for getting in touch</span>
+    <select name="reason" required>
+      <option value="" selected disabled>Choose one</option>
+      <option>Research collaboration</option>
+      <option>Healthtech or project enquiry</option>
+      <option>Speaking or community</option>
+      <option>Mentoring or education</option>
+      <option>Other professional enquiry</option>
+    </select>
+  </label>
+  <label class="site-field"><span>Subject</span><input type="text" name="subject" required maxlength="120"></label>
+  <label class="site-field"><span>Question or message</span><textarea name="message" rows="5" required maxlength="1500"></textarea></label>
+  <label class="contact-form__consent">
+    <input type="checkbox" name="confidentiality_acknowledged" value="yes" required>
+    <span>I will not include patient information or confidential, sensitive or urgent medical details.</span>
+  </label>
+  <p class="contact-form__privacy">Your enquiry is sent securely through Formspree to {{ $contactEmail }}. Do not include patient or confidential information. This is not a clinical advice or emergency service. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
+  <p class="contact-form__status" id="{{ $id }}-status" data-contact-status role="status" aria-live="polite"></p>
+  <div class="contact-form__actions"><button class="site-button site-button--primary" type="submit" data-contact-submit>Send enquiry <span aria-hidden="true">↗</span></button></div>
+</form>

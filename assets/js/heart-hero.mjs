@@ -4,7 +4,7 @@ if (host) initialiseHeart(host).catch(() => { host.dataset.heartState = 'fallbac
 
 export function proximityFalloff(dx, dy) { return Math.exp(-(dx * dx + dy * dy) / 0.22); }
 export function damp(current, target, dt) { return current + (target - current) * (1 - Math.exp(-dt * 5)); }
-export function rotationAt(seconds) { return (seconds * Math.PI * 2 / 150) % (Math.PI * 2); }
+export function rotationAt(seconds) { return (seconds * Math.PI * 2 / 90) % (Math.PI * 2); }
 
 async function initialiseHeart(host) {
   const canvas = host.querySelector('canvas');
@@ -71,8 +71,8 @@ async function initialiseHeart(host) {
     const dpr = Math.min(devicePixelRatio || 1, 1.75);
     canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
     gl.viewport(0, 0, canvas.width, canvas.height);
-    // A 3.4-unit heart occupies 85% of the scene's height, centred in real 3D.
-    const pixelsPerUnit = rect.height * 0.25;
+    // Fill the right-hand stage without clipping the rotating model on narrow screens.
+    const pixelsPerUnit = Math.min(rect.height * 0.26, rect.width * 0.28);
     scale = [pixelsPerUnit * 2 / rect.width, pixelsPerUnit * 2 / rect.height];
     requestFrame();
   }

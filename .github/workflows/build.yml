@@ -107,7 +107,7 @@ jobs:
       run: |
         node scripts/check-site-typography.mjs
         node scripts/check-redesign.mjs
-        node --test scripts/heart-hero.test.mjs
+        node --test scripts/heart-hero.test.mjs scripts/contact-forms.test.mjs
         node scripts/check-nika.mjs
         node scripts/check-nika-content.mjs
         node --test scripts/nika-pricing.test.mjs

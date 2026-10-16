@@ -1,6 +1,5 @@
 {{ $branding := partialCached "functions/get_branding" . "branding" }}
 {{ $page := . }}
-{{ $contactEmail := hugo.Data.authors.me.email }}
 {{ $mascot := resources.Get "media/assistant-mascot.png" }}
 {{ $newsletter := site.Params.newsletter | default dict }}
 {{ $newsletterEnabled := index $newsletter "enabled" | default false }}
@@ -9,9 +8,6 @@
 {{ $newsletterFormID := index $newsletter "form_id" | default "" }}
 {{ $newsletterFormUID := index $newsletter "form_uid" | default "" }}
 {{ $newsletterRuntimeURL := index $newsletter "runtime_url" | default "" }}
-{{ $contactForm := site.Params.contact_form | default dict }}
-{{ $contactEndpoint := index $contactForm "endpoint" | default "" }}
-{{ $contactConfigured := ne $contactEndpoint "" }}
 {{ $isArticle := and .IsPage (eq .Section "articles") }}
 {{ $engagementPage := cond $isArticle "article" "site" }}
 {{ if or (eq .RelPermalink "/privacy/") (eq .RelPermalink "/contact-thanks/") }}
@@ -100,67 +96,7 @@
 
   <p class="contact-dialog__introduction">Use this form for research, healthtech, speaking, community or general professional enquiries.</p>
 
-  <form
-    class="contact-form"
-    id="contact-form"
-    action="{{ $contactEndpoint }}"
-    method="post"
-    data-contact-configured="{{ $contactConfigured }}"
-  >
-
-    <input type="hidden" name="_subject" value="New website enquiry for Vidun">
-    <input type="hidden" name="source_page" value="">
-
-    <div class="site-honeypot" aria-hidden="true">
-      <label for="contact-botcheck">Leave this field empty</label>
-      <input id="contact-botcheck" type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off">
-    </div>
-
-    <div class="contact-form__row">
-      <label class="site-field">
-        <span>Name</span>
-        <input type="text" name="name" autocomplete="name" required>
-      </label>
-      <label class="site-field">
-        <span>Email</span>
-        <input type="email" name="email" autocomplete="email" required>
-      </label>
-    </div>
-
-    <label class="site-field">
-      <span>Reason for getting in touch</span>
-      <select name="reason" required>
-        <option value="" selected disabled>Choose one</option>
-        <option>Research collaboration</option>
-        <option>Healthtech or project enquiry</option>
-        <option>Speaking or community</option>
-        <option>Mentoring or education</option>
-        <option>Other professional enquiry</option>
-      </select>
-    </label>
-
-    <label class="site-field">
-      <span>Subject</span>
-      <input type="text" name="subject" required maxlength="120">
-    </label>
-
-    <label class="site-field">
-      <span>Question or message</span>
-      <textarea name="message" rows="5" required maxlength="1500"></textarea>
-    </label>
-
-    <label class="contact-form__consent">
-      <input type="checkbox" name="confidentiality_acknowledged" value="yes" required>
-      <span>I will not include patient information or confidential, sensitive or urgent medical details.</span>
-    </label>
-
-    <p class="contact-form__privacy">Your enquiry is sent securely through Formspree to {{ $contactEmail }}. Do not include patient or confidential information. This is not a clinical advice or emergency service. Read the <a href="{{ "privacy/" | relURL }}">privacy notice</a>.</p>
-    <p class="contact-form__status" id="contact-form-status" role="status" aria-live="polite"></p>
-
-    <div class="contact-form__actions">
-      <button class="site-button site-button--primary" type="submit" data-contact-submit>Send enquiry</button>
-    </div>
-  </form>
+  {{ partial "contact-form.html" (dict "id" "contact-form") }}
 </dialog>
 
 {{ if $newsletterEnabled }}

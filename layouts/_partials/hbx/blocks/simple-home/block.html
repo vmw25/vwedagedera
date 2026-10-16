@@ -12,22 +12,25 @@
       <img class="heart-scene__fallback" src="{{ $fallback.RelPermalink }}" width="600" height="700" alt="A fine, three-dimensional wireframe of an anatomical heart." fetchpriority="high">
       <canvas class="heart-scene__canvas" aria-hidden="true"></canvas>
     </div>
-    <div class="heart-hero__identity"><h1 id="profile-name">Vidun <span>Wedagedera.</span></h1></div>
-    <div class="heart-hero__intro">
-      <p class="heart-hero__role">Y5 Medic at Cambridge</p>
-      <p class="heart-hero__focus">Building at the Intersection of Medicine and Technology</p>
-    </div>
-    <div class="heart-hero__baseline">
-      <a href="#explore" class="heart-scroll">Explore <span aria-hidden="true">↓</span></a>
-      <a href="{{ "portfolio/" | relURL }}" class="quiet-link">My portfolio <span aria-hidden="true">↗</span></a>
+    <div class="heart-hero__copy">
+      <div class="hero-portrait" aria-hidden="true"><img src="{{ $portrait.RelPermalink }}" alt="" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" decoding="async"></div>
+      <div class="heart-hero__identity"><h1 id="profile-name">Vidun <span>Wedagedera.</span></h1></div>
+      <div class="heart-hero__intro">
+        <p class="heart-hero__role">Medicine @ Cambridge</p>
+        <p class="heart-hero__focus">Building the future of healthcare</p>
+      </div>
+      <div class="heart-hero__baseline">
+        <a href="#explore" class="heart-scroll">Explore <span aria-hidden="true">↓</span></a>
+        <a href="{{ "portfolio/" | relURL }}" class="quiet-link">My portfolio <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
   </section>
 
   <section class="home-introduction content-shell" id="explore" aria-label="About Vidun">
-    <div class="home-portrait" data-reveal><img src="{{ $portrait.RelPermalink }}" alt="Vidun Wedagedera at his Cambridge graduation" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" decoding="async"></div>
+    <div class="home-portrait" data-portrait-destination><img src="{{ $portrait.RelPermalink }}" alt="Vidun Wedagedera at his Cambridge graduation" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" decoding="async"></div>
     <div class="home-introduction__copy">
-      <p data-scroll-focus>I’m a fifth-year medical student at Cambridge, interested in cardiovascular medicine and the space where research meets technology.</p>
-      <p data-scroll-focus>Here, I share what I’m learning, the things I’m building, and the resources that have helped along the way.</p>
+      <p data-scroll-focus>Hey! I’m Vidun, a 5th-year medic @ Cambridge, interested in changing how we approach the management of cardiovascular disease.</p>
+      <p data-scroll-focus>Here, I share what I’m learning, the things I’m building, the resources that have helped along the way, my past work, and my portfolio.</p>
       <a class="text-link" href="{{ "portfolio/" | relURL }}">Explore my work <span aria-hidden="true">↗</span></a>
     </div>
   </section>

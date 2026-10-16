@@ -28,7 +28,7 @@ sections:
         - label: 'Shared drive'
           title: 'EdMedSoc Resource Drive'
           url: 'https://drive.google.com/drive/folders/1OI_77i3T6TvX3FH4MgfHlMyUlRnQSDs5?usp=sharing'
-          description: 'A shared collection of medical-school learning resources.'
+          description: 'A shared collection of learning resources for Cambridge clinical medical students only.'
           link_text: 'Open resource drive'
     design:
       spacing:

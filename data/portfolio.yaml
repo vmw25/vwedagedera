@@ -63,11 +63,9 @@ sections:
         organisation: 'Churchill College, University of Cambridge'
         period: '2026–Present'
         badge: 'Teaching'
-        summary: 'Small-group supervision in pharmacology through Cambridge’s Mechanisms of Drug Action course.'
+        summary: 'Paid small-group supervision in pharmacology through Cambridge’s Mechanisms of Drug Action course.'
         points:
-          - 'Teach cardiovascular and renal pharmacology, peripheral neurotransmission and neuropharmacology.'
-          - 'Also cover atherosclerosis, antimicrobial pharmacology and anticancer pharmacology.'
-          - 'Supervise the pharmacokinetics and pharmacodynamics (PK/PD) practical paper.'
+          - 'Teaching covers cardiovascular and renal pharmacology, peripheral neurotransmission and neuropharmacology, atherosclerosis, antimicrobial pharmacology and anticancer pharmacology, alongside supervision of the pharmacokinetics and pharmacodynamics (PK/PD) practical paper.'
         tags:
           - 'Teaching'
           - 'Pharmacology'

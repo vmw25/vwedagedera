@@ -17,8 +17,8 @@
   const searchResults = document.getElementById('site-search-results');
   const contactDialog = document.getElementById('contact-dialog');
   const contactOpeners = document.querySelectorAll('[data-contact-open]');
-  const contactForm = document.getElementById('contact-form');
-  const contactStatus = document.getElementById('contact-form-status');
+  const contactForms = document.querySelectorAll('[data-contact-form]');
+  const contactSection = document.querySelector('[data-contact-section]');
   const newsletterDialog = document.getElementById('newsletter-dialog');
   const newsletterNudge = document.getElementById('newsletter-nudge');
   const newsletterAccept = document.querySelector('[data-newsletter-accept]');
@@ -311,6 +311,21 @@
     openDialog(contactDialog, contactDialog?.querySelector('input[name="name"]'));
   }));
 
+  // Observe the rendered footer, including the homepage's transformed stage.
+  // No per-scroll layout reads or extra animation loop are needed.
+  if (floatingContact && contactSection && 'IntersectionObserver' in window) {
+    const contactObserver = new IntersectionObserver(([entry]) => {
+      const hidden = entry.isIntersecting;
+      if (hidden && document.activeElement === floatingContact) {
+        document.getElementById('footer-contact-title')?.focus({ preventScroll: true });
+      }
+      floatingContact.classList.toggle('is-at-contact', hidden);
+      floatingContact.inert = hidden;
+      floatingContact.setAttribute('aria-hidden', String(hidden));
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    contactObserver.observe(contactSection);
+  }
+
   newsletterAccept?.addEventListener('click', () => {
     hideNewsletterNudge(7);
     openDialog(newsletterDialog, newsletterDialog?.querySelector('input[name="email_address"]'));
@@ -408,9 +423,11 @@
     searchTimer = window.setTimeout(() => runSearch(query, currentSequence), 120);
   });
 
-  contactForm?.addEventListener('submit', async function (event) {
+  contactForms.forEach(form => form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (this.dataset.submitting === 'true') return;
     if (!this.reportValidity()) return;
+    const contactStatus = this.querySelector('[data-contact-status]');
 
     if (this.dataset.contactConfigured !== 'true' || !this.action) {
       if (contactStatus) {
@@ -423,6 +440,8 @@
     const originalLabel = submitButton?.textContent || 'Send enquiry';
     const formData = new FormData(this);
     formData.set('source_page', window.location.href);
+    this.dataset.submitting = 'true';
+    this.setAttribute('aria-busy', 'true');
 
     if (submitButton) {
       submitButton.disabled = true;
@@ -451,12 +470,14 @@
         contactStatus.textContent = 'I couldn’t send that just now. Please check your connection and try again.';
       }
     } finally {
+      delete this.dataset.submitting;
+      this.removeAttribute('aria-busy');
       if (submitButton) {
         submitButton.disabled = false;
         submitButton.textContent = originalLabel;
       }
     }
-  });
+  }));
 
   document.addEventListener('ckjs:submission:complete', (event) => {
     const completedUID = String(event.detail?.uid || '');
