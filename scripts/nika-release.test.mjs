@@ -15,7 +15,7 @@ function render(config) {
   try {
     for (const dir of ['layouts/nika', 'layouts/partials/nika', 'assets/css', 'assets/js', 'content/sidequests/nika', 'data']) mkdirSync(join(fixture, dir), { recursive: true });
     for (const file of ['layouts/nika/single.html', 'assets/css/nika.css', 'assets/js/nika-showcase.mjs',
-      'assets/css/nika-walkthrough.css', 'assets/css/product-dark.css', 'assets/js/nika-walkthrough.mjs',
+      'assets/css/nika-walkthrough.css', 'assets/css/product-dark.css', 'assets/css/nena-maintenance.css', 'assets/js/nika-walkthrough.mjs',
       'data/nika_walkthrough.yaml', 'data/nika_walkthrough_images.json']) cpSync(join(source, file), join(fixture, file));
     cpSync(join(source, 'layouts/partials/nika'), join(fixture, 'layouts/partials/nika'), { recursive: true });
     // Release-gate unit tests do not need the build-time font download. The
@@ -35,6 +35,17 @@ function render(config) {
 function links(html, platform) {
   return [...html.matchAll(new RegExp(`<a[^>]+data-download-platform="${platform}"[^>]*>`, 'g'))].map(m => m[0]);
 }
+test('maintenance hides the entire product page even when downloads and web access are enabled', () => {
+  const { status, html, output } = render({ maintenance_mode: true, launch_ready: true,
+    web_beta_ready: true, web_beta_url: 'https://app.vidunwedagedera.com/workspace',
+    macos_url: mac, windows_url: windows });
+  assert.equal(status, 0, output);
+  assert.match(html, /data-nena-maintenance/);
+  assert.match(html, /Major updates<br>in progress\./);
+  assert.match(html, /Back to apps/);
+  assert.match(html, /nena-maintenance\./);
+  assert.doesNotMatch(html, /<script\b|data-installer|data-download-platform|data-web-beta|data-pricing-version|data-guide-panel/);
+});
 test('web workspace stays hidden until explicitly released', () => {
   const { status, html, output } = render({ web_beta_ready: false, web_beta_url: 'https://app.vidunwedagedera.com/workspace' });
   assert.equal(status, 0, output);

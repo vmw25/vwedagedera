@@ -1,8 +1,14 @@
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { checkMaintenance } from './check-nika-maintenance.mjs';
 
 const metadata = JSON.parse(readFileSync('data/nika_walkthrough_images.json', 'utf8'));
-const html = readFileSync('public/apps/nika/index.html', 'utf8');
+const html = readFileSync(join(process.argv[2] || 'public', 'apps/nika/index.html'), 'utf8');
+if (checkMaintenance(html)) {
+  console.log('Walkthrough is not loaded on the temporary page; retained version tested separately.');
+  process.exit(0);
+}
 const source = readFileSync('assets/js/nika-walkthrough.mjs', 'utf8');
 const data = readFileSync('data/nika_walkthrough.yaml', 'utf8');
 assert.equal((html.match(/data-guide-panel=/g) ?? []).length, 3);

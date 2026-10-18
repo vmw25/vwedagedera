@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>nena · Major updates in progress</title>
+  <meta name="description" content="Major updates to nena are in progress. Check back soon.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:title" content="nena · Major updates in progress">
+  <meta property="og:description" content="I’m working on the next version of nena. Check back soon.">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="{{ "media/nena/mark.svg" | relURL }}">
+  {{ partialCached "site-fonts.html" . }}
+  {{ $css := resources.Get "css/nena-maintenance.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+</head>
+<body data-nena-maintenance>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="maintenance-header shell">
+    <a href="{{ .RelPermalink }}" aria-label="nena home"><img class="wordmark" src="{{ "media/nena/wordmark.svg" | relURL }}" width="102" height="36" alt="nena"></a>
+    <a href="{{ "/" | relURL }}">Vidun’s website <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="maintenance-main shell" id="main">
+    <h1>Major updates<br>in progress.</h1>
+    <p>I’m working on the next version of nena.<br>Check back soon.</p>
+    <a class="back-link" href="{{ "apps/" | relURL }}"><span aria-hidden="true">←</span> Back to apps</a>
+  </main>
+  <footer class="maintenance-footer shell">
+    <span>nena</span>
+    <nav aria-label="Footer navigation">
+      <a href="{{ hugo.Data.nika.account_url }}/privacy">Privacy</a>
+      <a href="{{ hugo.Data.nika.account_url }}/terms">Terms</a>
+      <a href="mailto:nika@vidunwedagedera.com">Contact</a>
+    </nav>
+  </footer>
+</body>
+</html>

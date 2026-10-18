@@ -1,10 +1,15 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { checkMaintenance } from './check-nika-maintenance.mjs';
 
 const output = resolve(process.argv[2] || 'public');
 const page = join(output, 'apps/nika/index.html');
 const html = readFileSync(page, 'utf8');
+if (checkMaintenance(html)) {
+  console.log('nena holding page verified; full product checks run in the restoration fixture.');
+  process.exit(0);
+}
 const ids = new Set([...html.matchAll(/\bid=(?:["']([^"']+)["']|([^\s>]+))/g)].map(m => m[1] || m[2]));
 assert.match(html, /https:\/\/vidunwedagedera\.com\/apps\/nika\//);
 assert.match(html, /Learning that grows with you\./);

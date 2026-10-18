@@ -1,7 +1,15 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-const home = readFileSync('public/apps/nika/index.html', 'utf8');
-const apps = readFileSync('public/apps/index.html', 'utf8');
+import { join } from 'node:path';
+import { checkMaintenance } from './check-nika-maintenance.mjs';
+const output = process.argv[2] || 'public';
+const home = readFileSync(join(output, 'apps/nika/index.html'), 'utf8');
+const apps = readFileSync(join(output, 'apps/index.html'), 'utf8');
+if (checkMaintenance(home)) {
+  assert.ok(apps.includes('nena') && apps.includes('media/nena/icon.svg'));
+  console.log('nena temporary copy and existing app listing verified.');
+  process.exit(0);
+}
 for (const phrase of ['A clearer way to create', 'See it. Hide it. Recall it.', 'New pricing', 'Your data, your choice', 'One app, your whole card-making workflow', 'nika is an independent product, not affiliated with Anki, PassMedicine, Apple or Stripe.']) {
   assert.ok(!home.includes(phrase), `Removed decorative copy returned: ${phrase}`);
 }
@@ -20,7 +28,7 @@ assert.ok(!home.includes('Instant, Balanced and Advanced generation'));
 assert.ok(home.includes('7680') && home.includes('4320'));
 for (const name of ['create', 'passmedicine', 'insights', 'onboarding']) {
   assert.ok(home.includes(`media/nika/${name}-v1518.webp`), `Current UI capture missing: ${name}`);
-  const bytes = readFileSync(`public/media/nika/${name}-v1518.webp`);
+  const bytes = readFileSync(join(output, `media/nika/${name}-v1518.webp`));
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
   assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   // Qt's opaque lossy WebP contains a VP8 keyframe; verify the actual pixels,

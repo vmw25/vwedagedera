@@ -1,3 +1,5 @@
+# Temporary website holding page. Set false to restore the full product page.
+maintenance_mode: true
 # Beta distribution is separate from account/payment launch readiness.
 # A Mac beta must carry its checksum, platform limits and notarisation warning.
 launch_ready: true
